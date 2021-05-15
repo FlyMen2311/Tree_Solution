@@ -2,6 +2,8 @@
     <string name="app_name">Tree</string>
     <string name="title_activity_aplication">MainActivity</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="title_newpost">Upload</string>
+    <string name="title_Chat">Comunicacion</string>
+    <string name="title_perfil">Perfil</string>
 </resources>

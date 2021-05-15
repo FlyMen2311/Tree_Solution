@@ -1,4 +1,4 @@
-package com.example.tree_solution_proyect.Vistas.ui.favorite;
+package com.example.tree_solution_proyect.Vistas.ui.comunicacion;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,25 +12,26 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.tree_solution_proyect.databinding.FragmentFavoriteBinding;
+import com.example.tree_solution_proyect.databinding.FragmentChatBinding;
 
 
 
-public class FavoriteFragment extends Fragment {
+public class ComunicacionFragment extends Fragment {
 
-    private FavoriteViewModel dashboardViewModel;
-    private FragmentFavoriteBinding binding;
+    private ComunicacionViewModel comunicacionViewModel;
+    private FragmentChatBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                new ViewModelProvider(this).get(FavoriteViewModel.class);
+        comunicacionViewModel =
+                new ViewModelProvider(this).get(ComunicacionViewModel.class);
 
-        binding = FragmentFavoriteBinding.inflate(inflater, container, false);
+        binding = FragmentChatBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        final TextView textView = binding.textchat;
+
+        comunicacionViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
