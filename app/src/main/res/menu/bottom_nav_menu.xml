@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/navigation_home"
@@ -15,6 +16,7 @@
         android:id="@+id/navigation_newpost"
         android:icon="@drawable/nuevo"
         android:title="@string/title_newpost" />
+
     <item
         android:id="@+id/navigation_comunicacion"
         android:icon="@drawable/chat"
