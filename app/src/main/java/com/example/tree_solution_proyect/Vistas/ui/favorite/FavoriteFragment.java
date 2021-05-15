@@ -1,4 +1,4 @@
-package com.example.tree_solution_proyect.Vistas.ui.notifications;
+package com.example.tree_solution_proyect.Vistas.ui.favorite;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,24 +12,25 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.tree_solution_proyect.databinding.FragmentNotificationsBinding;
+import com.example.tree_solution_proyect.databinding.FragmentFavoriteBinding;
+import com.example.tree_solution_proyect.databinding.FragmentHomeBinding;
 
 
-public class NotificationsFragment extends Fragment {
+public class FavoriteFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
-    private FragmentNotificationsBinding binding;
+    private FavoriteViewModel dashboardViewModel;
+    private FragmentFavoriteBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
+        dashboardViewModel =
+                new ViewModelProvider(this).get(FavoriteViewModel.class);
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = FragmentFavoriteBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textNotifications;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        final TextView textView = binding.textDashboard;
+        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
