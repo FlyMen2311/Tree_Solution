@@ -49,7 +49,7 @@ public class Login extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         Toast.makeText(Login.this, "Se logeo correctamente",
                                                 Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(Login.this, ChatActivity.class));
+                                        startActivity(new Intent(Login.this, AplicationActivity.class));
                                     } else {
                                         Toast.makeText(Login.this, "Error al Entrar",
                                                 Toast.LENGTH_SHORT).show();
