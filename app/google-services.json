@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "494001839771",
+    "project_id": "treesolution-38dca",
+    "storage_bucket": "treesolution-38dca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494001839771:android:f944f6e7de552f3ec4f03e",
+        "android_client_info": {
+          "package_name": "com.example.tree_solution_proyect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "494001839771-viho8nlnmcucnmsab68gg2b946qedem0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCU1ekAj7qqWtJxgPyvataTrLweRTW0eWY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "494001839771-viho8nlnmcucnmsab68gg2b946qedem0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
