@@ -1,4 +1,4 @@
-package com.example.tree_solution_proyect;
+package com.example.tree_solution_proyect.Adaptadores;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +11,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tree_solution_proyect.Objetos.Mensaje;
-import com.example.tree_solution_proyect.Vistas.ChatActivity;
+import com.bumptech.glide.Glide;
+import com.example.tree_solution_proyect.Holders.HolderMensaje;
+import com.example.tree_solution_proyect.Objetos.Firebase.Mensaje;
+import com.example.tree_solution_proyect.Objetos.Logica.LMensaje;
+import com.example.tree_solution_proyect.R;
+import com.example.tree_solution_proyect.Vistas.ui.comunicacion.ComunicacionFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +24,9 @@ import java.util.Locale;
 
 public class Adapter_mensaje extends RecyclerView.Adapter<HolderMensaje> {
 
-   private List<Mensaje> listMensaje=new ArrayList<>();
+   private List<LMensaje> listMensaje=new ArrayList<>();
    private Context x;
-   private ChatActivity mainActivity=new ChatActivity();;
+   private ComunicacionFragment mainActivity=new ComunicacionFragment();;
 
 
    public Adapter_mensaje(Context x){
@@ -44,17 +48,20 @@ public class Adapter_mensaje extends RecyclerView.Adapter<HolderMensaje> {
     //Llama a este metodo para vincular holder con los datos asociados
     @Override
     public void onBindViewHolder(@NonNull HolderMensaje holder, int position) {
-        //vinculamos holder con los datos asociados
-        holder.getNombre().setText(listMensaje.get(position).getNombre());
-        holder.getMensaje().setText(listMensaje.get(position).getMensaje());
-        holder.getHora().setText(listMensaje.get(position).getHora());
 
-        //Comprobamos foto si la foto esta vacia y ponemos una nuestra o una por default.
-        if(listMensaje.get(position).getFoto_perfil().isEmpty()){
-            holder.getFotoPerfilMensaje().setImageResource(R.drawable.logo);
-        }else{
-           // Glide.with(x).load(listMensaje.get(position).getFoto_perfil()).into(holder.getFotoPerfilMensaje());
+       LMensaje lMensaje=listMensaje.get(position);
+        //vinculamos holder con los datos asociados
+        holder.getNombre().setText(lMensaje.getlUsuario().getUsuario().getUserName());
+        holder.getMensaje().setText(lMensaje.getMensaje().getMensaje());
+        if(!lMensaje.getMensaje().toString().isEmpty()) {
+            holder.getFotoPerfilMensaje().setVisibility(View.VISIBLE);
+            holder.getMensaje().setVisibility(View.VISIBLE);
         }
+
+
+        Glide.with(x.getApplicationContext()).load(lMensaje.getlUsuario().getUsuario().getFotoPerfilUrl()).into(holder.getFotoPerfilMensaje());
+
+        holder.getHora().setText(lMensaje.obtenerFechaDeCreacionMensaje());
 
         //Gestion mensaje este utilizamos para abrir nuestra ubicacion mandada.
         holder.mensaje.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +96,7 @@ public class Adapter_mensaje extends RecyclerView.Adapter<HolderMensaje> {
     }
 
     //En este metodo añdimos el mensaje creado a nuestra lista y notificamos a nuestro activity
-    public void addMensaje(Mensaje m){
+    public void addMensaje(LMensaje m){
        listMensaje.add(m);
        notifyItemInserted(listMensaje.size());
     }

@@ -8,13 +8,17 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tree_solution_proyect.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
+    private FirebaseAuth mAuth;
     Button entrar,registro;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
+        setContentView(R.layout.activity_main);
 
+        mAuth = FirebaseAuth.getInstance();
         entrar=findViewById(R.id.btnstartsession);
         entrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,5 +33,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this,Registro.class));
             }
         });
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            startActivity(new Intent(MainActivity.this, AplicationActivity.class));
+        }
     }
 }

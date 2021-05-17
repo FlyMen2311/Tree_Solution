@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.AplicationActivity;
 import com.example.tree_solution_proyect.Vistas.Login;
 import com.example.tree_solution_proyect.Vistas.MainActivity;
@@ -25,46 +26,18 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeFragment extends Fragment{
 
-    private HomeViewModel homeViewModel;
-    private FragmentHomeBinding binding;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
-
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-        final TextView textView = binding.textHome;
-        final Button salir=binding.button;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-                salir.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        FirebaseAuth.getInstance().signOut();
-                        Intent intent = new Intent(getActivity(), Login.class);
-                        startActivity(intent);
-                        try {
-                            this.finalize();
-                        } catch (Throwable throwable) {
-                            throwable.printStackTrace();
-                        }
-                    }
-
-
-                });
-            }
-        });
-        return root;
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
+        try {
+            this.finalize();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
     }
 }

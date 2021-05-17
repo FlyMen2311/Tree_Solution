@@ -1,88 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Vistas.ChatActivity">
+    android:background="@drawable/background"
+    android:hapticFeedbackEnabled="true">
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
+
+    <Button
+        android:id="@+id/btnstartsession"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="1dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/recycler"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="27dp"
+        android:background="@drawable/btn_redondeado_white"
+        android:elevation="5dp"
+        android:text="Inciar Sesión"
+        android:textColor="#403f3f"
+        android:textSize="16dp"
+        android:drawableLeft="@drawable/singin"
+        app:layout_constraintBottom_toTopOf="@+id/btnregistro"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
-        <ImageView
-            android:id="@+id/FotoPerfil"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            tools:srcCompat="@drawable/ic_launcher_foreground" />
-
-        <TextView
-            android:id="@+id/nombreMensaje"
-            android:layout_width="299dp"
-            android:layout_height="33dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:text="Nombre"
-            android:textSize="18sp" />
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler"
-        android:layout_width="410dp"
-        android:layout_height="560dp"
-        android:layout_marginBottom="3dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-    <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="400dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginEnd="2dp"
-        android:orientation="horizontal"
+    <Button
+        android:id="@+id/btnregistro"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="214dp"
+        android:background="@drawable/btn_redondeado_white"
+        android:drawableLeft="@drawable/singup"
+        android:paddingLeft="3pt"
+        android:elevation="5dp"
+        android:text="Registro"
+        android:textColor="#403f3f"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recycler">
+        app:layout_constraintTop_toBottomOf="@+id/btnstartsession" />
 
-
-        <ImageButton
-            android:id="@+id/localizacion_env"
-            android:layout_width="45dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@android:drawable/ic_dialog_map" />
-
-        <EditText
-            android:id="@+id/Texto_mensaje"
-            android:layout_width="299dp"
-            android:layout_height="match_parent"
-            android:ems="10"
-            android:gravity="start|top"
-            android:hint="Escribe un mensaje"
-            android:inputType="textMultiLine" />
-
-        <ImageButton
-            android:id="@+id/btn_enviar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_menu_send" />
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="369dp"
+        android:layout_height="149dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="144dp"
+        android:layout_marginEnd="34dp"
+        android:layout_marginBottom="111dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnstartsession"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,6 @@ package com.example.tree_solution_proyect.Vistas;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.tree_solution_proyect.Objetos.Usuario;
+import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
 import com.example.tree_solution_proyect.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,7 +25,7 @@ public class Registro extends AppCompatActivity {
     private EditText txtNombre,txtCorreo,txtContraseña,txtContraseñaRepetida;
     private Button registro;
     private FirebaseAuth mAuth;
-    private DatabaseReference referenceUsuarios;
+
     private FirebaseDatabase database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +38,7 @@ public class Registro extends AppCompatActivity {
 
         mAuth=FirebaseAuth.getInstance();
         database=FirebaseDatabase.getInstance();
-        referenceUsuarios=database.getReference("Usuarios");
+
 
         registro= (Button) findViewById(R.id.btnRegistro);
         registro.setOnClickListener(new View.OnClickListener() {
@@ -60,7 +59,10 @@ public class Registro extends AppCompatActivity {
                                         Usuario usuario=new Usuario();
                                         usuario.setEmail(email);
                                         usuario.setUserName(nombre);
-                                        referenceUsuarios.push().setValue(usuario);
+                                        FirebaseUser currentUser=mAuth.getCurrentUser();
+                                        DatabaseReference reference=database.getReference("Usuarios/"+currentUser.getUid());
+                                        reference.setValue(usuario);
+                                        finish();
                                     } else {
                                         Toast.makeText(Registro.this, "Error al registrarse",
                                                 Toast.LENGTH_SHORT).show();
