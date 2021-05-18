@@ -56,6 +56,7 @@ dependencies {
     implementation 'me.saket:better-link-movement-method:2.2.0'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation 'com.google.firebase:firebase-analytics'
+   
 
     //
     testImplementation 'junit:junit:4.+'
