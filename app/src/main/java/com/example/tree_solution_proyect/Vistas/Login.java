@@ -42,6 +42,9 @@ public class Login extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseDatabase database;
     private Usuario usuario;
+    private  FirebaseUser firebaseUser;
+    private boolean isNew=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +71,6 @@ public class Login extends AppCompatActivity {
                 String email = txtEmail.getText().toString();
                 if (isValidEmail(email) && validContracena()) {
                     String contracena = txtContracena.getText().toString();
-
                     mAuth.signInWithEmailAndPassword(email, contracena)
                             .addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -78,10 +80,21 @@ public class Login extends AppCompatActivity {
                                                 Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(Login.this, AplicationActivity.class));
                                     } else {
-                                        Toast.makeText(Login.this, "Error al Entrar",
-                                                Toast.LENGTH_SHORT).show();
-
-                                    }
+                                        mAuth.fetchSignInMethodsForEmail(email)
+                                                .addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+                                                        boolean isEmailExist = task.getResult().getSignInMethods().isEmpty();
+                                                        if (!isEmailExist) {
+                                                            Toast.makeText(Login.this, "Constraseña introducida no es correcta",
+                                                                    Toast.LENGTH_SHORT).show();
+                                                        } else {
+                                                            Toast.makeText(Login.this, "Email no existe",
+                                                                    Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                });
+                                        }
                                 }
                             });
                 } else {
@@ -108,8 +121,8 @@ public class Login extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         if ((currentUser != null)) {
@@ -139,7 +152,6 @@ public class Login extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
-
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
 
@@ -149,9 +161,11 @@ public class Login extends AppCompatActivity {
                             public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
                                 boolean isNewUser = task.getResult().getSignInMethods().isEmpty();
                                 if (isNewUser) {
+                                    isNew=true;
                                     usuario=new Usuario();
                                     usuario.setEmail(account.getEmail());
                                     usuario.setUserName(account.getDisplayName());
+                                    usuario.setFechaDeNacimiento(10);
                                     firebaseAuthWithGoogle(account.getIdToken());
                                 } else {
                                     firebaseAuthWithGoogle(account.getIdToken());
@@ -159,7 +173,6 @@ public class Login extends AppCompatActivity {
                             }
                         });
             } catch (ApiException e) {
-
                 Toast.makeText(Login.this, e.getMessage(),
                         Toast.LENGTH_SHORT).show();
             }
@@ -167,25 +180,33 @@ public class Login extends AppCompatActivity {
     }
 
     private void firebaseAuthWithGoogle(String idToken) {
+
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            FirebaseUser currentUser=mAuth.getCurrentUser();
-                            DatabaseReference reference=database.getReference("Usuarios/"+currentUser.getUid());
-                            reference.setValue(usuario);
-                            finish();
-                            // Sign in success, update UI with the signed-in user's information
-                            startActivity(new Intent(Login.this, AplicationActivity.class));
+                            if(isNew) {
+                                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                                    firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                                    DatabaseReference reference = database.getReference("Usuarios/" + firebaseUser.getUid());
+                                    reference.setValue(usuario);
+                                } else {
+                                    Toast.makeText(Login.this, "Suka blat naxyt",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                                startActivity(new Intent(Login.this, AplicationActivity.class));
+
                         } else {
-                            // If sign in fails, display a message to the user.
                             Toast.makeText(Login.this, "Error al Entrar",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+
     }
 
 

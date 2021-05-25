@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -45,6 +46,7 @@ public class Registro extends AppCompatActivity {
             public void onClick(View v) {
                 String email=txtCorreo.getText().toString();
                 String nombre=txtNombre.getText().toString();
+
                 if(isValidEmail(email) && validContracena() && validarNombreUsuario(nombre)){
                     String contrasena=txtContraseña.getText().toString();
                     mAuth.createUserWithEmailAndPassword(email, contrasena)
@@ -62,8 +64,17 @@ public class Registro extends AppCompatActivity {
                                         reference.setValue(usuario);
                                         finish();
                                     } else {
-                                        Toast.makeText(Registro.this, "Error al registrarse",
-                                                Toast.LENGTH_SHORT).show();
+                                        mAuth.fetchSignInMethodsForEmail(email)
+                                                .addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+                                                        boolean isEmailExist = task.getResult().getSignInMethods().isEmpty();
+                                                        if (!isEmailExist) {
+                                                            Toast.makeText(Registro.this, "Email ya existe",
+                                                                    Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                });
                                     }
                                 }
                             });

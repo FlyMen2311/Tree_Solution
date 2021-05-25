@@ -102,7 +102,7 @@ public class ComunicacionFragment extends Fragment {
        userName=vista.findViewById(R.id.nombreMensaje);;
 
        database=FirebaseDatabase.getInstance();;
-       databaseReference=database.getReference("chat");;
+       databaseReference=database.getReference("chat");
 
        storage= FirebaseStorage.getInstance();;
 
