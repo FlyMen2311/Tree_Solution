@@ -11,15 +11,9 @@ public class Mensaje {
     private String userKey;
     private Object createTimestamp;
 
-
-
-
     //Metodo constructor vacio
     public Mensaje(){createTimestamp = ServerValue.TIMESTAMP;
         }
-
-
-
     public String getMensaje() {
         return mensaje;
     }

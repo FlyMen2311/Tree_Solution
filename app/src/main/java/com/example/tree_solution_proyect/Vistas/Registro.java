@@ -39,15 +39,13 @@ public class Registro extends AppCompatActivity {
         mAuth=FirebaseAuth.getInstance();
         database=FirebaseDatabase.getInstance();
 
-
         registro= (Button) findViewById(R.id.btnRegistro);
         registro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email=txtCorreo.getText().toString();
                 String nombre=txtNombre.getText().toString();
-                if(isValidEmail(email)&& validContracena() && validarNombre(nombre)){
-
+                if(isValidEmail(email) && validContracena() && validarNombreUsuario(nombre)){
                     String contrasena=txtContraseña.getText().toString();
                     mAuth.createUserWithEmailAndPassword(email, contrasena)
                             .addOnCompleteListener(Registro.this, new OnCompleteListener<AuthResult>() {
@@ -66,7 +64,6 @@ public class Registro extends AppCompatActivity {
                                     } else {
                                         Toast.makeText(Registro.this, "Error al registrarse",
                                                 Toast.LENGTH_SHORT).show();
-
                                     }
                                 }
                             });
@@ -100,10 +97,11 @@ public class Registro extends AppCompatActivity {
                return false;
             }
         }else{
+
             return  false;
         }
     }
-    public boolean validarNombre(String nombre){
+    public boolean validarNombreUsuario(String nombre){
         return !nombre.isEmpty();
     }
 }

@@ -29,7 +29,7 @@ public class UsuarioDAO {
         return usuarioDAO;
     }
 
-    private UsuarioDAO(){
+    public UsuarioDAO(){
         database=FirebaseDatabase.getInstance();
         referenceUsuarios= database.getReference(Constantes.NODO_USUARIOS);
     }
