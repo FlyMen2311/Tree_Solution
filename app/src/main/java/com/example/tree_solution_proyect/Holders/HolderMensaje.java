@@ -1,13 +1,7 @@
 package com.example.tree_solution_proyect.Holders;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.text.method.LinkMovementMethod;
-import android.text.util.Linkify;
-import android.util.Log;
 import android.view.View;
-import android.webkit.URLUtil;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,8 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tree_solution_proyect.R;
-
-import me.saket.bettermovementmethod.BetterLinkMovementMethod;
 
 public class HolderMensaje extends RecyclerView.ViewHolder  {
     
@@ -33,7 +25,7 @@ public class HolderMensaje extends RecyclerView.ViewHolder  {
 
         super(itemView);
         context=itemView.getContext();
-        nombre=itemView.findViewById(R.id.nombreMensaje);
+        nombre=itemView.findViewById(R.id.UserNamePerfil);
         mensaje=itemView.findViewById(R.id.Mensaje_text);
         hora=itemView.findViewById(R.id.hora_mensaje);
         fotoPerfilMensaje=itemView.findViewById(R.id.fotoMensaje);

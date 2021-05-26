@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,10 +24,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.tree_solution_proyect.Adaptadores.Adapter_mensaje;
 import com.example.tree_solution_proyect.Objetos.Firebase.Mensaje;
 import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
 import com.example.tree_solution_proyect.Objetos.Logica.LMensaje;
+import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
 import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.Login;
@@ -39,6 +42,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -48,8 +52,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -69,7 +75,8 @@ public class ComunicacionFragment extends Fragment {
     private TextView userName;
 
     private FirebaseDatabase database;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReferenceChat;
+    private DatabaseReference databaseReferenceUsuario;
 
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -90,19 +97,21 @@ public class ComunicacionFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View vista =inflater.inflate(R.layout.fragment_chat, container, false);
-        enviar=vista.findViewById(R.id.btn_enviar);;
-        texto_mensaje=vista.findViewById(R.id.Texto_mensaje);;
-        recyclerView=vista.findViewById(R.id.recycler);;
+        enviar=vista.findViewById(R.id.btn_enviar);
+        texto_mensaje=vista.findViewById(R.id.Texto_mensaje);
+        recyclerView=vista.findViewById(R.id.recycler);
 
-       foto_perfil=vista.findViewById(R.id.FotoPerfil);
-       foto_perfil.setImageResource(R.drawable.logo);
+       foto_perfil=vista.findViewById(R.id.FotoCambiarPerfil);
 
-       nombre=vista.findViewById(R.id.nombreMensaje);;
-       envial_loc=vista.findViewById(R.id.localizacion_env);;
-       userName=vista.findViewById(R.id.nombreMensaje);;
 
-       database=FirebaseDatabase.getInstance();;
-       databaseReference=database.getReference("chat");
+       nombre=vista.findViewById(R.id.UserNamePerfil);
+       envial_loc=vista.findViewById(R.id.localizacion_env);
+       userName=vista.findViewById(R.id.UserNamePerfil);
+       mAuth=FirebaseAuth.getInstance();
+
+       database=FirebaseDatabase.getInstance();
+       databaseReferenceChat =database.getReference("chat");
+       databaseReferenceUsuario =database.getReference("Usuarios/"+mAuth.getCurrentUser().getUid());
 
        storage= FirebaseStorage.getInstance();;
 
@@ -111,7 +120,6 @@ public class ComunicacionFragment extends Fragment {
       fotoPerfilString="";
 
       mAuth=FirebaseAuth.getInstance();;
-
 
             adapter_mensaje=new Adapter_mensaje(getActivity());
             LinearLayoutManager l=new LinearLayoutManager(getActivity().getApplicationContext());
@@ -128,23 +136,42 @@ public class ComunicacionFragment extends Fragment {
                         mensaje.setMensaje(textMensaje);
                         mensaje.setUserKey(UsuarioDAO.getKeyUsuario());
 
-                        databaseReference.push().setValue(mensaje);
+                        databaseReferenceChat.push().setValue(mensaje);
                         texto_mensaje.setText("");
                     }
 
                 }
             });
 
-            //Gestion btn cambiar foto perfil
-            foto_perfil.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-                    i.setType("image/jpg");
-                    i.putExtra(Intent.EXTRA_LOCAL_ONLY,true);
-                    startActivityForResult(Intent.createChooser(i,"Selecciona una foto"),2311);
+        //Agregamos un ValueEventListener para que los cambios que se hagan en la base de datos
+        //se reflejen en la aplicacion
+        databaseReferenceUsuario.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                //leeremos un objeto de tipo Estudiante
+                GenericTypeIndicator<Usuario> usuario = new GenericTypeIndicator<Usuario>() {
+                };
+                Usuario usuario1 = dataSnapshot.getValue(usuario);
+                Uri uri=Uri.parse(usuario1.getFotoPerfilUrl());
+                if(uri!=null) {
+                    try {
+                        Glide.with(getActivity().getApplicationContext())
+                                .load(uri)
+                                .into(foto_perfil);
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
-            });
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+            }
+        });
+
+
 
             //Gestion btn enviar mensaje
             enviar.setOnClickListener(new View.OnClickListener() {
@@ -156,7 +183,7 @@ public class ComunicacionFragment extends Fragment {
                         mensaje.setMensaje(textMensaje);
                         mensaje.setUserKey(UsuarioDAO.getInstance().getKeyUsuario());
 
-                        databaseReference.push().setValue(mensaje);
+                        databaseReferenceChat.push().setValue(mensaje);
                         texto_mensaje.setText("");
                     }
 
@@ -164,12 +191,33 @@ public class ComunicacionFragment extends Fragment {
             });
 
             //Gestion de eventos producidos en FIREBASE
-            databaseReference.addChildEventListener(new ChildEventListener() {
+            databaseReferenceChat.addChildEventListener(new ChildEventListener() {
+
+                Map<String, LUsuario> stringLUsuarioMap=new HashMap<>();
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    Mensaje m=dataSnapshot.getValue(Mensaje.class);
-                    LMensaje lMensaje=new LMensaje(m,dataSnapshot.getKey());
-                    adapter_mensaje.addMensaje(lMensaje);
+                    final Mensaje m=dataSnapshot.getValue(Mensaje.class);
+                    final LMensaje lMensaje=new LMensaje(m,dataSnapshot.getKey());
+                    final int posicion=adapter_mensaje.addMensaje(lMensaje);
+
+                    if(stringLUsuarioMap.get(m.getUserKey())!=null){
+                        lMensaje.setlUsuario(stringLUsuarioMap.get(m.getUserKey()));
+                        adapter_mensaje.actualizarMensaje(posicion,lMensaje);
+                    }else{
+                        UsuarioDAO.getInstance().obtenerInformacionKey(m.getUserKey(), new UsuarioDAO.IDevolverUsuario() {
+                            @Override
+                            public void devolverUsuario(LUsuario lUsuario) {
+                                stringLUsuarioMap.put(m.getUserKey(),lUsuario);
+                                lMensaje.setlUsuario(lUsuario);
+                                adapter_mensaje.actualizarMensaje(posicion,lMensaje);
+                            }
+
+                            @Override
+                            public void devolverError(String mensajeError) {
+                                Toast.makeText(getActivity().getApplicationContext(),"Error"+ mensajeError,Toast.LENGTH_SHORT);
+                            }
+                        });
+                    }
                 }
 
                 @Override
@@ -218,6 +266,10 @@ public class ComunicacionFragment extends Fragment {
                     Usuario usuario=snapshot.getValue(Usuario.class);
                     nombreUsuario=usuario.getUserName();
                     nombre.setText(nombreUsuario);
+                    Glide.with(getActivity().getApplicationContext())
+                            .load(Uri.parse(usuario.getFotoPerfilUrl()))
+                            .into(foto_perfil);
+
                 }
                 @Override
                 public void onCancelled(@NonNull @NotNull DatabaseError error) {
@@ -271,35 +323,6 @@ public class ComunicacionFragment extends Fragment {
 
     }
 
-    //Recoger datos de Intent producido en esta clase
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 2311 && resultCode == RESULT_OK){
-
-            Uri x = data.getData();
-            storageReference = storage.getReference("foto_perfil");
-            final StorageReference fotoReferencia = storageReference.child(x.getLastPathSegment());
-            fotoReferencia.putFile(x).addOnSuccessListener((Executor) ComunicacionFragment.this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                    Task<Uri> u = taskSnapshot.getStorage().getDownloadUrl();
-                    u.addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            fotoPerfilString = uri.toString();
-                           // Mensaje m = new Mensaje(nombreUsuario,""+calendario.get(Calendar.HOUR_OF_DAY)+":"+calendario.get(Calendar.MINUTE)+"","Foto ha sido actualizada",fotoPerfilString);
-                            //databaseReference.push().setValue(m);
-                            //Glide.with(MainActivity.this).load(fotoPerfilString).into(foto_perfil);
-                        }
-                    });
-
-                }
-            });
-        }
-    }
 
     public ImageView getFoto_perfil() {
         return foto_perfil;

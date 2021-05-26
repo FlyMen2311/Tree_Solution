@@ -2,6 +2,8 @@ package com.example.tree_solution_proyect.Objetos.Logica;
 
 import com.example.tree_solution_proyect.Objetos.Firebase.Mensaje;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -36,9 +38,10 @@ public class LMensaje {
     }
 
     public String obtenerFechaDeCreacionMensaje(){
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("hh:mm:ss a",Locale.getDefault());
-        Date date =new Date(getCreateTimeLong());
-        return  simpleDateFormat.format(date);
+        Date date=new Date(getCreateTimeLong());
+        PrettyTime prettyTime=new PrettyTime(new Date(),Locale.getDefault());
+        return prettyTime.format(date);
+
     }
 
     public LUsuario getlUsuario() {

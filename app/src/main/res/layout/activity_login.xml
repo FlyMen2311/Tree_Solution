@@ -37,10 +37,10 @@
 
         <Button
             android:id="@+id/btnEntrar"
-            android:layout_width="0dp"
-            android:layout_height="38dp"
-            android:layout_marginEnd="44dp"
-            android:layout_marginBottom="206dp"
+            android:layout_width="127dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="46dp"
+            android:layout_marginBottom="213dp"
             android:background="@drawable/btn_redondeado_white"
             android:drawableLeft="@drawable/singin"
             android:elevation="5dp"
@@ -50,12 +50,13 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/entrar_google"
-            app:layout_constraintTop_toBottomOf="@+id/contrasenatxt" />
+            app:layout_constraintTop_toBottomOf="@+id/contrasenatxt"
+            app:layout_constraintVertical_bias="1.0" />
 
         <EditText
             android:id="@+id/emailTxt"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="318dp"
+            android:layout_height="41dp"
             android:layout_marginStart="48dp"
             android:layout_marginTop="54dp"
             android:layout_marginEnd="48dp"
@@ -72,33 +73,31 @@
 
         <EditText
             android:id="@+id/contrasenatxt"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="47dp"
-            android:layout_marginEnd="47dp"
-            android:layout_marginBottom="41dp"
+            android:layout_width="319dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="120dp"
+            android:layout_marginBottom="44dp"
             android:ems="10"
             android:hint="Contraseña"
             android:inputType="textPassword"
             android:textColor="#FFFEFE"
             android:textColorHint="#F6F3F3"
-            app:layout_constraintBottom_toTopOf="@+id/btnEntrar"
+            app:layout_constraintBottom_toTopOf="@+id/entrar_google"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emailTxt" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/entrar_google"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="171dp"
-            android:layout_marginEnd="20dp"
             android:background="@drawable/google_icon"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnEntrar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.486"
+            app:layout_constraintVertical_bias="0.484"
             app:srcCompat="@drawable/google_icon" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -110,6 +109,48 @@
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -128,5 +169,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo_2" />
+
+    <Button
+        android:id="@+id/btn_atrs"
+        android:layout_width="47dp"
+        android:layout_height="35dp"
+        android:background="#00000000"
+        android:drawableLeft="@drawable/atras"
+        android:elevation="5dp"
+        android:paddingLeft="3pt"
+        android:textColor="#403f3f"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.002"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

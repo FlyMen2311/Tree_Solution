@@ -6,11 +6,43 @@
     android:layout_height="match_parent"
     tools:context=".Vistas.ui.perfil.PerfilFragment">
 
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="408dp"
+        android:layout_height="93dp"
+        android:layout_marginTop="59dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="579dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/FotoCambiarPerfil"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            tools:srcCompat="@drawable/ic_launcher_foreground" />
+
+        <TextView
+            android:id="@+id/UserNamePerfil"
+            android:layout_width="299dp"
+            android:layout_height="33dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="Nombre"
+            android:textColor="#050505"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="172dp"
         android:layout_marginEnd="16dp"
         android:text="salir"
         app:layout_constraintEnd_toEndOf="parent"

@@ -1,5 +1,6 @@
 package com.example.tree_solution_proyect.Vistas;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
 import com.example.tree_solution_proyect.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +29,7 @@ public class Registro extends AppCompatActivity {
     private EditText txtNombre,txtCorreo,txtContraseña,txtContraseñaRepetida;
     private Button registro;
     private FirebaseAuth mAuth;
+    private Button btn_atras;
 
     private FirebaseDatabase database;
     @Override
@@ -39,6 +43,14 @@ public class Registro extends AppCompatActivity {
 
         mAuth=FirebaseAuth.getInstance();
         database=FirebaseDatabase.getInstance();
+
+        btn_atras=findViewById(R.id.btn_atras);
+        btn_atras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Registro.this, MainActivity.class));
+            }
+        });
 
         registro= (Button) findViewById(R.id.btnRegistro);
         registro.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +71,8 @@ public class Registro extends AppCompatActivity {
                                         Usuario usuario=new Usuario();
                                         usuario.setEmail(email);
                                         usuario.setUserName(nombre);
+                                        usuario.setFotoPerfilUrl(Constantes.URL_FOTO_PERFIL);
+
                                         FirebaseUser currentUser=mAuth.getCurrentUser();
                                         DatabaseReference reference=database.getReference("Usuarios/"+currentUser.getUid());
                                         reference.setValue(usuario);

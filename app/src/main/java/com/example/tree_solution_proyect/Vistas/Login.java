@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
 import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
@@ -37,6 +38,7 @@ public class Login extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123 ;
     private EditText txtEmail, txtContracena;
     private Button btnEntrar;
+    private Button btn_atras;
     private FirebaseAuth mAuth;
     private ImageButton googleAut;
     private GoogleSignInClient mGoogleSignInClient;
@@ -63,7 +65,13 @@ public class Login extends AppCompatActivity {
                 signIn();
             }
         });
-
+        btn_atras=findViewById(R.id.btn_atrs);
+        btn_atras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Login.this, MainActivity.class));
+            }
+        });
         btnEntrar = findViewById(R.id.btnEntrar);
         btnEntrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,7 +173,8 @@ public class Login extends AppCompatActivity {
                                     usuario=new Usuario();
                                     usuario.setEmail(account.getEmail());
                                     usuario.setUserName(account.getDisplayName());
-                                    usuario.setFechaDeNacimiento(10);
+                                    usuario.setFechaDeNacimiento(10-10-1022);
+                                    usuario.setFotoPerfilUrl(Constantes.URL_FOTO_PERFIL);
                                     firebaseAuthWithGoogle(account.getIdToken());
                                 } else {
                                     firebaseAuthWithGoogle(account.getIdToken());
@@ -193,9 +202,6 @@ public class Login extends AppCompatActivity {
                                     firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                                     DatabaseReference reference = database.getReference("Usuarios/" + firebaseUser.getUid());
                                     reference.setValue(usuario);
-                                } else {
-                                    Toast.makeText(Login.this, "Suka blat naxyt",
-                                            Toast.LENGTH_SHORT).show();
                                 }
                             }
                                 startActivity(new Intent(Login.this, AplicationActivity.class));

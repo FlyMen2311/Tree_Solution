@@ -2,16 +2,24 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingLeft="6dp"
+    android:paddingRight="43dp"
+    android:paddingBottom="3dp"
+    android:paddingTop="3dp">
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="330dp"
-        android:layout_height="69dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="2dp"
         android:layout_weight="1"
+        android:background="#FAFAFA"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,9 +27,11 @@
 
         <LinearLayout
             android:id="@+id/linearLayout"
-            android:layout_width="338dp"
-            android:layout_height="71dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
+
+            android:background="#77E608"
             android:orientation="horizontal">
 
             <ImageView
@@ -39,33 +49,38 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/nombreMensaje"
-                        android:layout_width="192dp"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/UserNamePerfil"
+                        android:layout_width="217dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:autoSizeTextType="none"
                         android:text="User"
                         android:textColor="#FA0000" />
 
                     <TextView
                         android:id="@+id/hora_mensaje"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="136dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="21:00" />
+                        android:autoSizeTextType="none"
+                        android:text="21:00"
+                        android:textColor="#575656" />
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/Mensaje_text"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:autoSizeTextType="uniform"
 
-                    android:text="Bienvenido" />
+                    android:text="Bienvenido"
+                    android:textColor="#575656" />
 
             </LinearLayout>
 
