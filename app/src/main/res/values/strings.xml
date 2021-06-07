@@ -6,4 +6,20 @@
     <string name="title_newpost">Upload</string>
     <string name="title_Chat">Comunicacion</string>
     <string name="title_perfil">Perfil</string>
+
+    <string-array name="conditions">
+        <item>Sin abrir</item>
+        <item>Muy buen estado</item>
+        <item>Buen estado</item>
+        <item>Defecto estético</item>
+        <item>Mala condición</item>
+    </string-array>
+
+    <string-array name="category">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
 </resources>

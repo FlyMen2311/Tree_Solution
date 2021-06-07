@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,13 +16,25 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.databinding.FragmentFavoriteBinding;
 
+import java.util.zip.Inflater;
 
 
 public class FavoriteFragment extends Fragment {
+    private Button button;
+
+    private Inflater inflater;
+
+    private int container;
+
+    private View vista;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
-                            ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_favorite, container, false);
+                             ViewGroup container, Bundle savedInstanceState) {
+        vista = inflater.inflate(R.layout.fragment_favorite, container, false);
+
+        button = vista.findViewById(R.id.button2);
+
+        return vista;
     }
 
     @Override

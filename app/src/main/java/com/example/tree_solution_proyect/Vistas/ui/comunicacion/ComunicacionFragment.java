@@ -158,7 +158,7 @@ public class ComunicacionFragment extends Fragment {
                 if(uri!=null) {
                     try {
                         Glide.with(getActivity().getApplicationContext())
-                                .load(uri)
+                                .load(uri.getPath())
                                 .into(foto_perfil);
                     } catch (Exception e) {
                         Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
