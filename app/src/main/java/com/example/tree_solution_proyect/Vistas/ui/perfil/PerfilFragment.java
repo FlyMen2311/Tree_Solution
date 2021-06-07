@@ -113,7 +113,7 @@ public class PerfilFragment extends Fragment {
                 if(uri!=null) {
                     try {
                         Glide.with(getActivity().getApplicationContext())
-                                .load(uri)
+                                .load(uri.getPath())
                                 .into(FotoCambioPerfil);
                         userName.setText(usuario1.getUserName());
                     } catch (Exception e) {
