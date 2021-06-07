@@ -126,8 +126,6 @@ public class UsuarioDAO {
             @Override
             public void onComplete(@NonNull @NotNull Task<Task<Uri>> task) {
                 if(task.isSuccessful()){
-                    Task<Uri> uri=task.getResult();
-
                     iDevolverUrlFoto.DevolverUrlFoto(uri1.toString());
                 }
             }
