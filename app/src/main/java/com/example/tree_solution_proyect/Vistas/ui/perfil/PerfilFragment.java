@@ -65,6 +65,7 @@ public class PerfilFragment extends Fragment {
     private StorageReference storageReference;
     private ImagePicker imagePicker;
     private Uri fotoUriPerfil;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View vista=inflater.inflate(R.layout.fragment_perfil, container, false);
@@ -72,20 +73,18 @@ public class PerfilFragment extends Fragment {
         mAuth=FirebaseAuth.getInstance();
         storage= FirebaseStorage.getInstance();;
         userName=vista.findViewById(R.id.UserNamePerfil);
-
         imagePicker=new ImagePicker(this);
+
         imagePicker.setImagePickerCallback(new ImagePickerCallback() {
             @Override
             public void onImagesChosen(List<ChosenImage> list) {
                 if(!list.isEmpty()){
                     String path=list.get(0).getOriginalPath();
-                    fotoUriPerfil=Uri.parse(path);
-                    FotoCambioPerfil.setImageURI(fotoUriPerfil);
+                    fotoUriPerfil= Uri.parse(path);
                     if(fotoUriPerfil!=null) {
-
                         UsuarioDAO.getInstance().cambiarFotoUri(fotoUriPerfil, new UsuarioDAO.IDevolverUrlFoto() {
                             @Override
-                            public void DevurlFoto(String uri) {
+                            public void DevolverUrlFoto(String uri) {
                                 FirebaseDatabase.getInstance().getReference().child("Usuarios").child(mAuth.getCurrentUser().getUid()).child("fotoPerfilUrl").setValue(uri);
                             }
                         });
@@ -99,6 +98,7 @@ public class PerfilFragment extends Fragment {
 
             }
         });
+
         databaseReferenceUsuario = database.getReference("Usuarios/"+mAuth.getCurrentUser().getUid());
         databaseReferenceUsuario.addValueEventListener(new ValueEventListener() {
 
@@ -113,7 +113,7 @@ public class PerfilFragment extends Fragment {
                 if(uri!=null) {
                     try {
                         Glide.with(getActivity().getApplicationContext())
-                                .load(uri.getPath())
+                                .load(uri.toString())
                                 .into(FotoCambioPerfil);
                         userName.setText(usuario1.getUserName());
                     } catch (Exception e) {
@@ -130,8 +130,7 @@ public class PerfilFragment extends Fragment {
         FotoCambioPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               imagePicker.pickImage();
-
+              imagePicker.pickImage();
             }
         });
 
@@ -158,6 +157,7 @@ public class PerfilFragment extends Fragment {
         return vista;
 
     }
+
     //Recoger datos de Intent producido en esta clase
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -167,6 +167,7 @@ public class PerfilFragment extends Fragment {
             imagePicker.submit(data);
         }
     }
+
 
     @Override
     public void onDestroyView() {

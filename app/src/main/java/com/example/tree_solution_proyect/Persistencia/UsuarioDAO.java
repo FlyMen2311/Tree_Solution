@@ -1,6 +1,7 @@
 package com.example.tree_solution_proyect.Persistencia;
 
 import android.net.Uri;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -43,7 +44,7 @@ public class UsuarioDAO {
         public void devolverError(String mensajeError);
     }
     public interface IDevolverUrlFoto{
-        public void DevurlFoto(String uri);
+        public void DevolverUrlFoto(String uri);
     }
 
 
@@ -110,13 +111,13 @@ public class UsuarioDAO {
         });
     }
 
-    public void cambiarFotoUri(Uri uri,IDevolverUrlFoto iDevolverUrlFoto){
+    public void cambiarFotoUri(Uri uri1,IDevolverUrlFoto iDevolverUrlFoto){
         String nombreFoto="";
         Date date=new Date();
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("SSSS.ss-mm-hh-dd-MM-yyyy", Locale.getDefault());
         nombreFoto=simpleDateFormat.format(date);
         final StorageReference fotoReferencia = storageReferenceFotoPerfil.child(nombreFoto);
-        fotoReferencia.putFile(uri).continueWith((task) -> {
+        fotoReferencia.putFile(uri1).continueWith((task) -> {
             if(!task.isSuccessful()){
                 throw task.getException();
             }
@@ -125,8 +126,7 @@ public class UsuarioDAO {
             @Override
             public void onComplete(@NonNull @NotNull Task<Task<Uri>> task) {
                 if(task.isSuccessful()){
-                    Task<Uri> uri=task.getResult();
-                    iDevolverUrlFoto.DevurlFoto(uri.toString());
+                    iDevolverUrlFoto.DevolverUrlFoto(uri1.toString());
                 }
             }
         });
