@@ -12,6 +12,7 @@ public class Libro {
     private Object createTimestamp;
     private String categoria;
     private String userKey;
+    private String referenceStorage;
 
 
     public Libro() {
@@ -19,6 +20,14 @@ public class Libro {
     }
     public String getUserKey() {
         return userKey;
+    }
+
+    public String getReferenceStorage() {
+        return referenceStorage;
+    }
+
+    public void setReferenceStorage(String referenceStorage) {
+        this.referenceStorage = referenceStorage;
     }
 
     public void setCreateTimestamp(Object createTimestamp) {
