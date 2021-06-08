@@ -146,7 +146,6 @@ public class ComunicacionFragment extends Fragment {
         //Agregamos un ValueEventListener para que los cambios que se hagan en la base de datos
         //se reflejen en la aplicacion
         databaseReferenceUsuario.addValueEventListener(new ValueEventListener() {
-
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
