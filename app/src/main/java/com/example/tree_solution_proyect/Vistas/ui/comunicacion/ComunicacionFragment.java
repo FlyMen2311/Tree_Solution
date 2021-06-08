@@ -47,6 +47,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -156,8 +157,8 @@ public class ComunicacionFragment extends Fragment {
                 Uri uri=Uri.parse(usuario1.getFotoPerfilUrl());
                 if(uri!=null) {
                     try {
-                        Glide.with(getActivity().getApplicationContext())
-                                .load(uri.getPath())
+                        Picasso.with(getActivity().getApplicationContext())
+                                .load(uri.getPath()).resize(50,50)
                                 .into(foto_perfil);
                     } catch (Exception e) {
                         Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -265,8 +266,8 @@ public class ComunicacionFragment extends Fragment {
                     Usuario usuario=snapshot.getValue(Usuario.class);
                     nombreUsuario=usuario.getUserName();
                     nombre.setText(nombreUsuario);
-                    Glide.with(getActivity().getApplicationContext())
-                            .load(Uri.parse(usuario.getFotoPerfilUrl()))
+                    Picasso.with(getActivity().getApplicationContext())
+                            .load(Uri.parse(usuario.getFotoPerfilUrl())).resize(50,50)
                             .into(foto_perfil);
 
                 }

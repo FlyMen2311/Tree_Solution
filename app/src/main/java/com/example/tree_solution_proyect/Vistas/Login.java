@@ -2,6 +2,7 @@ package com.example.tree_solution_proyect.Vistas;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -9,9 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tree_solution_proyect.Objetos.Constantes;
@@ -37,6 +40,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class Login extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123 ;
     private EditText txtEmail, txtContracena;
+    private TextView olvidarcontracena;
     private Button btnEntrar;
     private Button btn_atras;
     private FirebaseAuth mAuth;
@@ -57,6 +61,27 @@ public class Login extends AppCompatActivity {
 
         database= FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
+        olvidarcontracena = findViewById(R.id.olvidarcontrasena);
+        olvidarcontracena.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(getApplicationContext());
+
+                alert.setMessage("Enter your email");
+
+                final EditText email = new EditText(getApplicationContext());
+                email.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                email.setHint("Email...");
+
+                alert.setView(email);
+
+                alert.setPositiveButton("Ok", null);
+
+                alert.setNegativeButton("Cancel", null);
+
+                alert.show();
+            }
+        });
 
         googleAut=findViewById(R.id.entrar_google);
         googleAut.setOnClickListener(new View.OnClickListener() {
@@ -214,6 +239,7 @@ public class Login extends AppCompatActivity {
                 });
 
     }
+
 
 
 }

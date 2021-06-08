@@ -156,6 +156,15 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="20dp" />
 
+        <TextView
+            android:id="@+id/olvidarcontrasena"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Olvido contraseña?"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="47dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView

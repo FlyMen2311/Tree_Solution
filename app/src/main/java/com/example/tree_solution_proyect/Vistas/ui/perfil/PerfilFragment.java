@@ -45,6 +45,7 @@ import com.kbeanie.multipicker.api.ImagePicker;
 import com.kbeanie.multipicker.api.Picker;
 import com.kbeanie.multipicker.api.callbacks.ImagePickerCallback;
 import com.kbeanie.multipicker.api.entity.ChosenImage;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -79,6 +80,7 @@ public class PerfilFragment extends Fragment {
             @Override
             public void onImagesChosen(List<ChosenImage> list) {
                 if(!list.isEmpty()){
+
                     String path=list.get(0).getOriginalPath();
                     fotoUriPerfil= Uri.parse(path);
                     if(fotoUriPerfil!=null) {
@@ -119,8 +121,8 @@ public class PerfilFragment extends Fragment {
                 Uri uri=Uri.parse(usuario1.getFotoPerfilUrl());
                 if(uri!=null) {
                     try {
-                        Glide.with(getActivity().getApplicationContext())
-                                .load(uri.toString())
+                        Picasso.with(getActivity().getApplicationContext())
+                                .load(uri.toString()).resize(50,50)
                                 .into(FotoCambioPerfil);
                         userName.setText(usuario1.getUserName());
                     } catch (Exception e) {

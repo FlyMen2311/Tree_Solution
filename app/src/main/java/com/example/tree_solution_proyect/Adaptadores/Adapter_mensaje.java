@@ -18,6 +18,7 @@ import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
 import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.comunicacion.ComunicacionFragment;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +66,7 @@ public class Adapter_mensaje extends RecyclerView.Adapter<HolderMensaje> {
        if(lUsuario!=null){
            //vinculamos holder con los datos asociados
            holder.getNombre().setText(lUsuario.getUsuario().getUserName());
-           Glide.with(x.getApplicationContext()).load(lUsuario.getUsuario().getFotoPerfilUrl()).into(holder.getFotoPerfilMensaje());
+           Picasso.with(x.getApplicationContext()).load(lUsuario.getUsuario().getFotoPerfilUrl()).resize(50,50).into(holder.getFotoPerfilMensaje());
        }
         holder.getMensaje().setText(lMensaje.getMensaje().getMensaje());
         if(!lMensaje.getMensaje().toString().isEmpty()) {
