@@ -98,6 +98,13 @@ public class PerfilFragment extends Fragment {
 
             }
         });
+        FotoCambioPerfil=vista.findViewById(R.id.FotoCambiarPerfil);
+        FotoCambioPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imagePicker.pickImage();
+            }
+        });
 
         databaseReferenceUsuario = database.getReference("Usuarios/"+mAuth.getCurrentUser().getUid());
         databaseReferenceUsuario.addValueEventListener(new ValueEventListener() {
@@ -126,17 +133,6 @@ public class PerfilFragment extends Fragment {
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
             }
         });
-        FotoCambioPerfil=vista.findViewById(R.id.FotoCambiarPerfil);
-        FotoCambioPerfil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-              imagePicker.pickImage();
-            }
-        });
-
-
-
-
 
         salir=vista.findViewById(R.id.button);
         salir.setOnClickListener(new View.OnClickListener() {

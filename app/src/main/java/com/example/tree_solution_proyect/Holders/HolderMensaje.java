@@ -22,14 +22,12 @@ public class HolderMensaje extends RecyclerView.ViewHolder  {
 
     //Metodo Constructor
     public HolderMensaje(@NonNull View itemView) {
-
         super(itemView);
         context=itemView.getContext();
         nombre=itemView.findViewById(R.id.UserNamePerfil);
         mensaje=itemView.findViewById(R.id.Mensaje_text);
         hora=itemView.findViewById(R.id.hora_mensaje);
         fotoPerfilMensaje=itemView.findViewById(R.id.fotoMensaje);
-
     }
 
     //Seters y Geters

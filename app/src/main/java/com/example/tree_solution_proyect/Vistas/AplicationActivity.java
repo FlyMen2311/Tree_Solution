@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,14 +12,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
+import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
+import com.example.tree_solution_proyect.Persistencia.LibroDAO;
+import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.comunicacion.ComunicacionFragment;
 import com.example.tree_solution_proyect.Vistas.ui.favorite.FavoriteFragment;
@@ -28,32 +31,36 @@ import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
 import com.example.tree_solution_proyect.Vistas.ui.perfil.PerfilFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+import com.kbeanie.multipicker.api.ImagePicker;
+import com.kbeanie.multipicker.api.Picker;
+import com.kbeanie.multipicker.api.callbacks.ImagePickerCallback;
+import com.kbeanie.multipicker.api.entity.ChosenImage;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.UUID;
+import java.util.List;
 
 public class AplicationActivity extends AppCompatActivity {
-
-
-    private FirebaseAuth firebaseAuth;
-    private FirebaseDatabase firebaseDatabase;
-    private FirebaseStorage firebaseStorage;
-    private StorageReference storageReference;
+    private FirebaseDatabase database;
+    private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
+    private DatabaseReference databaseReferenceLibro;
+    private FirebaseStorage storage;
 
-    final private String Database_Path = "allImageUploadDatabase";
-    final private String Storage_Path = "allImageUploads/";
 
     private int Image_Request_Code = 7;
 
     private boolean viewIsAtHome;
     Dialog myDialog;
 
+    private ImagePicker imagePicker;
     private TextView editTextAuthor;
     private TextView editTextName;
     private TextView editTextPrice;
@@ -69,6 +76,8 @@ public class AplicationActivity extends AppCompatActivity {
     private ImageView imageView;
 
     protected Uri imageUri;
+    private String StrinUrl;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +85,41 @@ public class AplicationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_aplication);
         myDialog = new Dialog(this);
 
-        storageReference = FirebaseStorage.getInstance().getReference();
-        databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path);
+        mAuth=FirebaseAuth.getInstance();
+        database=FirebaseDatabase.getInstance();
+        storage= FirebaseStorage.getInstance();
+        databaseReferenceLibro=database.getReference("Libros");
+
+       imagePicker=new ImagePicker(this);
+
+        imagePicker.setImagePickerCallback(new ImagePickerCallback() {
+            @Override
+            public void onImagesChosen(List<ChosenImage> list) {
+                if(!list.isEmpty()){
+                    String path=list.get(0).getOriginalPath();
+                    imageUri= Uri.parse(path);
+                    if(imageUri!=null) {
+                        LibroDAO.getInstance().cambiarFotoUri(imageUri, new UsuarioDAO.IDevolverUrlFoto() {
+                            @Override
+                            public void DevolverUrlFoto(String uri) {
+                                Glide.with(getApplication().getApplicationContext())
+                                        .load(uri)
+                                        .into(imageView);
+                               StrinUrl=uri;
+                            }
+                        });
+                    }
+
+                }
+            }
+
+            @Override
+            public void onError(String s) {
+
+            }
+        });
+
+
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
@@ -125,7 +167,13 @@ public class AplicationActivity extends AppCompatActivity {
 
                         buttonSubmitBook.setOnClickListener(new submitBook()); //subir libro/pedido
                         textViewExit.setOnClickListener(new exit()); //cerrar
-                        imageView.setOnClickListener(new submitImage()); //subir imagen
+                        imageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                imagePicker.pickImage();
+
+                            }
+                        });
 
                         myDialog.show();
                         return true;
@@ -180,7 +228,16 @@ public class AplicationActivity extends AppCompatActivity {
     class submitBook implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-
+            Libro libro=new Libro();
+            libro.setAutor(editTextAuthor.getText().toString());
+            libro.setNombre(editTextName.getText().toString());
+            libro.setISBN(editTextISBN.getText().toString());
+            libro.setPrecio(Double.parseDouble(String.valueOf(editTextPrice)));
+            libro.setCondition(spinnerContidion.toString());
+            libro.setCategoria(spinnerCategory.toString());
+            libro.setUserKey(LibroDAO.getKeyUsuario());
+            libro.setFotoPrincipalUrl(StrinUrl);
+            databaseReferenceLibro.push().setValue(libro);
         }
     }
 
@@ -209,27 +266,13 @@ public class AplicationActivity extends AppCompatActivity {
 
         }
     }
+    //Recoger datos de Intent producido en esta clase
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-    class submitImage extends AppCompatActivity implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            // Creating intent.
-            Intent intent = new Intent();
-
-            // Setting intent type as image to select image from phone storage.
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, "Please Select Image"), Image_Request_Code);
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == Picker.PICK_IMAGE_DEVICE && resultCode == RESULT_OK){
+            imagePicker.submit(data);
         }
-
-        @Override
-        protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
-            if (resultCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
-                imageUri = data.getData();
-                imageView.setImageURI(imageUri);
-            }
-        }
-
     }
 }
