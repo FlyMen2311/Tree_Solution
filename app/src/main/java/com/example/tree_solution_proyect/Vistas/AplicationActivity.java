@@ -208,7 +208,7 @@ public class AplicationActivity extends AppCompatActivity {
     private void addFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.nav_host_fragment_activity_aplication, fragment)
+                .replace(R.id.nav_host_fragment_activity_aplication2, fragment)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .addToBackStack(null)
                 .commit();
