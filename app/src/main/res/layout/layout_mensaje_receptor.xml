@@ -34,11 +34,12 @@
             android:background="#77E608"
             android:orientation="horizontal">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/fotoMensaje"
                 android:layout_width="81dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
+                android:layout_gravity="center"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <LinearLayout

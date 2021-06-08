@@ -9,21 +9,20 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="408dp"
-        android:layout_height="93dp"
-        android:layout_marginTop="59dp"
-        android:layout_marginEnd="3dp"
-        android:layout_marginBottom="579dp"
+        android:layout_width="409dp"
+        android:layout_height="62dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/FotoCambiarPerfil"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:layout_weight="1"
             tools:srcCompat="@drawable/ic_launcher_foreground" />
 
@@ -43,29 +42,24 @@
         android:id="@+id/recycler"
         android:layout_width="406dp"
         android:layout_height="449dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="161dp"
-        android:layout_marginEnd="3dp"
-        android:layout_marginBottom="121dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.351">
 
     </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="411dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="616dp"
-        android:layout_marginBottom="61dp"
+        android:layout_height="62dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.862">
 
 
         <ImageButton
@@ -73,7 +67,9 @@
             android:layout_width="45dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@android:drawable/ic_dialog_map" />
+            app:srcCompat="@android:drawable/ic_dialog_map"
+            tools:layout_editor_absoluteX="2dp"
+            tools:layout_editor_absoluteY="556dp" />
 
         <EditText
             android:id="@+id/Texto_mensaje"
@@ -84,12 +80,16 @@
             android:hint="Escribe un mensaje"
             android:inputType="textMultiLine"
             android:textColor="#4E4D4D"
-            android:textColorHint="#454444" />
+            android:textColorHint="#454444"
+            tools:layout_editor_absoluteX="59dp"
+            tools:layout_editor_absoluteY="556dp" />
 
         <ImageButton
             android:id="@+id/btn_enviar"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_menu_send" />
+            android:layout_height="match_parent"
+            app:srcCompat="@android:drawable/ic_menu_send"
+            tools:layout_editor_absoluteX="358dp"
+            tools:layout_editor_absoluteY="556dp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

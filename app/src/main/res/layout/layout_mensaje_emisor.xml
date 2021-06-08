@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingLeft="13dp"
+    android:paddingLeft="10dp"
     android:paddingTop="3dp"
     android:paddingRight="3dp"
     android:paddingBottom="3dp">
@@ -34,11 +34,12 @@
             android:background="#08DFE6"
             android:orientation="horizontal">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/fotoMensaje"
                 android:layout_width="81dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
+                android:layout_gravity="center"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <LinearLayout
