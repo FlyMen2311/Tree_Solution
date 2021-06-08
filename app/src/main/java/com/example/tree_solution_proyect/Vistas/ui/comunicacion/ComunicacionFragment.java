@@ -149,7 +149,7 @@ public class ComunicacionFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                //leeremos un objeto de tipo Estudiante
+                //leeremos un objeto de tipo Usuario
                 GenericTypeIndicator<Usuario> usuario = new GenericTypeIndicator<Usuario>() {
                 };
                 Usuario usuario1 = dataSnapshot.getValue(usuario);

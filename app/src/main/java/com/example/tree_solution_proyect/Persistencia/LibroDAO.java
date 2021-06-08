@@ -8,6 +8,7 @@ import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -77,14 +78,12 @@ public class LibroDAO {
             if (!task.isSuccessful()) {
                 throw task.getException();
             }
-            return fotoReferencia.getDownloadUrl();
-        }).addOnCompleteListener(new OnCompleteListener<Task<Uri>>() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task<Task<Uri>> task) {
-                if (task.isSuccessful()) {
-                    iDevolverUrlFoto.DevolverUrlFoto(uri1.toString());
+            return fotoReferencia.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    iDevolverUrlFoto.DevolverUrlFoto(uri.toString());
                 }
-            }
+            });
         });
 
     }

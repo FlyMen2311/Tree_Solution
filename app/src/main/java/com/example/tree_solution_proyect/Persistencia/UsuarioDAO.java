@@ -121,14 +121,12 @@ public class UsuarioDAO {
             if(!task.isSuccessful()){
                 throw task.getException();
             }
-            return fotoReferencia.getDownloadUrl();
-        }).addOnCompleteListener(new OnCompleteListener<Task<Uri>>() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task<Task<Uri>> task) {
-                if(task.isSuccessful()){
-                    iDevolverUrlFoto.DevolverUrlFoto(uri1.toString());
+            return fotoReferencia.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    iDevolverUrlFoto.DevolverUrlFoto(uri.toString());
                 }
-            }
+            });
         });
 
     }

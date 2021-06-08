@@ -108,6 +108,7 @@ public class AplicationActivity extends AppCompatActivity {
                                 Glide.with(getApplication().getApplicationContext())
                                         .load(uri)
                                         .into(imageView);
+                                Toast.makeText(getApplicationContext(),"Foto subida para subir otra repite el proceso",Toast.LENGTH_SHORT).show();
                                StrinUrl=uri;
                             }
                         });
@@ -248,8 +249,11 @@ public class AplicationActivity extends AppCompatActivity {
                 libro.setFotoPrincipalUrl(StrinUrl);
                 libro.setReferenceStorage(mGroupId);
 
+
                 if (libro != null) {
                     databaseReferenceLibro.child(mGroupId).setValue(libro);
+                    Toast.makeText(getApplicationContext(),"Libro se subío correcto",Toast.LENGTH_SHORT).show();
+                    myDialog.dismiss();
                 }
             }else{
                 Toast.makeText(getApplicationContext(),"No has rellenado todos los datos ,vuelva a revisar los datos introducidos",Toast.LENGTH_SHORT).show();
