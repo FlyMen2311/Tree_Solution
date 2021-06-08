@@ -16,10 +16,8 @@
     </string-array>
 
     <string-array name="category">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
+        <item>Primaría</item>
+        <item>Segundaría</item>
+        <item>Bachillerato</item>
     </string-array>
 </resources>

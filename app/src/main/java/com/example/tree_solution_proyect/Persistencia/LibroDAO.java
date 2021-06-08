@@ -33,38 +33,26 @@ public class LibroDAO {
     private DatabaseReference referenceLibros;
     private String key;
 
-    public static LibroDAO getInstance(){
-        if(libroDAO==null){
-            libroDAO=new LibroDAO();
+    public static LibroDAO getInstance() {
+        if (libroDAO == null) {
+            libroDAO = new LibroDAO();
         }
         return libroDAO;
     }
-    public LibroDAO(){
-        database= FirebaseDatabase.getInstance();
+
+    public LibroDAO() {
+        database = FirebaseDatabase.getInstance();
         referenceLibros = database.getReference(Constantes.NODO_LIBROS);
-        storage= FirebaseStorage.getInstance();
-        DatabaseReference databaseReference = database.getInstance().getReference();
-        Query lastQuery = databaseReference.child("Libros").orderByKey().limitToLast(1);
-
-        lastQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                key = dataSnapshot.getKey();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        storageReferenceFotoLibro =storage.getReference("Fotos/FotoLibros/"+key);
+        storage = FirebaseStorage.getInstance();
+        storageReferenceFotoLibro = storage.getReference("Fotos/FotoLibros");
     }
-    public void obtenerInformacionKey(final String key,final UsuarioDAO.IDevolverUsuario iDevolverUsuario){
+
+    public void obtenerInformacionKey(final String key, final UsuarioDAO.IDevolverUsuario iDevolverUsuario) {
         referenceLibros.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                Usuario usuario=snapshot.getValue(Usuario.class);
-                LUsuario lUsuario=new LUsuario(usuario,key);
+                Usuario usuario = snapshot.getValue(Usuario.class);
+                LUsuario lUsuario = new LUsuario(usuario, key);
                 iDevolverUsuario.devolverUsuario(lUsuario);
             }
 
@@ -74,15 +62,17 @@ public class LibroDAO {
             }
         });
     }
-    public static String getKeyUsuario(){
+
+    public static String getKeyUsuario() {
         return FirebaseAuth.getInstance().getUid();
     }
-    public void cambiarFotoUri(Uri uri1, UsuarioDAO.IDevolverUrlFoto iDevolverUrlFoto) {
+
+    public void cambiarFotoUri(Uri uri1, String key, UsuarioDAO.IDevolverUrlFoto iDevolverUrlFoto) {
         String nombreFoto = "";
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("SSSS.ss-mm-hh-dd-MM-yyyy", Locale.getDefault());
         nombreFoto = simpleDateFormat.format(date);
-        final StorageReference fotoReferencia = storageReferenceFotoLibro.child(nombreFoto);
+        final StorageReference fotoReferencia = storageReferenceFotoLibro.child(key).child(nombreFoto);
         fotoReferencia.putFile(uri1).continueWith((task) -> {
             if (!task.isSuccessful()) {
                 throw task.getException();
@@ -98,4 +88,5 @@ public class LibroDAO {
         });
 
     }
+
 }

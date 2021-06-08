@@ -77,6 +77,7 @@ public class AplicationActivity extends AppCompatActivity {
 
     protected Uri imageUri;
     private String StrinUrl;
+    private String mGroupId;
 
 
     @Override
@@ -85,10 +86,12 @@ public class AplicationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_aplication);
         myDialog = new Dialog(this);
 
+
         mAuth=FirebaseAuth.getInstance();
         database=FirebaseDatabase.getInstance();
         storage= FirebaseStorage.getInstance();
         databaseReferenceLibro=database.getReference("Libros");
+
 
        imagePicker=new ImagePicker(this);
 
@@ -99,7 +102,7 @@ public class AplicationActivity extends AppCompatActivity {
                     String path=list.get(0).getOriginalPath();
                     imageUri= Uri.parse(path);
                     if(imageUri!=null) {
-                        LibroDAO.getInstance().cambiarFotoUri(imageUri, new UsuarioDAO.IDevolverUrlFoto() {
+                        LibroDAO.getInstance().cambiarFotoUri(imageUri,mGroupId, new UsuarioDAO.IDevolverUrlFoto() {
                             @Override
                             public void DevolverUrlFoto(String uri) {
                                 Glide.with(getApplication().getApplicationContext())
@@ -158,6 +161,9 @@ public class AplicationActivity extends AppCompatActivity {
 
                         adapterCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         adapterCondition.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                        //asignamos codigo para storage y database
+                        mGroupId = databaseReferenceLibro.push().getKey();
 
                         spinnerCategory.setAdapter(adapterCategory);
                         spinnerContidion.setAdapter(adapterCondition);
@@ -228,16 +234,26 @@ public class AplicationActivity extends AppCompatActivity {
     class submitBook implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Libro libro=new Libro();
-            libro.setAutor(editTextAuthor.getText().toString());
-            libro.setNombre(editTextName.getText().toString());
-            libro.setISBN(editTextISBN.getText().toString());
-            libro.setPrecio(Double.parseDouble(String.valueOf(editTextPrice)));
-            libro.setCondition(spinnerContidion.toString());
-            libro.setCategoria(spinnerCategory.toString());
-            libro.setUserKey(LibroDAO.getKeyUsuario());
-            libro.setFotoPrincipalUrl(StrinUrl);
-            databaseReferenceLibro.push().setValue(libro);
+            if((!editTextAuthor.getText().toString().isEmpty())||(editTextName.getText().toString().isEmpty())&&
+                    (!editTextISBN.getText().toString().isEmpty())||(editTextPrice.getText().toString().isEmpty())){
+
+                Libro libro=new Libro();
+                libro.setAutor(editTextAuthor.getText().toString());
+                libro.setNombre(editTextName.getText().toString());
+                libro.setISBN(editTextISBN.getText().toString());
+                libro.setPrecio(Double.parseDouble(editTextPrice.getText().toString()));
+                libro.setCondition(spinnerContidion.getSelectedItem().toString());
+                libro.setCategoria(spinnerCategory.getSelectedItem().toString());
+                libro.setUserKey(LibroDAO.getKeyUsuario());
+                libro.setFotoPrincipalUrl(StrinUrl);
+                libro.setReferenceStorage(mGroupId);
+
+                if (libro != null) {
+                    databaseReferenceLibro.child(mGroupId).setValue(libro);
+                }
+            }else{
+                Toast.makeText(getApplicationContext(),"No has rellenado todos los datos ,vuelva a revisar los datos introducidos",Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
