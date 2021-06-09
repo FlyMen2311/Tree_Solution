@@ -6,6 +6,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,6 +38,8 @@ import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Login extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123 ;
     private EditText txtEmail, txtContracena;
@@ -65,21 +68,7 @@ public class Login extends AppCompatActivity {
         olvidarcontracena.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(getApplicationContext());
-
-                alert.setMessage("Enter your email");
-
-                final EditText email = new EditText(getApplicationContext());
-                email.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-                email.setHint("Email...");
-
-                alert.setView(email);
-
-                alert.setPositiveButton("Ok", null);
-
-                alert.setNegativeButton("Cancel", null);
-
-                alert.show();
+                mostrarDialogOlvidarContrasena();
             }
         });
 
@@ -239,7 +228,56 @@ public class Login extends AppCompatActivity {
                 });
 
     }
+    private void mostrarDialogOlvidarContrasena(){
+        AlertDialog.Builder builder=new AlertDialog.Builder(Login.this);
+        LayoutInflater inflater=getLayoutInflater();
 
+        View view=inflater.inflate(R.layout.layout_olvidar_contracena,null);
+        builder.setView(view);
+
+        AlertDialog dialog=builder.create();
+        dialog.show();
+
+        TextView email=view.findViewById(R.id.editTextTextEmailAddress);
+
+        Button btnAceptar=view.findViewById(R.id.btn_aceptar);
+        btnAceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if((!email.getText().toString().isEmpty())&&(isValidEmail(email.getText().toString()))) {
+                    mAuth.sendPasswordResetEmail(email.getText().toString())
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull @NotNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(getApplicationContext(),
+                                        "Mensaje con instruciones de restablecimiento de contraseña enviado al: "+email.getText().toString()+". Revisa correo electronico",
+                                        Toast.LENGTH_LONG).show();
+                                dialog.dismiss();
+                            }
+                            else{
+                                Toast.makeText(getApplicationContext(),
+                                        "Hubo un error",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }else{
+                    Toast.makeText(getApplicationContext(),
+                            "Email introducido no es valido",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        Button btnCancelar=view.findViewById(R.id.btn_cancelar);
+        btnCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+    }
 
 
 }

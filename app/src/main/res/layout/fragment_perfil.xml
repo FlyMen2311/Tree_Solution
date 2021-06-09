@@ -7,45 +7,67 @@
     tools:context=".Vistas.ui.perfil.PerfilFragment">
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="408dp"
-        android:layout_height="93dp"
-        android:layout_marginTop="59dp"
-        android:layout_marginEnd="3dp"
-        android:layout_marginBottom="579dp"
-        android:orientation="horizontal"
+        android:layout_width="419dp"
+        android:layout_height="190dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="539dp"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical"
+        android:paddingTop="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/FotoCambiarPerfil"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            tools:srcCompat="@drawable/ic_launcher_foreground"
-            />
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp"
+            android:paddingStart="150dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="20dp"
+            android:paddingEnd="150dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="20dp">
 
-        <TextView
-            android:id="@+id/UserNamePerfil"
-            android:layout_width="299dp"
-            android:layout_height="33dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:text="Nombre"
-            android:textColor="#050505"
-            android:textSize="18sp" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/FotoCambiarPerfil"
+                android:layout_width="290dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                tools:srcCompat="@drawable/ic_launcher_foreground" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/UserNamePerfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="TextView"
+                android:textAlignment="center" />
+        </LinearLayout>
     </LinearLayout>
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="172dp"
-        android:layout_marginEnd="16dp"
-        android:text="salir"
+        android:layout_marginStart="292dp"
+        android:layout_marginTop="220dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="464dp"
+        android:text="Log Out"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

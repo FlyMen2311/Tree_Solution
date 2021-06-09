@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:paddingLeft="50dp"
     android:paddingTop="3dp"
-    android:paddingRight="0dp"
+    android:paddingRight="15dp"
     android:paddingBottom="3dp">
 
 
@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="#FAFAFA"
+        android:paddingRight="10dp"
         app:cardBackgroundColor="#FFFFFF"
         app:cardCornerRadius="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -29,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
 
-            android:background="#77E608"
+            android:background="#3377E608"
             android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -67,9 +68,9 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:autoSizeTextType="none"
-                        android:textAlignment="textEnd"
                         android:paddingRight="15dp"
                         android:text="21:00"
+                        android:textAlignment="textEnd"
                         android:textColor="#575656" />
                 </LinearLayout>
 

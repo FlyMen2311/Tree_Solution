@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -74,6 +75,7 @@ public class PerfilFragment extends Fragment {
         mAuth=FirebaseAuth.getInstance();
         storage= FirebaseStorage.getInstance();;
         userName=vista.findViewById(R.id.UserNamePerfil);
+
         imagePicker=new ImagePicker(this);
 
         imagePicker.setImagePickerCallback(new ImagePickerCallback() {

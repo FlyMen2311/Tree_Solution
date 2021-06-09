@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context=".Vistas.ui.comunicacion.ComunicacionFragment">
 
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="411dp"
-        android:layout_height="76dp"
+        android:layout_width="402dp"
+        android:layout_height="65dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,27 +30,28 @@
 
         <TextView
             android:id="@+id/UserNamePerfil"
-            android:layout_width="299dp"
+            android:layout_width="237dp"
             android:layout_height="33dp"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:fontFamily="monospace"
             android:text="Nombre"
-            android:textColor="#050505"
             android:textSize="18sp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="410dp"
-        android:layout_height="480dp"
+        android:layout_width="411dp"
+        android:layout_height="536dp"
+        android:layout_marginTop="115dp"
+        android:layout_marginBottom="80dp"
+        android:background="@color/colorPrimaryDark"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.681">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
@@ -62,7 +64,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout4"
-        android:layout_width="410dp"
+        android:layout_width="391dp"
         android:layout_height="45dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -74,31 +76,32 @@
 
         <ImageButton
             android:id="@+id/localizacion_env"
-            android:layout_width="45dp"
-            android:layout_height="wrap_content"
+            android:layout_width="44dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            app:srcCompat="@android:drawable/ic_dialog_map"
+            android:background="@drawable/mapa"
             tools:layout_editor_absoluteX="2dp"
             tools:layout_editor_absoluteY="556dp" />
 
         <EditText
             android:id="@+id/Texto_mensaje"
-            android:layout_width="299dp"
+            android:layout_width="311dp"
             android:layout_height="match_parent"
+            android:autoSizeTextType="uniform"
             android:ems="10"
-            android:gravity="start|top"
             android:hint="Escribe un mensaje"
             android:inputType="textMultiLine"
-            android:textColor="#4E4D4D"
-            android:textColorHint="#454444"
+            android:keyboardNavigationCluster="false"
+            android:textColor="#DDDADA"
+            android:textColorHint="#DDDADA"
             tools:layout_editor_absoluteX="59dp"
             tools:layout_editor_absoluteY="556dp" />
 
         <ImageButton
             android:id="@+id/btn_enviar"
-            android:layout_width="wrap_content"
+            android:layout_width="42dp"
             android:layout_height="match_parent"
-            app:srcCompat="@android:drawable/ic_menu_send"
+            android:background="@drawable/enviar"
             tools:layout_editor_absoluteX="358dp"
             tools:layout_editor_absoluteY="556dp" />
     </LinearLayout>

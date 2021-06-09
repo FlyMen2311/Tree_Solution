@@ -160,10 +160,17 @@
             android:id="@+id/olvidarcontrasena"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="47dp"
+            android:layout_marginTop="213dp"
+            android:layout_marginEnd="247dp"
+            android:layout_marginBottom="108dp"
             android:text="Olvido contraseña?"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="47dp" />
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

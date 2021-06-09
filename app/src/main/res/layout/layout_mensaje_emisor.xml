@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingLeft="0dp"
+    android:paddingLeft="15dp"
     android:paddingTop="3dp"
     android:paddingRight="50dp"
     android:paddingBottom="3dp">
@@ -16,8 +16,8 @@
         android:layout_weight="1"
         android:background="#FAFAFA"
         app:cardBackgroundColor="#FFFFFF"
-        app:cardCornerRadius="20sp"
 
+        app:cardCornerRadius="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
 
-            android:background="#08DFE6"
+            android:background="#3308DFE6"
             android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -67,9 +67,9 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:autoSizeTextType="none"
-                        android:textAlignment="textEnd"
                         android:paddingRight="15dp"
                         android:text="21:00"
+                        android:textAlignment="textEnd"
                         android:textColor="#575656" />
                 </LinearLayout>
 
