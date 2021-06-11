@@ -57,7 +57,6 @@ public class AplicationActivity extends AppCompatActivity {
 
     private int Image_Request_Code = 7;
 
-    private boolean viewIsAtHome;
     Dialog myDialog;
 
     private ImagePicker imagePicker;
@@ -68,7 +67,6 @@ public class AplicationActivity extends AppCompatActivity {
     private TextView textViewExit;
 
     private Button buttonSubmitBook;
-    private Button buttonSubmitImage;
 
     private Spinner spinnerContidion;
     private Spinner spinnerCategory;
@@ -138,13 +136,13 @@ public class AplicationActivity extends AppCompatActivity {
                 R.layout.support_simple_spinner_dropdown_item
         );
 
+
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.navigation_home:
                         addFragment(new HomeFragment());
-                        viewIsAtHome = true;
                         return true;
                     case R.id.navigation_newpost:
                         //asignamos layout a pop up
@@ -186,22 +184,21 @@ public class AplicationActivity extends AppCompatActivity {
                         return true;
                     case R.id.navigation_favorite:
                         addFragment(new FavoriteFragment());
-                        viewIsAtHome = false;
+
                         return true;
                     case R.id.navigation_comunicacion:
                         addFragment(new ComunicacionFragment());
-                        viewIsAtHome = false;
+
                         return true;
                     case R.id.navigation_perfil:
                         addFragment(new PerfilFragment());
-                        viewIsAtHome = false;
+
                         return true;
 
                 }
                 return false;
             }
         });
-        navView.setSelectedItemId(R.id.navigation_home);
 
     }
 
@@ -214,15 +211,6 @@ public class AplicationActivity extends AppCompatActivity {
                 .commit();
     }
 
-    @Override
-    public void onBackPressed() {
-        if (!viewIsAtHome) { //Si la vista actual no es el fragment Home
-            BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.nav_view);
-            bottomNavigationView.setSelectedItemId(R.id.navigation_home); //Selecciona el fragment Home
-        } else {
-            moveTaskToBack(true);  //Si presionas Back cuando ya muestras el fragment Home, sale de la app
-        }
-    }
 
     class exit implements View.OnClickListener {
         @Override

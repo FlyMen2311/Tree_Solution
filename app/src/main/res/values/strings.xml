@@ -8,7 +8,7 @@
     <string name="title_perfil">Perfil</string>
 
     <string-array name="conditions">
-        <item>Sin abrir</item>
+        <item>Nuevo</item>
         <item>Muy buen estado</item>
         <item>Buen estado</item>
         <item>Defecto estético</item>

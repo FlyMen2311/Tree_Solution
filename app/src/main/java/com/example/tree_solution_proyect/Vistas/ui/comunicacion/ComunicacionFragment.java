@@ -250,6 +250,7 @@ public class ComunicacionFragment extends Fragment {
                     recyclerView.scrollToPosition(adapter_mensaje.getItemCount()-1);
                 }
             });
+
         return vista;
         }
 

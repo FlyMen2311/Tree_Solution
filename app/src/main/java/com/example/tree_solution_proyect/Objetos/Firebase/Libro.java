@@ -2,7 +2,9 @@ package com.example.tree_solution_proyect.Objetos.Firebase;
 
 import com.google.firebase.database.ServerValue;
 
-public class Libro {
+import java.io.Serializable;
+
+public class Libro implements Serializable {
     private String FotoPrincipalUrl;
     private String nombre;
     private String autor;
@@ -13,6 +15,7 @@ public class Libro {
     private String categoria;
     private String userKey;
     private String referenceStorage;
+    private String descripcion;
 
 
     public Libro() {
@@ -28,6 +31,14 @@ public class Libro {
 
     public void setReferenceStorage(String referenceStorage) {
         this.referenceStorage = referenceStorage;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public void setCreateTimestamp(Object createTimestamp) {

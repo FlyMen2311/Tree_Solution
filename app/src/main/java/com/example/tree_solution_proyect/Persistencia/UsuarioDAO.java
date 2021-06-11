@@ -40,8 +40,8 @@ public class UsuarioDAO {
 
 
     public interface IDevolverUsuario{
-        public void devolverUsuario(LUsuario lUsuario);
-        public void devolverError(String mensajeError);
+        void devolverUsuario(LUsuario lUsuario);
+        void devolverError(String mensajeError);
     }
     public interface IDevolverUrlFoto{
         public void DevolverUrlFoto(String uri);

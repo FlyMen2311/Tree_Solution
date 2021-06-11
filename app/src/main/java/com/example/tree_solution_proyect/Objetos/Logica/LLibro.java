@@ -1,14 +1,21 @@
 package com.example.tree_solution_proyect.Objetos.Logica;
 
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
+
 import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
+import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 public class LLibro {
     private Libro libro;
+    private LLibro lLibro;
     private String key;
     private LUsuario LUsuario;
 
@@ -16,10 +23,11 @@ public class LLibro {
         this.libro = libro;
         this.key = key;
     }
+
     public String obtenerFechaDeCreacionLibro(){
-        Date date=new Date(getCreateTimeLong());
-        PrettyTime prettyTime=new PrettyTime(new Date(), Locale.getDefault());
-        return prettyTime.format(date);
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        Date date =new Date(UsuarioDAO.getInstance().fechaDeCreacion());
+        return  simpleDateFormat.format(date);
 
     }
     public long getCreateTimeLong(){
@@ -32,6 +40,14 @@ public class LLibro {
 
     public void setLibro(Libro libro) {
         this.libro = libro;
+    }
+
+    public LLibro getlLibro() {
+        return lLibro;
+    }
+
+    public void setlLibro(LLibro lLibro) {
+        this.lLibro = lLibro;
     }
 
     public String getKey() {

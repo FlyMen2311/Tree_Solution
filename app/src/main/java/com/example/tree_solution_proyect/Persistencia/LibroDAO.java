@@ -1,11 +1,16 @@
 package com.example.tree_solution_proyect.Persistencia;
 
 import android.net.Uri;
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
 import com.example.tree_solution_proyect.Objetos.Constantes;
+import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
 import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
+import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,11 +39,16 @@ public class LibroDAO {
     private DatabaseReference referenceLibros;
     private String key;
 
+
     public static LibroDAO getInstance() {
         if (libroDAO == null) {
             libroDAO = new LibroDAO();
         }
         return libroDAO;
+    }
+    public interface IDevolverLibro{
+        void devolverLibro(LLibro lLibro);
+         void devolverError(String mensajeError);
     }
 
     public LibroDAO() {
@@ -48,18 +58,18 @@ public class LibroDAO {
         storageReferenceFotoLibro = storage.getReference("Fotos/FotoLibros");
     }
 
-    public void obtenerInformacionKey(final String key, final UsuarioDAO.IDevolverUsuario iDevolverUsuario) {
+    public void obtenerInformacionKeyLibro(final String key, final LibroDAO.IDevolverLibro iDevolverLibro) {
         referenceLibros.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                Usuario usuario = snapshot.getValue(Usuario.class);
-                LUsuario lUsuario = new LUsuario(usuario, key);
-                iDevolverUsuario.devolverUsuario(lUsuario);
+                Libro libro = snapshot.getValue(Libro.class);
+                LLibro lLibro = new LLibro(libro, key);
+                iDevolverLibro.devolverLibro(lLibro);
             }
 
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
-                iDevolverUsuario.devolverError(error.getMessage());
+                iDevolverLibro.devolverError(error.getMessage());
             }
         });
     }
