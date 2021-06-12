@@ -9,11 +9,12 @@ import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class LLibro {
+public class LLibro implements Serializable  {
     private Libro libro;
     private LLibro lLibro;
     private String key;

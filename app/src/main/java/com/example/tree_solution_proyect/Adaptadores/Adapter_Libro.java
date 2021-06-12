@@ -40,10 +40,11 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro> {
     private List<LLibro> listLibros=new ArrayList<>();
     private Context x;
     private HomeFragment homeFragment=new HomeFragment();
+    private  HomeFragment.LibroOpen libroOpen;
 
-
-    public Adapter_Libro(Context x) {
+    public Adapter_Libro(Context x,HomeFragment.LibroOpen libroOpen) {
         this.x = x;
+        this.libroOpen=libroOpen;
     }
 
     public void actualizarLibro(int posicion,LLibro lLibro){
@@ -58,7 +59,7 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro> {
         View v;
         v= LayoutInflater.from(x).inflate(R.layout.layout_holder_libro,parent,false);
 
-        return new Holder_Libro(v,homeFragment);
+        return new Holder_Libro(v, libroOpen);
     }
 
     @Override

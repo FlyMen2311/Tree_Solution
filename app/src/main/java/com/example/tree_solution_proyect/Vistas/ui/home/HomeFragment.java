@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import androidx.core.util.Pair;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,11 +63,11 @@ import java.util.Map;
 import java.util.Objects;
 
 
-public class HomeFragment extends Fragment implements LibrosClickablesIntefrace{
+public class HomeFragment extends Fragment {
+
     private RecyclerView recyclerView;
     private FirebaseDatabase database;
     private DatabaseReference databaseReferenceLibro;
-    private DatabaseReference databaseReferenceUsuario;
 
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -74,14 +76,7 @@ public class HomeFragment extends Fragment implements LibrosClickablesIntefrace{
     private FirebaseAuth mAuth;
     public static List<LLibro> libroList;
     public View vista;
-    private Context context;
 
-
-    @Override
-    public void onAttach(@NonNull @NotNull Context context) {
-        super.onAttach(context);
-        this.context=context;
-    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -91,23 +86,20 @@ public class HomeFragment extends Fragment implements LibrosClickablesIntefrace{
         recyclerView=vista.findViewById(R.id.recycler_home);
         mAuth=FirebaseAuth.getInstance();
 
-
-
-
-
         database=FirebaseDatabase.getInstance();
         databaseReferenceLibro =database.getReference("Libros");
-        databaseReferenceUsuario =database.getReference("Usuarios/"+mAuth.getCurrentUser().getUid());
+
 
         storage= FirebaseStorage.getInstance();;
         libroList=new ArrayList<LLibro>();
         Calendar calendario = Calendar.getInstance();
 
-        adapter_libro=new Adapter_Libro(getActivity());
+
+
+        adapter_libro=new Adapter_Libro(getActivity().getApplicationContext(),new LibroOpen(getActivity(),getContext()));
         LinearLayoutManager l=new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(l);
         recyclerView.setAdapter(adapter_libro);
-
         //Funcion para pasar al ultimo mensaje producido
         adapter_libro.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
@@ -174,39 +166,63 @@ public class HomeFragment extends Fragment implements LibrosClickablesIntefrace{
 
 
     }
+    public class LibroOpen  implements LibrosClickablesIntefrace {
+        Activity activity;
+        Context context;
 
-
-
-
-
-
-    @Override
-    public void LibroClick(int pos,ImageView imgcontainer,ImageView fotoLibro,TextView nombre,
-                           TextView autor,TextView precio,TextView ISBN, TextView categoria,
-                                          RatingBar ratingBar,TextView estado, TextView fechacreacion,ImageView favorite) {
-        Intent intent=new Intent();
-        Libro libro=libroList.get(pos).getLibro();
-        if(libro!=null) {
-            intent.putExtra("objectLibro", libro);
-        }else{
-            Toast.makeText(getActivity(),"Pizda zaibalo",Toast.LENGTH_LONG).show();
+        public LibroOpen(Activity activity,Context context) {
+            this.activity=activity;
+            this.context=context;
         }
-        Pair<View,String> p1=Pair.create((View) imgcontainer,"container_holder_libro");
-        Pair<View,String> p2=Pair.create((View) fotoLibro,"fotolibro");
-        Pair<View,String> p3=Pair.create((View) nombre,"nombre");
-        Pair<View,String> p4=Pair.create((View) autor,"autor");
-        Pair<View,String> p5=Pair.create((View) precio,"precio");
-        Pair<View,String> p6=Pair.create((View) ISBN,"ISBN");
-        Pair<View,String> p7=Pair.create((View) categoria,"categoria");
-        Pair<View,String> p8=Pair.create((View) ratingBar,"ratingbar");
-        Pair<View,String> p9=Pair.create((View) estado,"condition");
-        Pair<View,String> p10=Pair.create((View) fechacreacion,"fechacreacion");
-        Pair<View,String> p11=Pair.create((View) favorite ,"favorite");
 
-       
-            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11);
-            startActivity(intent, activityOptionsCompat.toBundle());
+        public Activity getActivity() {
+            return activity;
+        }
 
+        public void setActivity(Activity activity) {
+            this.activity = activity;
+        }
+
+        public Context getContext() {
+            return context;
+        }
+
+        public void setContext(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        public void LibroClick ( int pos, ImageView imgcontainer, ImageView fotoLibro, TextView nombre, TextView autor, TextView precio, TextView ISBN, TextView categoria,
+                                 RatingBar ratingBar, TextView estado, TextView fechacreacion, ImageView favorite){
+            try {
+                Intent intent = new Intent(activity, LibroClickActivity.class);
+                LLibro llibro = libroList.get(pos);
+                if (llibro != null) {
+                    intent.putExtra("objectLibro", llibro);
+
+
+                    ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, Pair.create((View) imgcontainer, " container_holder_libro")
+                            ,Pair.create((View) fotoLibro, "fotolibro_TR")
+                            ,Pair.create((View) nombre, "nombre_TR")
+                            ,Pair.create((View) autor, "autor_TR")
+                            ,Pair.create((View) precio, "precio_TR")
+                            ,Pair.create((View) ISBN, "ISBN_TR")
+                            ,Pair.create((View) categoria, "categoria_TN")
+                            ,Pair.create((View) ratingBar, "ratingbar_TR")
+                            ,Pair.create((View) estado, "condition_TR")
+                            ,Pair.create((View) fechacreacion, "fechacreacion_TR")
+                            ,Pair.create((View) favorite, "favorite_TR"));
+                    startActivity(intent, activityOptionsCompat.toBundle());
+
+                } else {
+                    Toast.makeText(activity, "Error", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (Exception exception) {
+                Toast.makeText(activity, exception.getMessage(), Toast.LENGTH_LONG).show();
+            }
+
+        }
     }
     @Override
     public void onDestroyView() {

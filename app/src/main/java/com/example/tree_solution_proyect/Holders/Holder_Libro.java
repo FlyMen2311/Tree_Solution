@@ -30,7 +30,7 @@ public class Holder_Libro extends  RecyclerView.ViewHolder{
     private Context context;
     private RatingBar ratingBar;
     private ImageView containerLibro;
-    private LibrosClickablesIntefrace librosClickablesIntefrace;
+    private LibrosClickablesIntefrace librosClickablesIntefrace1;
 
 
     public Holder_Libro(@NonNull View itemView ,LibrosClickablesIntefrace librosClickablesIntefrace) {
@@ -47,20 +47,19 @@ public class Holder_Libro extends  RecyclerView.ViewHolder{
         ratingBar=itemView.findViewById(R.id.ratingBar);
         hora=itemView.findViewById(R.id.holder_fechacreacion);
         containerLibro= itemView.findViewById(R.id.container_holder_libro);
-        this.librosClickablesIntefrace=librosClickablesIntefrace;
-
+        this.librosClickablesIntefrace1=librosClickablesIntefrace;
 
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                librosClickablesIntefrace.LibroClick(getAdapterPosition(),getContainerLibro(),
-                        getFoto_libro(),getNombre(),
-                        getAutor(),getPrecio(),getISBN(),
-                        getCategoria(),getRatingBar(),
-                        getCondition(),getHora(),
-                        getFavorit());
+                librosClickablesIntefrace1.LibroClick(getAdapterPosition(),containerLibro,
+                        Foto_libro,nombre,
+                        autor,precio,ISBN,
+                        categoria,ratingBar,
+                        condition,hora,
+                        Favorit);
             }
         });
     }

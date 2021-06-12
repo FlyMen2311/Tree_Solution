@@ -12,6 +12,7 @@
         android:layout_height="107dp"
         android:layout_marginTop="47dp"
         android:background="@drawable/container"
+        android:transitionName="container_holder_libro"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,6 +23,7 @@
         android:layout_height="151dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="3dp"
+        android:transitionName="fotolibro_TR"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/libro_ejemplo" />
@@ -34,6 +36,7 @@
         android:layout_marginTop="50dp"
         android:text="Nombre"
         android:textColor="#000000"
+        android:transitionName="nombre_TR"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,6 +49,7 @@
         android:layout_marginBottom="66dp"
         android:text="Autor"
         android:textColor="#101010"
+        android:transitionName="autor_TR"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -53,13 +57,14 @@
     <RatingBar
         android:id="@+id/ratingBar"
         style="?android:attr/ratingBarStyleSmall"
-        android:isIndicator="true"
         android:layout_width="81dp"
         android:layout_height="19dp"
         android:layout_marginStart="149dp"
         android:layout_marginTop="88dp"
         android:layout_marginBottom="47dp"
+        android:isIndicator="true"
         android:numStars="5"
+        android:transitionName="ratingbar_TR"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -73,6 +78,7 @@
         android:layout_marginBottom="47dp"
         android:text="Condicion"
         android:textColor="#131313"
+        android:transitionName="condition_TR"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -86,6 +92,7 @@
         android:layout_marginBottom="24dp"
         android:text="Categoria"
         android:textColor="#000000"
+        android:transitionName="categoria_TN"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -99,6 +106,7 @@
         android:layout_marginBottom="22dp"
         android:text="Precio"
         android:textColor="#000000"
+        android:transitionName="precio_TR"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -112,6 +120,7 @@
         android:layout_marginBottom="86dp"
         android:text="fechaCreacion"
         android:textColor="#131313"
+        android:transitionName="fechacreacion_TR"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -125,6 +134,7 @@
         android:layout_marginBottom="68dp"
         android:text="ISBN"
         android:textColor="#000000"
+        android:transitionName="ISBN_TR"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -136,6 +146,7 @@
         android:layout_marginStart="369dp"
         android:layout_marginTop="122dp"
         android:layout_marginBottom="9dp"
+        android:transitionName="favorite_TR"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

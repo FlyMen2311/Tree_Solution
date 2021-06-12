@@ -1,5 +1,7 @@
 package com.example.tree_solution_proyect.Objetos.Firebase;
 
+import android.net.Uri;
+
 import com.google.firebase.database.ServerValue;
 
 import java.io.Serializable;

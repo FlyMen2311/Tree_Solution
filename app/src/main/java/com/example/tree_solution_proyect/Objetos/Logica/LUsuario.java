@@ -5,11 +5,12 @@ import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class LUsuario {
+public class LUsuario implements Serializable {
     private Usuario usuario;
     private String key;
 
