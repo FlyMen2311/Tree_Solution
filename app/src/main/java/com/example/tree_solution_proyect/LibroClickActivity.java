@@ -90,10 +90,7 @@ public class LibroClickActivity extends AppCompatActivity {
         btnVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.container, new HomeFragment())
-                        .commit();
+                finish();
             }
         });
 
