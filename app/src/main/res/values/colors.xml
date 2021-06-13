@@ -13,5 +13,6 @@
     <color name="green">#45bc62</color>
     <color name="orange">#eaad43</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="ligh_medium_gray">#F3F3F3</color>
+    <color name="ligh_medium_gray">#d3d3d3</color>
+    <color name="dark_gray">#a9a9a9</color>
 </resources>
