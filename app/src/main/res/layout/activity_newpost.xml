@@ -26,9 +26,10 @@
 
         <TextView
             android:id="@+id/textView4"
-            style="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Large"
+            style="@style/Widget.AppCompat.TextView"
             android:layout_width="307dp"
             android:layout_height="wrap_content"
+            android:fontFamily="monospace"
             android:text="AÑADIR LIBRO"
             android:textAlignment="center"
             app:layout_column="1"
@@ -49,7 +50,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="651dp">
+                android:layout_height="752dp">
 
                 <TextView
                     android:id="@+id/textViewAuthor"
@@ -58,7 +59,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="36dp"
-                    android:layout_marginTop="232dp"
+                    android:layout_marginTop="234dp"
                     android:text="Author :" />
 
                 <TextView
@@ -93,25 +94,25 @@
 
                 <EditText
                     android:id="@+id/editTextName"
-                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="149dp"
                     android:layout_marginEnd="26dp"
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
                     android:ems="10"
                     android:inputType="textPersonName" />
 
                 <EditText
                     android:id="@+id/editTextAuthor"
-                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="217dp"
                     android:layout_marginEnd="26dp"
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
                     android:ems="10"
                     android:inputType="textPersonName" />
 
@@ -121,7 +122,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginStart="33dp"
+                    android:layout_marginStart="31dp"
                     android:layout_marginTop="162dp"
                     android:text="Nombre :" />
 
@@ -143,8 +144,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginEnd="29dp"
-                    android:layout_marginBottom="252dp"
+                    android:layout_marginEnd="26dp"
+                    android:layout_marginBottom="350dp"
                     android:ems="10"
                     android:inputType="numberDecimal" />
 
@@ -154,8 +155,8 @@
                     android:layout_height="34dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginEnd="25dp"
-                    android:layout_marginBottom="327dp" />
+                    android:layout_marginEnd="26dp"
+                    android:layout_marginBottom="427dp" />
 
                 <Spinner
                     android:id="@+id/spinnerCategory"
@@ -163,8 +164,8 @@
                     android:layout_height="34dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginEnd="25dp"
-                    android:layout_marginBottom="110dp" />
+                    android:layout_marginEnd="26dp"
+                    android:layout_marginBottom="216dp" />
 
                 <TextView
                     android:id="@+id/textViewCategory"
@@ -172,9 +173,19 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginBottom="117dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginBottom="223dp"
                     android:text="Categoria :" />
+
+                <TextView
+                    android:id="@+id/textViewDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="184dp"
+                    android:text="Description :" />
 
                 <EditText
                     android:id="@+id/editTextISBN"
@@ -182,8 +193,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginEnd="29dp"
-                    android:layout_marginBottom="183dp"
+                    android:layout_marginEnd="26dp"
+                    android:layout_marginBottom="278dp"
                     android:ems="10"
                     android:inputType="number" />
 
@@ -193,8 +204,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginEnd="100dp"
-                    android:layout_marginBottom="34dp"
+                    android:layout_marginEnd="101dp"
+                    android:layout_marginBottom="11dp"
                     android:text="Añadir" />
 
                 <TextView
@@ -203,9 +214,24 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginStart="31dp"
-                    android:layout_marginTop="67dp"
+                    android:layout_marginStart="33dp"
+                    android:layout_marginTop="66dp"
                     android:text="Imagen :" />
+
+                <EditText
+                    android:id="@+id/editTextTextMultiLineDesc"
+                    android:layout_width="322dp"
+                    android:layout_height="98dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="80dp"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:inputType="textMultiLine" />
 
             </RelativeLayout>
 
