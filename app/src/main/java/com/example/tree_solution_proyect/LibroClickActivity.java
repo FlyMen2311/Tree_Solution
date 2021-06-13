@@ -2,14 +2,8 @@ package com.example.tree_solution_proyect;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,10 +11,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
 import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
-import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -66,7 +58,7 @@ public class LibroClickActivity extends AppCompatActivity {
         condition=findViewById(R.id.holder_condition);
         precio=findViewById(R.id.holder_precio);
         hora=findViewById(R.id.holder_fechacreacion);
-        ratingBar=findViewById(R.id.ratingBar);
+        ratingBar=findViewById(R.id.ratingBar_libro);
         foto_libro_propietario =findViewById(R.id.foto_user_libro);
         nombre_libro_propietario=findViewById(R.id.nombre_user);
         btnchat=findViewById(R.id.btn_aceptar);
@@ -90,13 +82,9 @@ public class LibroClickActivity extends AppCompatActivity {
         btnVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.container, new HomeFragment())
-                        .commit();
+               finish();
             }
         });
-
     }
     public void LoadLibros(LLibro libro){
         Picasso.with(getApplicationContext()).load(libro.getLibro().getFotoPrincipalUrl()).into(foto_libro);

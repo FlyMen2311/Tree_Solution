@@ -4,15 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
+
 import androidx.core.util.Pair;
 
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -20,29 +20,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
-import com.example.tree_solution_proyect.Adaptadores.Adapter_mensaje;
 import com.example.tree_solution_proyect.LibroClickActivity;
 import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
-import com.example.tree_solution_proyect.Objetos.Firebase.Mensaje;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
-import com.example.tree_solution_proyect.Objetos.Logica.LMensaje;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
-import com.example.tree_solution_proyect.Persistencia.LibroDAO;
 import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
-import com.example.tree_solution_proyect.Vistas.AplicationActivity;
-import com.example.tree_solution_proyect.Vistas.Login;
-import com.example.tree_solution_proyect.Vistas.MainActivity;
-import com.example.tree_solution_proyect.Vistas.Registro;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -54,13 +43,11 @@ import com.google.firebase.storage.StorageReference;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 
 public class HomeFragment extends Fragment {
@@ -74,7 +61,8 @@ public class HomeFragment extends Fragment {
     private Adapter_Libro adapter_libro;
     private Calendar calendario = Calendar.getInstance();
     private FirebaseAuth mAuth;
-    public static List<LLibro> libroList;
+    public static List<LLibro> libroListClick;
+    private EditText buscar_librosISBN;
     public View vista;
 
 
@@ -84,6 +72,7 @@ public class HomeFragment extends Fragment {
         vista =inflater.inflate(R.layout.fragment_home, container, false);
 
         recyclerView=vista.findViewById(R.id.recycler_home);
+        buscar_librosISBN=vista.findViewById(R.id.buscar_libro_Isbn);
         mAuth=FirebaseAuth.getInstance();
 
         database=FirebaseDatabase.getInstance();
@@ -91,7 +80,7 @@ public class HomeFragment extends Fragment {
 
 
         storage= FirebaseStorage.getInstance();;
-        libroList=new ArrayList<LLibro>();
+        libroListClick =new ArrayList<LLibro>();
         Calendar calendario = Calendar.getInstance();
 
 
@@ -109,6 +98,24 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        buscar_librosISBN.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter_libro.getFilter().filter(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
 
         databaseReferenceLibro.addChildEventListener(new ChildEventListener() {
             Map<String, LUsuario> stringLUsuarioMap=new HashMap<>();
@@ -117,12 +124,12 @@ public class HomeFragment extends Fragment {
                 final Libro m=snapshot.getValue(Libro.class);
                 final LLibro lLibro=new LLibro(m,snapshot.getKey());
                 final int posicion=adapter_libro.addLibro(lLibro);
-
+                adapter_libro.addLibroAll(lLibro);
 
                 if(stringLUsuarioMap.get(m.getUserKey())!=null){
                     lLibro.setLUsuario(stringLUsuarioMap.get(m.getUserKey()));
                     adapter_libro.actualizarLibro(posicion,lLibro);
-
+                    libroListClick.add(lLibro);
                 }else{
                     UsuarioDAO.getInstance().obtenerInformacionKey(m.getUserKey(), new UsuarioDAO.IDevolverUsuario() {
                         @Override
@@ -130,7 +137,7 @@ public class HomeFragment extends Fragment {
                             stringLUsuarioMap.put(m.getUserKey(),lUsuario);
                             lLibro.setLUsuario(lUsuario);
                             adapter_libro.actualizarLibro(posicion,lLibro);
-                            libroList.add(lLibro);
+                            libroListClick.add(lLibro);
                         }
 
                         @Override
@@ -139,6 +146,7 @@ public class HomeFragment extends Fragment {
                         }
                     });
                 }
+
             }
 
             @Override
@@ -148,8 +156,22 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onChildRemoved(@NonNull @NotNull DataSnapshot snapshot) {
+                final Libro m=snapshot.getValue(Libro.class);
+                final LLibro lLibro=new LLibro(m,snapshot.getKey());
+                int posicion = 0;
+                for(int i=0;i<adapter_libro.getListLibros().size();i++){
+                    if(adapter_libro.getListLibros().get(i).getLibro().getReferenceStorage().equals(lLibro.getLibro().getReferenceStorage())){
+                        posicion=i;
+                    }
+                }
+                            adapter_libro.getListLibros().remove(posicion);
+                            adapter_libro.getListLibrosAll().remove(posicion);
+                            libroListClick.remove(posicion);
 
-            }
+                            adapter_libro.notifyItemRemoved(posicion);
+
+                }
+
 
             @Override
             public void onChildMoved(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
@@ -161,7 +183,6 @@ public class HomeFragment extends Fragment {
 
             }
         });
-
         return vista;
 
 
@@ -196,7 +217,7 @@ public class HomeFragment extends Fragment {
                                  RatingBar ratingBar, TextView estado, TextView fechacreacion, ImageView favorite){
             try {
                 Intent intent = new Intent(activity, LibroClickActivity.class);
-                LLibro llibro = libroList.get(pos);
+                LLibro llibro = libroListClick.get(pos);
                 if (llibro != null) {
                     intent.putExtra("objectLibro", llibro);
 

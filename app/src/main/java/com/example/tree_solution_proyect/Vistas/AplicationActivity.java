@@ -222,14 +222,16 @@ public class AplicationActivity extends AppCompatActivity {
     class submitBook implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            if((!editTextAuthor.getText().toString().isEmpty())||(editTextName.getText().toString().isEmpty())&&
-                    (!editTextISBN.getText().toString().isEmpty())||(editTextPrice.getText().toString().isEmpty())){
+            if((!editTextAuthor.getText().toString().isEmpty())&&(!editTextName.getText().toString().isEmpty())&&
+                    (!editTextISBN.getText().toString().isEmpty())&&(!editTextPrice.getText().toString().isEmpty())&&(StrinUrl!=null)){
 
                 Libro libro=new Libro();
                 libro.setAutor(editTextAuthor.getText().toString());
                 libro.setNombre(editTextName.getText().toString());
                 libro.setISBN(editTextISBN.getText().toString());
-                libro.setPrecio(Double.parseDouble(editTextPrice.getText().toString()));
+                if(!editTextPrice.getText().toString().isEmpty()){
+                    libro.setPrecio(Double.parseDouble(editTextPrice.getText().toString()));
+                }
                 libro.setCondition(spinnerContidion.getSelectedItem().toString());
                 libro.setCategoria(spinnerCategory.getSelectedItem().toString());
                 libro.setUserKey(LibroDAO.getKeyUsuario());
@@ -237,11 +239,14 @@ public class AplicationActivity extends AppCompatActivity {
                 libro.setReferenceStorage(mGroupId);
 
 
-                if (libro != null) {
+                if (libro!=null) {
                     databaseReferenceLibro.child(mGroupId).setValue(libro);
                     Toast.makeText(getApplicationContext(),"Libro se subío correcto",Toast.LENGTH_SHORT).show();
                     myDialog.dismiss();
+                }else{
+                    Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_SHORT).show();
                 }
+
             }else{
                 Toast.makeText(getApplicationContext(),"No has rellenado todos los datos ,vuelva a revisar los datos introducidos",Toast.LENGTH_SHORT).show();
             }
