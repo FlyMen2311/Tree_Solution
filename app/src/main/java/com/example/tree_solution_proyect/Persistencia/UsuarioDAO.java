@@ -1,17 +1,13 @@
 package com.example.tree_solution_proyect.Persistencia;
 
 import android.net.Uri;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
-import com.example.tree_solution_proyect.Vistas.ui.perfil.PerfilFragment;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,7 +16,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -29,7 +24,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.Executor;
 
 public class UsuarioDAO {
     private static UsuarioDAO usuarioDAO;

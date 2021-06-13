@@ -2,9 +2,7 @@ package com.example.tree_solution_proyect.Vistas;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
-import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -43,9 +40,6 @@ import org.jetbrains.annotations.NotNull;
 public class Login extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123 ;
     private EditText txtEmail, txtContracena;
-    private TextView olvidarcontracena;
-    private Button btnEntrar;
-    private Button btn_atras;
     private FirebaseAuth mAuth;
     private ImageButton googleAut;
     private GoogleSignInClient mGoogleSignInClient;
@@ -64,65 +58,41 @@ public class Login extends AppCompatActivity {
 
         database= FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        olvidarcontracena = findViewById(R.id.olvidarcontrasena);
-        olvidarcontracena.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mostrarDialogOlvidarContrasena();
-            }
-        });
+        TextView olvidarcontracena = findViewById(R.id.olvidarcontrasena);
+        olvidarcontracena.setOnClickListener(v -> mostrarDialogOlvidarContrasena());
 
         googleAut=findViewById(R.id.entrar_google);
-        googleAut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signIn();
-            }
-        });
-        btn_atras=findViewById(R.id.btn_atrs);
-        btn_atras.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Login.this, MainActivity.class));
-            }
-        });
-        btnEntrar = findViewById(R.id.btnEntrar);
-        btnEntrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = txtEmail.getText().toString();
-                if (isValidEmail(email) && validContracena()) {
-                    String contracena = txtContracena.getText().toString();
-                    mAuth.signInWithEmailAndPassword(email, contracena)
-                            .addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(Login.this, "Se logeo correctamente",
-                                                Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(Login.this, AplicationActivity.class));
-                                    } else {
-                                        mAuth.fetchSignInMethodsForEmail(email)
-                                                .addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
-                                                        boolean isEmailExist = task.getResult().getSignInMethods().isEmpty();
-                                                        if (!isEmailExist) {
-                                                            Toast.makeText(Login.this, "Constraseña introducida no es correcta",
-                                                                    Toast.LENGTH_SHORT).show();
-                                                        } else {
-                                                            Toast.makeText(Login.this, "Email no existe",
-                                                                    Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    }
-                                                });
-                                        }
+        googleAut.setOnClickListener(v -> signIn());
+        Button btn_atras = findViewById(R.id.btn_atrs);
+        btn_atras.setOnClickListener(v -> startActivity(new Intent(Login.this, MainActivity.class)));
+        Button btnEntrar = findViewById(R.id.btnEntrar);
+        btnEntrar.setOnClickListener(v -> {
+            String email = txtEmail.getText().toString();
+            if (isValidEmail(email) && validContracena()) {
+                String contracena = txtContracena.getText().toString();
+                mAuth.signInWithEmailAndPassword(email, contracena)
+                        .addOnCompleteListener(Login.this, task -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(Login.this, "Se logeo correctamente",
+                                        Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(Login.this, AplicationActivity.class));
+                            } else {
+                                mAuth.fetchSignInMethodsForEmail(email)
+                                        .addOnCompleteListener(task1 -> {
+                                            boolean isEmailExist = task1.getResult().getSignInMethods().isEmpty();
+                                            if (!isEmailExist) {
+                                                Toast.makeText(Login.this, "Constraseña introducida no es correcta",
+                                                        Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(Login.this, "Email no existe",
+                                                        Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
                                 }
-                            });
-                } else {
-                    Toast.makeText(Login.this, "Email o la contraceña son incorectos",
-                            Toast.LENGTH_SHORT).show();
-                }
+                        });
+            } else {
+                Toast.makeText(Login.this, "Email o la contraceña son incorectos",
+                        Toast.LENGTH_SHORT).show();
             }
         });
         createRequest();
@@ -178,21 +148,18 @@ public class Login extends AppCompatActivity {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
 
                 mAuth.fetchSignInMethodsForEmail(account.getEmail())
-                        .addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
-                                boolean isNewUser = task.getResult().getSignInMethods().isEmpty();
-                                if (isNewUser) {
-                                    isNew=true;
-                                    usuario=new Usuario();
-                                    usuario.setEmail(account.getEmail());
-                                    usuario.setUserName(account.getDisplayName());
-                                    usuario.setFechaDeNacimiento(10-10-1022);
-                                    usuario.setFotoPerfilUrl(Constantes.URL_FOTO_PERFIL);
-                                    firebaseAuthWithGoogle(account.getIdToken());
-                                } else {
-                                    firebaseAuthWithGoogle(account.getIdToken());
-                                }
+                        .addOnCompleteListener(task1 -> {
+                            boolean isNewUser = task1.getResult().getSignInMethods().isEmpty();
+                            if (isNewUser) {
+                                isNew=true;
+                                usuario=new Usuario();
+                                usuario.setEmail(account.getEmail());
+                                usuario.setUserName(account.getDisplayName());
+                                usuario.setFechaDeNacimiento(10-10-1022);
+                                usuario.setFotoPerfilUrl(Constantes.URL_FOTO_PERFIL);
+                                firebaseAuthWithGoogle(account.getIdToken());
+                            } else {
+                                firebaseAuthWithGoogle(account.getIdToken());
                             }
                         });
             } catch (ApiException e) {
@@ -206,24 +173,20 @@ public class Login extends AppCompatActivity {
 
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            if(isNew) {
-                                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                                    firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                                    DatabaseReference reference = database.getReference("Usuarios/" + firebaseUser.getUid());
-                                    reference.setValue(usuario);
-                                }
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        if(isNew) {
+                            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                                firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                                DatabaseReference reference = database.getReference("Usuarios/" + firebaseUser.getUid());
+                                reference.setValue(usuario);
                             }
-                                startActivity(new Intent(Login.this, AplicationActivity.class));
-
-                        } else {
-                            Toast.makeText(Login.this, "Error al Entrar",
-                                    Toast.LENGTH_SHORT).show();
                         }
+                            startActivity(new Intent(Login.this, AplicationActivity.class));
+
+                    } else {
+                        Toast.makeText(Login.this, "Error al Entrar",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -241,14 +204,10 @@ public class Login extends AppCompatActivity {
         TextView email=view.findViewById(R.id.editTextTextEmailAddress);
 
         Button btnAceptar=view.findViewById(R.id.btn_aceptar);
-        btnAceptar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if((!email.getText().toString().isEmpty())&&(isValidEmail(email.getText().toString()))) {
-                    mAuth.sendPasswordResetEmail(email.getText().toString())
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull @NotNull Task<Void> task) {
+        btnAceptar.setOnClickListener(v -> {
+            if((!email.getText().toString().isEmpty())&&(isValidEmail(email.getText().toString()))) {
+                mAuth.sendPasswordResetEmail(email.getText().toString())
+                        .addOnCompleteListener(task -> {
                             if(task.isSuccessful()){
                                 Toast.makeText(getApplicationContext(),
                                         "Mensaje con instruciones de restablecimiento de contraseña enviado al: "+email.getText().toString()+". Revisa correo electronico",
@@ -260,23 +219,16 @@ public class Login extends AppCompatActivity {
                                         "Hubo un error",
                                         Toast.LENGTH_SHORT).show();
                             }
-                        }
-                    });
-                }else{
-                    Toast.makeText(getApplicationContext(),
-                            "Email introducido no es valido",
-                            Toast.LENGTH_SHORT).show();
-                }
+                        });
+            }else{
+                Toast.makeText(getApplicationContext(),
+                        "Email introducido no es valido",
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
         Button btnCancelar=view.findViewById(R.id.btn_cancelar);
-        btnCancelar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        btnCancelar.setOnClickListener(v -> dialog.dismiss());
     }
 
 
