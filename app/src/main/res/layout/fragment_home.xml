@@ -11,10 +11,11 @@
     <LinearLayout
         android:id="@+id/container_buscar"
         android:layout_width="407dp"
-        android:background="@color/colorPrimaryDark"
         android:layout_height="109dp"
         android:layout_marginStart="3dp"
+        android:layout_marginEnd="14dp"
         android:layout_marginBottom="622dp"
+        android:background="@color/colorPrimaryDark"
         android:elevation="20dp"
         android:orientation="vertical"
         android:paddingHorizontal="10dp"
@@ -25,8 +26,10 @@
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.545">
 
         <EditText
             android:id="@+id/buscar_libro_Isbn"
