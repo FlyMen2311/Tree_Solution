@@ -3,9 +3,15 @@ package com.example.tree_solution_proyect.Adaptadores;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.ListAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -36,21 +42,25 @@ import java.util.List;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
-public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro> {
-    private List<LLibro> listLibros=new ArrayList<>();
+public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements Filterable {
+    public List<LLibro> listLibros=new ArrayList<>();
+    public List<LLibro> listLibrosFilter=new ArrayList<>();
     private Context x;
     private HomeFragment homeFragment=new HomeFragment();
     private  HomeFragment.LibroOpen libroOpen;
+    public ISBNFilter isbnFilter;
 
     public Adapter_Libro(Context x,HomeFragment.LibroOpen libroOpen) {
         this.x = x;
+        isbnFilter=new ISBNFilter(this);
         this.libroOpen=libroOpen;
     }
 
     public void actualizarLibro(int posicion,LLibro lLibro){
-        listLibros.set(posicion,lLibro);
+        listLibrosFilter.set(posicion,lLibro);
         notifyItemChanged(posicion);
     }
+
 
     @NonNull
     @NotNull
@@ -64,8 +74,10 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro> {
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull Holder_Libro holder, int position) {
-        LLibro lLibro=listLibros.get(position);
+
+        LLibro lLibro=listLibrosFilter.get(position);
         LUsuario lUsuario=lLibro.getLUsuario();
+
         if((lLibro!=null)&&(lUsuario!=null)){
             //vinculamos holder con los datos asociados
             holder.getAutor().setText("by "+lLibro.getLibro().getAutor());
@@ -99,25 +111,80 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro> {
         holder.getHora().setText(lLibro.obtenerFechaDeCreacionLibro());
 
 
+            try {
+
+            }catch (Exception exception){
+                Toast.makeText(x.getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
+            }
+
     }
 
     public List<LLibro> getListLibros() {
+        return listLibrosFilter;
+    }
+    public List<LLibro> getListLibrosAll() {
         return listLibros;
     }
-
     public void setListLibros(List<LLibro> listLibros) {
-        this.listLibros = listLibros;
+        this.listLibrosFilter = listLibros;
     }
 
     @Override
     public int getItemCount() {
-        return listLibros.size();
+        return listLibrosFilter.size();
     }
+
     //En este metodo añdimos el Libro creado a nuestra lista y notificamos a nuestro activity
     public int addLibro(LLibro lLibro){
-        listLibros.add(lLibro);
-        int posicion=listLibros.size()-1;
-        notifyItemInserted(listLibros.size());
+        listLibrosFilter.add(lLibro);
+        int posicion=listLibrosFilter.size()-1;
+        notifyItemInserted(listLibrosFilter.size());
         return posicion;
     }
+    public void addLibroAll(LLibro Libro){
+        this.listLibros.add(Libro);
+    }
+
+
+    @Override
+    public Filter getFilter() {
+        return isbnFilter;
+    }
+
+    public class ISBNFilter extends Filter {
+        private Adapter_Libro listAdapter;
+
+
+        private ISBNFilter(Adapter_Libro listAdapter) {
+            super();
+            this.listAdapter = listAdapter;
+        }
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            listLibrosFilter.clear();
+            final FilterResults results = new FilterResults();
+            if (constraint.length() == 0) {
+                listLibrosFilter.addAll(listLibros);
+            } else {
+                final String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (LLibro libro  : listLibros) {
+                    if (libro.getLibro().getISBN().toLowerCase().contains(filterPattern)) {
+                        listLibrosFilter.add(libro);
+                    }
+                }
+            }
+            results.values = listLibrosFilter;
+            results.count = listLibrosFilter.size();
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            this.listAdapter.notifyDataSetChanged();
+        }
+    }
+
+
 }

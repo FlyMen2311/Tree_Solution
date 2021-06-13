@@ -55,7 +55,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <RatingBar
-        android:id="@+id/ratingBar"
+        android:id="@+id/ratingBar_libro"
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="81dp"
         android:layout_height="19dp"

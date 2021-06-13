@@ -7,15 +7,53 @@
     android:layout_height="match_parent"
     tools:context=".Vistas.ui.home.HomeFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_home"
-        android:layout_width="409dp"
-        android:layout_height="672dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="57dp"
+    <LinearLayout
+        android:id="@+id/container_buscar"
+        android:layout_width="407dp"
+        android:layout_height="109dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginBottom="622dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="10dp"
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="60dp"
+        android:paddingEnd="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/buscar_libro_Isbn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Buscar por ISBN"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="#070707"
+            android:textColorHighlight="#CA5454"
+            android:textColorHint="#070707" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="414dp"
+        android:layout_height="564dp"
+        android:layout_marginTop="110dp"
+        android:layout_marginBottom="57dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#E8E7E7" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

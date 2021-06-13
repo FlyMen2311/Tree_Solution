@@ -2,6 +2,7 @@ package com.example.tree_solution_proyect.Holders;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -10,12 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
-import com.example.tree_solution_proyect.Persistencia.LibroDAO;
+import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.R;
-import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
 import com.example.tree_solution_proyect.Vistas.ui.home.LibrosClickablesIntefrace;
 
-import org.jetbrains.annotations.NotNull;
+import java.util.ArrayList;
 
 public class Holder_Libro extends  RecyclerView.ViewHolder{
     private ImageView Foto_libro;
@@ -41,10 +41,11 @@ public class Holder_Libro extends  RecyclerView.ViewHolder{
         autor=itemView.findViewById(R.id.autor);
         categoria=itemView.findViewById(R.id.holder_catergoria);
         ISBN=itemView.findViewById(R.id.holder_Isbn);
+
         condition=itemView.findViewById(R.id.holder_condition);
         precio=itemView.findViewById(R.id.holder_precio);
         Favorit=itemView.findViewById(R.id.favoritos);
-        ratingBar=itemView.findViewById(R.id.ratingBar);
+        ratingBar=itemView.findViewById(R.id.ratingBar_libro);
         hora=itemView.findViewById(R.id.holder_fechacreacion);
         containerLibro= itemView.findViewById(R.id.container_holder_libro);
         this.librosClickablesIntefrace1=librosClickablesIntefrace;
@@ -91,6 +92,8 @@ public class Holder_Libro extends  RecyclerView.ViewHolder{
     public ImageView getFoto_libro() {
         return Foto_libro;
     }
+
+
 
     public ImageView getContainerLibro() {
         return containerLibro;
@@ -159,4 +162,5 @@ public class Holder_Libro extends  RecyclerView.ViewHolder{
     public void setContext(Context context) {
         this.context = context;
     }
+
 }
