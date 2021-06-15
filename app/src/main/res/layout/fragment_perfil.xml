@@ -34,7 +34,7 @@
             android:paddingBottom="20dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/FotoCambiarPerfil"
+                android:id="@+id/FotoPerfil"
                 android:layout_width="290dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -48,7 +48,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/UserNamePerfil"
+                android:id="@+id/NameLibroChat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"

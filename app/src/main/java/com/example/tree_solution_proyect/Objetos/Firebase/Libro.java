@@ -1,6 +1,6 @@
 package com.example.tree_solution_proyect.Objetos.Firebase;
 
-import android.net.Uri;
+import android.widget.TextView;
 
 import com.google.firebase.database.ServerValue;
 

@@ -4,7 +4,7 @@ import com.google.firebase.database.ServerValue;
 
 import java.io.Serializable;
 
-public class Mensaje {
+public class Mensaje implements  Serializable{
 
     //Inicializamos los atributos
     private String mensaje;

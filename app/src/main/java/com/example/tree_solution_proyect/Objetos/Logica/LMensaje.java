@@ -4,11 +4,12 @@ import com.example.tree_solution_proyect.Objetos.Firebase.Mensaje;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class LMensaje {
+public class LMensaje implements Serializable {
     private Mensaje mensaje;
     private String key;
     private LUsuario lUsuario;

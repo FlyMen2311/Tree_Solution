@@ -26,7 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
-import com.example.tree_solution_proyect.LibroClickActivity;
+import com.example.tree_solution_proyect.Vistas.LibroClickActivity;
 import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
@@ -61,7 +61,7 @@ public class HomeFragment extends Fragment {
     private Adapter_Libro adapter_libro;
     private Calendar calendario = Calendar.getInstance();
     private FirebaseAuth mAuth;
-    public static List<LLibro> libroListClick;
+    private static List<LLibro> libroListClick;
     private EditText buscar_librosISBN;
     public View vista;
 
@@ -71,8 +71,8 @@ public class HomeFragment extends Fragment {
 
         vista =inflater.inflate(R.layout.fragment_home, container, false);
 
-        recyclerView=vista.findViewById(R.id.recycler_home);
-        buscar_librosISBN=vista.findViewById(R.id.buscar_libro_Isbn);
+        recyclerView=vista.findViewById(R.id.recycler_chats);
+        buscar_librosISBN=vista.findViewById(R.id.buscar_chats_nombre);
         mAuth=FirebaseAuth.getInstance();
 
         database=FirebaseDatabase.getInstance();
@@ -81,8 +81,6 @@ public class HomeFragment extends Fragment {
 
         storage= FirebaseStorage.getInstance();;
         libroListClick =new ArrayList<LLibro>();
-        Calendar calendario = Calendar.getInstance();
-
 
 
         adapter_libro=new Adapter_Libro(getActivity().getApplicationContext(),new LibroOpen(getActivity(),getContext()));
@@ -119,6 +117,7 @@ public class HomeFragment extends Fragment {
 
         databaseReferenceLibro.addChildEventListener(new ChildEventListener() {
             Map<String, LUsuario> stringLUsuarioMap=new HashMap<>();
+
             @Override
             public void onChildAdded(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
                 final Libro m=snapshot.getValue(Libro.class);

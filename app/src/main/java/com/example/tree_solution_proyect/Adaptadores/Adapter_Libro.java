@@ -46,7 +46,6 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
     public List<LLibro> listLibros=new ArrayList<>();
     public List<LLibro> listLibrosFilter=new ArrayList<>();
     private Context x;
-    private HomeFragment homeFragment=new HomeFragment();
     private  HomeFragment.LibroOpen libroOpen;
     public ISBNFilter isbnFilter;
 

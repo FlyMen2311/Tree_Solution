@@ -31,6 +31,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".Vistas.ChatsClick">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Vistas.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,7 +59,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LibroClickActivity">
+        <activity android:name=".Vistas.LibroClickActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

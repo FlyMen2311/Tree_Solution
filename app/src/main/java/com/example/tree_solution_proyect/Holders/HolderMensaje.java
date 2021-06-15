@@ -24,10 +24,10 @@ public class HolderMensaje extends RecyclerView.ViewHolder  {
     public HolderMensaje(@NonNull View itemView) {
         super(itemView);
         context=itemView.getContext();
-        nombre=itemView.findViewById(R.id.UserNamePerfil);
-        mensaje=itemView.findViewById(R.id.Mensaje_text);
-        hora=itemView.findViewById(R.id.hora_mensaje);
-        fotoPerfilMensaje=itemView.findViewById(R.id.fotoMensaje);
+        nombre=itemView.findViewById(R.id.NameLibroChat);
+        mensaje=itemView.findViewById(R.id.ultimo_masege_chats);
+        hora=itemView.findViewById(R.id.hora_ultimo_mesage);
+        fotoPerfilMensaje=itemView.findViewById(R.id.fotoLibroChat);
     }
 
     //Seters y Geters

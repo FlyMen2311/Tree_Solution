@@ -46,11 +46,6 @@ public class LibroDAO {
         }
         return libroDAO;
     }
-    public interface IDevolverLibro{
-        void devolverLibro(LLibro lLibro);
-         void devolverError(String mensajeError);
-    }
-
     public LibroDAO() {
         database = FirebaseDatabase.getInstance();
         referenceLibros = database.getReference(Constantes.NODO_LIBROS);
@@ -58,21 +53,6 @@ public class LibroDAO {
         storageReferenceFotoLibro = storage.getReference("Fotos/FotoLibros");
     }
 
-    public void obtenerInformacionKeyLibro(final String key, final LibroDAO.IDevolverLibro iDevolverLibro) {
-        referenceLibros.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                Libro libro = snapshot.getValue(Libro.class);
-                LLibro lLibro = new LLibro(libro, key);
-                iDevolverLibro.devolverLibro(lLibro);
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-                iDevolverLibro.devolverError(error.getMessage());
-            }
-        });
-    }
 
     public static String getKeyUsuario() {
         return FirebaseAuth.getInstance().getUid();

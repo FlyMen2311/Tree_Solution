@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".LibroClickActivity">
+    tools:context=".Vistas.LibroClickActivity">
 
     <ImageView
         android:id="@+id/container_holder_libro_user"
@@ -50,7 +50,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <RatingBar
-        android:id="@+id/ratingBar_libro"
+        android:id="@+id/ratingBar_libro_chat"
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="81dp"
         android:layout_height="19dp"
@@ -66,7 +66,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/holder_condition"
+        android:id="@+id/condition_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="292dp"
@@ -81,7 +81,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/holder_catergoria"
+        android:id="@+id/catergoria_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="148dp"
@@ -96,7 +96,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/holder_precio"
+        android:id="@+id/precio_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="292dp"
@@ -111,7 +111,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/holder_fechacreacion"
+        android:id="@+id/fechacreacion_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="292dp"
@@ -126,7 +126,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/holder_Isbn"
+        android:id="@+id/Isbn_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="292dp"
@@ -169,7 +169,7 @@
         app:srcCompat="@drawable/libro_ejemplo" />
 
     <TextView
-        android:id="@+id/nombre"
+        android:id="@+id/nombre_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="149dp"
