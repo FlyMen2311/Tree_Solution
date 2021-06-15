@@ -13,9 +13,8 @@ import com.example.tree_solution_proyect.R;
 public class HolderMensaje extends RecyclerView.ViewHolder  {
     
     //Atributos
-    private TextView nombre;
+    private TextView nombre,hora;
     public TextView mensaje;
-    private TextView hora;
     private ImageView fotoPerfilMensaje;
     private Context context;
 

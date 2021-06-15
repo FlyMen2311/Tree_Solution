@@ -65,20 +65,13 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class ComunicacionFragment extends Fragment {
-    private ImageButton enviar;
+    private ImageButton enviar,envial_loc;
     private EditText texto_mensaje;
     private RecyclerView recyclerView;
-
-
     private ImageView foto_perfil;
-    private TextView nombre;
-    private ImageButton envial_loc;
-    private TextView userName;
-
+    private TextView nombre,userName;
     private FirebaseDatabase database;
-    private DatabaseReference databaseReferenceChat;
-    private DatabaseReference databaseReferenceUsuario;
-
+    private DatabaseReference databaseReferenceChat,databaseReferenceUsuario;
     private FirebaseStorage storage;
     private StorageReference storageReference;
 
@@ -128,20 +121,17 @@ public class ComunicacionFragment extends Fragment {
             recyclerView.setAdapter(adapter_mensaje);
 
             //Gestion btn enviar localizacion
-            envial_loc.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String textMensaje=texto_mensaje.getText().toString();
-                    if(!textMensaje.isEmpty()){
-                        Mensaje mensaje =new Mensaje();
-                        mensaje.setMensaje(textMensaje);
-                        mensaje.setUserKey(UsuarioDAO.getKeyUsuario());
+            envial_loc.setOnClickListener(v -> {
+                String textMensaje=texto_mensaje.getText().toString();
+                if(!textMensaje.isEmpty()){
+                    Mensaje mensaje =new Mensaje();
+                    mensaje.setMensaje(textMensaje);
+                    mensaje.setUserKey(UsuarioDAO.getKeyUsuario());
 
-                        databaseReferenceChat.push().setValue(mensaje);
-                        texto_mensaje.setText("");
-                    }
-
+                    databaseReferenceChat.push().setValue(mensaje);
+                    texto_mensaje.setText("");
                 }
+
             });
 
         //Agregamos un ValueEventListener para que los cambios que se hagan en la base de datos
@@ -161,7 +151,8 @@ public class ComunicacionFragment extends Fragment {
                                 .load(uri.getPath()).resize(50,50)
                                 .into(foto_perfil);
                     } catch (Exception e) {
-                        Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getApplicationContext(),
+                                e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -174,20 +165,17 @@ public class ComunicacionFragment extends Fragment {
 
 
             //Gestion btn enviar mensaje
-            enviar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String textMensaje=texto_mensaje.getText().toString();
-                    if(!textMensaje.isEmpty()){
-                        Mensaje mensaje =new Mensaje();
-                        mensaje.setMensaje(textMensaje);
-                        mensaje.setUserKey(UsuarioDAO.getInstance().getKeyUsuario());
+            enviar.setOnClickListener(v -> {
+                String textMensaje=texto_mensaje.getText().toString();
+                if(!textMensaje.isEmpty()){
+                    Mensaje mensaje =new Mensaje();
+                    mensaje.setMensaje(textMensaje);
+                    mensaje.setUserKey(UsuarioDAO.getInstance().getKeyUsuario());
 
-                        databaseReferenceChat.push().setValue(mensaje);
-                        texto_mensaje.setText("");
-                    }
-
+                    databaseReferenceChat.push().setValue(mensaje);
+                    texto_mensaje.setText("");
                 }
+
             });
 
             //Gestion de eventos producidos en FIREBASE
@@ -204,7 +192,8 @@ public class ComunicacionFragment extends Fragment {
                         lMensaje.setlUsuario(stringLUsuarioMap.get(m.getUserKey()));
                         adapter_mensaje.actualizarMensaje(posicion,lMensaje);
                     }else{
-                        UsuarioDAO.getInstance().obtenerInformacionKey(m.getUserKey(), new UsuarioDAO.IDevolverUsuario() {
+                        UsuarioDAO.getInstance().obtenerInformacionKey(m.getUserKey(),
+                                new UsuarioDAO.IDevolverUsuario() {
                             @Override
                             public void devolverUsuario(LUsuario lUsuario) {
                                 stringLUsuarioMap.put(m.getUserKey(),lUsuario);
@@ -214,7 +203,8 @@ public class ComunicacionFragment extends Fragment {
 
                             @Override
                             public void devolverError(String mensajeError) {
-                                Toast.makeText(getActivity().getApplicationContext(),"Error"+ mensajeError,Toast.LENGTH_SHORT);
+                                Toast.makeText(getActivity().getApplicationContext(),
+                                        "Error"+ mensajeError,Toast.LENGTH_SHORT);
                             }
                         });
                     }
@@ -289,18 +279,22 @@ public class ComunicacionFragment extends Fragment {
 
     //Funcion para obtener geolocalizacion actual
     public String  geolocalizacion() {
-        if (ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(),
+                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{
 
                     Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION
             }, 100);
         }
-        locationManager = (LocationManager) getActivity().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getActivity()
+                .getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
         Location loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         String localizacion =
-                String.format(Locale.ENGLISH, "http://maps.google.com/maps?q=%f,%f ", loc.getLatitude(),loc.getLongitude());
+                String.format(Locale.ENGLISH, "http://maps.google.com/maps?q=%f,%f ",
+                        loc.getLatitude(),loc.getLongitude());
 
 
         return localizacion;
@@ -310,13 +304,14 @@ public class ComunicacionFragment extends Fragment {
     public static List<String> extractURL(String cadena) {
 
         List<String> containedUrls = new ArrayList<String>();
-        String urlRegex = (String) "((https?|ftp|gopher|telnet|file):((//)|(\\\\))+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)";
+        String urlRegex = (String) "((https?|ftp|gopher|telnet|file):" +
+                "((//)|(\\\\))+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)";
         Pattern pattern = Pattern.compile((String) urlRegex, Pattern.CASE_INSENSITIVE);
-        Matcher urlMatcher = pattern.matcher(cadena.toString());
+        Matcher urlMatcher = pattern.matcher(cadena);
 
         while (urlMatcher.find())
         {
-            containedUrls.add((String) cadena.toString().substring(urlMatcher.start(0),
+            containedUrls.add((String) cadena.substring(urlMatcher.start(0),
                     urlMatcher.end(0)));
         }
 

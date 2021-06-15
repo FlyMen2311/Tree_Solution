@@ -22,10 +22,6 @@ import java.util.zip.Inflater;
 public class FavoriteFragment extends Fragment {
     private Button button;
 
-    private Inflater inflater;
-
-    private int container;
-
     private View vista;
 
     public View onCreateView(@NonNull LayoutInflater inflater,

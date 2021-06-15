@@ -3,6 +3,8 @@ package com.example.tree_solution_proyect.Vistas.ui.perfil;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -57,8 +60,7 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class PerfilFragment extends Fragment {
-    private Button salir;
-    private TextView userName;
+    private TextView salir,userName,textViewResetPass;
     private ImageView FotoCambioPerfil;
     private FirebaseDatabase database;
     private FirebaseAuth mAuth;
@@ -70,7 +72,14 @@ public class PerfilFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         View vista=inflater.inflate(R.layout.fragment_perfil, container, false);
+
+        textViewResetPass = vista.findViewById(R.id.textViewResetPass);
+
+        //reset pass action
+        textViewResetPass.setOnClickListener(new textViewResetPass());
+
         database=FirebaseDatabase.getInstance();
         mAuth=FirebaseAuth.getInstance();
         storage= FirebaseStorage.getInstance();;
@@ -86,12 +95,11 @@ public class PerfilFragment extends Fragment {
                     String path=list.get(0).getOriginalPath();
                     fotoUriPerfil= Uri.parse(path);
                     if(fotoUriPerfil!=null) {
-                        UsuarioDAO.getInstance().cambiarFotoUri(fotoUriPerfil, new UsuarioDAO.IDevolverUrlFoto() {
-                            @Override
-                            public void DevolverUrlFoto(String uri) {
-                                FirebaseDatabase.getInstance().getReference().child("Usuarios").child(mAuth.getCurrentUser().getUid()).child("fotoPerfilUrl").setValue(uri);
-                            }
-                        });
+                        UsuarioDAO.getInstance().cambiarFotoUri(fotoUriPerfil,
+                                uri -> FirebaseDatabase.getInstance()
+                                        .getReference().child("Usuarios")
+                                        .child(mAuth.getCurrentUser().getUid())
+                                        .child("fotoPerfilUrl").setValue(uri));
                     }
 
                 }
@@ -103,14 +111,10 @@ public class PerfilFragment extends Fragment {
             }
         });
         FotoCambioPerfil=vista.findViewById(R.id.FotoCambiarPerfil);
-        FotoCambioPerfil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                imagePicker.pickImage();
-            }
-        });
+        FotoCambioPerfil.setOnClickListener(view -> imagePicker.pickImage());
 
-        databaseReferenceUsuario = database.getReference("Usuarios/"+mAuth.getCurrentUser().getUid());
+        databaseReferenceUsuario = database.getReference("Usuarios/"+mAuth
+                .getCurrentUser().getUid());
         databaseReferenceUsuario.addValueEventListener(new ValueEventListener() {
 
             @Override
@@ -128,7 +132,8 @@ public class PerfilFragment extends Fragment {
                                 .into(FotoCambioPerfil);
                         userName.setText(usuario1.getUserName());
                     } catch (Exception e) {
-                        Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getApplicationContext(),
+                                e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -138,7 +143,7 @@ public class PerfilFragment extends Fragment {
             }
         });
 
-        salir=vista.findViewById(R.id.button);
+        salir=vista.findViewById(R.id.textViewLogOut);
         salir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,6 +161,14 @@ public class PerfilFragment extends Fragment {
 
         return vista;
 
+    }
+
+    class textViewResetPass implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+
+        }
     }
 
     //Recoger datos de Intent producido en esta clase
@@ -177,5 +190,47 @@ public class PerfilFragment extends Fragment {
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
+    }
+
+    public void resetPass() {
+        AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater=getLayoutInflater();
+
+        View view=inflater.inflate(R.layout.layout_olvidar_contracena,null);
+        builder.setView(view);
+
+        AlertDialog dialog=builder.create();
+        dialog.show();
+
+        Button btnAceptar=view.findViewById(R.id.btn_aceptar);
+        btnAceptar.setOnClickListener(v -> {
+            /*if((!email.getText().toString().isEmpty())&&(isValidEmail(email.getText().toString()))) {
+                mAuth.sendPasswordResetEmail(email.getText().toString())
+                        .addOnCompleteListener(task -> {
+                            if(task.isSuccessful()){
+                                Toast.makeText(getApplicationContext(),
+                                        "Mensaje con instruciones de restablecimiento de contraseña enviado al: "+email.getText().toString()+". Revisa correo electronico",
+                                        Toast.LENGTH_LONG).show();
+                                dialog.dismiss();
+                            }
+                            else{
+                                Toast.makeText(getApplicationContext(),
+                                        "Hubo un error",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }else{
+                Toast.makeText(getApplicationContext(),
+                        "Email introducido no es valido",
+                        Toast.LENGTH_SHORT).show();
+            }*/
+        });
+
+        Button btnCancelar=view.findViewById(R.id.btn_cancelar);
+        btnCancelar.setOnClickListener(v -> dialog.dismiss());
+    }
+
+    public final static boolean isValidEmail(CharSequence charsequence) {
+        return !TextUtils.isEmpty(charsequence) && Patterns.EMAIL_ADDRESS.matcher(charsequence).matches();
     }
 }

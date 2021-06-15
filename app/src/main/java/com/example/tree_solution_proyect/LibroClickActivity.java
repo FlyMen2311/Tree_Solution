@@ -25,24 +25,22 @@ import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
 public class LibroClickActivity extends AppCompatActivity {
-    private ImageView foto_libro;
-    private ImageView favorit;
-    private ImageView foto_libro_propietario;
-    private TextView  nombre_libro_propietario;
-    private TextView nombre;
-    private TextView autor;
-    private TextView categoria;
-    private TextView ISBN;
-    private TextView condition;
+    private ImageView foto_libro,foto_libro_propietario,favorit;
     private TextView precio;
     private TextView hora;
+    private TextView condition;
+    private TextView ISBN;
+    private TextView categoria;
+    private TextView autor;
+    private TextView nombre;
+    private TextView nombre_libro_propietario;
+    private TextView descripcion;
     private Context context;
     private RatingBar ratingBar;
     private DatabaseReference databaseReferenceUsuario;
     private FirebaseDatabase database;
     private FirebaseAuth mAuth;
-    private Button btnchat;
-    private Button btnVolver;
+    private Button btnchat,btnVolver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +56,7 @@ public class LibroClickActivity extends AppCompatActivity {
         condition=findViewById(R.id.holder_condition);
         precio=findViewById(R.id.holder_precio);
         hora=findViewById(R.id.holder_fechacreacion);
+        descripcion=findViewById(R.id.descripcion);
         ratingBar=findViewById(R.id.ratingBar_libro);
         foto_libro_propietario =findViewById(R.id.foto_user_libro);
         nombre_libro_propietario=findViewById(R.id.nombre_user);
@@ -92,6 +91,7 @@ public class LibroClickActivity extends AppCompatActivity {
         autor.setText("by "+libro.getLibro().getAutor());
         categoria.setText(libro.getLibro().getCategoria());
         ISBN.setText(libro.getLibro().getISBN());
+        descripcion.setText(libro.getLibro().getDescripcion());
         condition.setText(libro.getLibro().getCondition());
         precio.setText(String.valueOf(libro.getLibro().getPrecio()+"€"));
         hora.setText(libro.obtenerFechaDeCreacionLibro());

@@ -12,7 +12,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,18 +23,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import org.jetbrains.annotations.NotNull;
 
 public class Login extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123 ;
@@ -45,8 +39,11 @@ public class Login extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseDatabase database;
     private Usuario usuario;
+    TextView olvidarcontracena;
     private  FirebaseUser firebaseUser;
     private boolean isNew=false;
+    private Button btn_atras,btnEntrar;
+    private String contracena,email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,18 +55,18 @@ public class Login extends AppCompatActivity {
 
         database= FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        TextView olvidarcontracena = findViewById(R.id.olvidarcontrasena);
+        olvidarcontracena = findViewById(R.id.olvidarcontrasena);
         olvidarcontracena.setOnClickListener(v -> mostrarDialogOlvidarContrasena());
 
         googleAut=findViewById(R.id.entrar_google);
         googleAut.setOnClickListener(v -> signIn());
-        Button btn_atras = findViewById(R.id.btn_atrs);
+        btn_atras = findViewById(R.id.btn_atrs);
         btn_atras.setOnClickListener(v -> startActivity(new Intent(Login.this, MainActivity.class)));
-        Button btnEntrar = findViewById(R.id.btnEntrar);
+        btnEntrar = findViewById(R.id.btnEntrar);
         btnEntrar.setOnClickListener(v -> {
-            String email = txtEmail.getText().toString();
+            email = txtEmail.getText().toString();
             if (isValidEmail(email) && validContracena()) {
-                String contracena = txtContracena.getText().toString();
+                contracena = txtContracena.getText().toString();
                 mAuth.signInWithEmailAndPassword(email, contracena)
                         .addOnCompleteListener(Login.this, task -> {
                             if (task.isSuccessful()) {

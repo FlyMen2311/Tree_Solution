@@ -4,7 +4,6 @@ import com.example.tree_solution_proyect.Objetos.Firebase.Mensaje;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 

@@ -1,45 +1,28 @@
 package com.example.tree_solution_proyect.Adaptadores;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ListAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.Transformation;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.tree_solution_proyect.Holders.Holder_Libro;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
-import com.example.tree_solution_proyect.Objetos.Logica.LMensaje;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
-import com.example.tree_solution_proyect.Persistencia.LibroDAO;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
-import com.example.tree_solution_proyect.Vistas.ui.home.LibrosClickablesIntefrace;
-import com.google.android.material.shape.RoundedCornerTreatment;
-import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements Filterable {
@@ -85,7 +68,9 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
             holder.getNombre().setText(lLibro.getLibro().getNombre());
             holder.getISBN().setText(lLibro.getLibro().getISBN());
             holder.getPrecio().setText(String.valueOf(lLibro.getLibro().getPrecio())+"€");
-            Glide.with(x.getApplicationContext()).load(lLibro.getLibro().getFotoPrincipalUrl()).transforms(new RoundedCornersTransformation(26,5)).into(holder.getFoto_libro());
+            Glide.with(x.getApplicationContext()).load(lLibro.getLibro().getFotoPrincipalUrl())
+                    .transforms(new RoundedCornersTransformation(26,5))
+                    .into(holder.getFoto_libro());
             holder.getFoto_libro().setVisibility(View.VISIBLE);
             holder.getCondition().setText(lLibro.getLibro().getCondition());
 

@@ -20,19 +20,9 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         entrar=findViewById(R.id.btnstartsession);
-        entrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,Login.class));
-            }
-        });
+        entrar.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,Login.class)));
         registro=findViewById(R.id.btnregistro);
-        registro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,Registro.class));
-            }
-        });
+        registro.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,Registro.class)));
     }
     @Override
     protected void onResume() {

@@ -18,15 +18,15 @@ import com.example.tree_solution_proyect.Vistas.ui.home.LibrosClickablesIntefrac
 import java.util.ArrayList;
 
 public class Holder_Libro extends  RecyclerView.ViewHolder{
-    private ImageView Foto_libro;
-    private ImageView Favorit;
+    private ImageView Foto_libro,Favorit;
     private TextView nombre;
-    private TextView autor;
-    private TextView categoria;
-    private TextView ISBN;
-    private TextView condition;
-    private TextView precio;
     private TextView hora;
+    private TextView precio;
+    private TextView condition;
+    private TextView ISBN;
+    private TextView categoria;
+    private TextView autor;
+    private TextView descripcion;
     private Context context;
     private RatingBar ratingBar;
     private ImageView containerLibro;
@@ -41,7 +41,7 @@ public class Holder_Libro extends  RecyclerView.ViewHolder{
         autor=itemView.findViewById(R.id.autor);
         categoria=itemView.findViewById(R.id.holder_catergoria);
         ISBN=itemView.findViewById(R.id.holder_Isbn);
-
+        descripcion=itemView.findViewById(R.id.descripcion);
         condition=itemView.findViewById(R.id.holder_condition);
         precio=itemView.findViewById(R.id.holder_precio);
         Favorit=itemView.findViewById(R.id.favoritos);
@@ -60,7 +60,7 @@ public class Holder_Libro extends  RecyclerView.ViewHolder{
                         autor,precio,ISBN,
                         categoria,ratingBar,
                         condition,hora,
-                        Favorit);
+                        Favorit, descripcion);
             }
         });
     }
@@ -162,5 +162,15 @@ public class Holder_Libro extends  RecyclerView.ViewHolder{
     public void setContext(Context context) {
         this.context = context;
     }
+
+    public TextView getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(TextView descripcion) {
+        this.descripcion = descripcion;
+    }
+
+
 
 }

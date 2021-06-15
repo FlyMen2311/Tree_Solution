@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.tree_solution_proyect.Holders.HolderMensaje;
 import com.example.tree_solution_proyect.Objetos.Logica.LMensaje;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
@@ -47,9 +46,11 @@ public class Adapter_mensaje extends RecyclerView.Adapter<HolderMensaje> {
     public HolderMensaje onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v;
         if(viewType==1){
-            v=LayoutInflater.from(x).inflate(R.layout.layout_mensaje_receptor,parent,false);
+            v=LayoutInflater.from(x).inflate(R.layout.layout_mensaje_receptor,
+                    parent,false);
         }else{
-            v= LayoutInflater.from(x).inflate(R.layout.layout_mensaje_emisor,parent,false);
+            v= LayoutInflater.from(x).inflate(R.layout.layout_mensaje_emisor,
+                    parent,false);
         }
         return new HolderMensaje(v);
     }
@@ -66,7 +67,8 @@ public class Adapter_mensaje extends RecyclerView.Adapter<HolderMensaje> {
        if(lUsuario!=null){
            //vinculamos holder con los datos asociados
            holder.getNombre().setText(lUsuario.getUsuario().getUserName());
-           Picasso.with(x.getApplicationContext()).load(lUsuario.getUsuario().getFotoPerfilUrl()).resize(50,50).into(holder.getFotoPerfilMensaje());
+           Picasso.with(x.getApplicationContext()).load(lUsuario.getUsuario().getFotoPerfilUrl())
+                   .resize(50,50).into(holder.getFotoPerfilMensaje());
        }
         holder.getMensaje().setText(lMensaje.getMensaje().getMensaje());
         if(!lMensaje.getMensaje().toString().isEmpty()) {
@@ -110,7 +112,8 @@ public class Adapter_mensaje extends RecyclerView.Adapter<HolderMensaje> {
     @Override
     public int getItemViewType(int position) {
         if (listMensaje.get(position).getlUsuario() != null) {
-            if (listMensaje.get(position).getlUsuario().getKey().equals(UsuarioDAO.getKeyUsuario())) {
+            if (listMensaje.get(position).getlUsuario().getKey()
+                    .equals(UsuarioDAO.getKeyUsuario())) {
                 return 1;
             } else {
                 return -1;
