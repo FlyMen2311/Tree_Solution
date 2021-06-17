@@ -26,13 +26,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
+import com.example.tree_solution_proyect.Persistencia.LibroDAO;
 import com.example.tree_solution_proyect.Vistas.LibroClickActivity;
 import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
 import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
+import com.example.tree_solution_proyect.Vistas.Login;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -64,6 +67,7 @@ public class HomeFragment extends Fragment {
     private static List<LLibro> libroListClick;
     private EditText buscar_librosISBN;
     public View vista;
+    public  boolean isFavorite;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -122,8 +126,9 @@ public class HomeFragment extends Fragment {
             public void onChildAdded(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
                 final Libro m=snapshot.getValue(Libro.class);
                 final LLibro lLibro=new LLibro(m,snapshot.getKey());
-                final int posicion=adapter_libro.addLibro(lLibro);
-                adapter_libro.addLibroAll(lLibro);
+
+                final int posicion=adapter_libro.addLibro(lLibro);//listFilter
+                adapter_libro.addLibroAll(lLibro);//listAll
 
                 if(stringLUsuarioMap.get(m.getUserKey())!=null){
                     lLibro.setLUsuario(stringLUsuarioMap.get(m.getUserKey()));
@@ -186,6 +191,22 @@ public class HomeFragment extends Fragment {
 
 
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        FirebaseUser currentuser=mAuth.getCurrentUser();
+
+        if(currentuser!=null){
+            adapter_libro.notifyDataSetChanged();
+        }else{
+            startActivity(new Intent(getActivity().getApplicationContext(), Login.class));
+            try {
+                finalize();
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        }
+    }
     public class LibroOpen  implements LibrosClickablesIntefrace {
         Activity activity;
         Context context;
@@ -214,12 +235,22 @@ public class HomeFragment extends Fragment {
         @Override
         public void LibroClick ( int pos, ImageView imgcontainer, ImageView fotoLibro, TextView nombre, TextView autor, TextView precio, TextView ISBN, TextView categoria,
                                  RatingBar ratingBar, TextView estado, TextView fechacreacion, ImageView favorite){
+
             try {
                 Intent intent = new Intent(activity, LibroClickActivity.class);
-                LLibro llibro = libroListClick.get(pos);
-                if (llibro != null) {
-                    intent.putExtra("objectLibro", llibro);
+                LLibro llibro = adapter_libro.getListLibros().get(pos);
 
+                if (llibro != null) {
+
+                    if(favorite.getBackground().getConstantState().equals(favorite.getContext().getDrawable(R.drawable.favorite).getConstantState())){
+                        isFavorite=false;
+                        intent.putExtra("isFavorite", isFavorite);
+
+                    }else if(favorite.getBackground().getConstantState().equals(favorite.getContext().getDrawable(R.drawable.favorite_libro).getConstantState())){
+                        isFavorite=true;
+                        intent.putExtra("isFavorite", isFavorite);
+                    }
+                    intent.putExtra("objectLibro", llibro);
 
                     ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, Pair.create((View) imgcontainer, " container_holder_libro")
                             ,Pair.create((View) fotoLibro, "fotolibro_TR")
@@ -232,6 +263,7 @@ public class HomeFragment extends Fragment {
                             ,Pair.create((View) estado, "condition_TR")
                             ,Pair.create((View) fechacreacion, "fechacreacion_TR")
                             ,Pair.create((View) favorite, "favorite_TR"));
+
                     startActivity(intent, activityOptionsCompat.toBundle());
 
                 } else {
@@ -244,6 +276,7 @@ public class HomeFragment extends Fragment {
 
         }
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

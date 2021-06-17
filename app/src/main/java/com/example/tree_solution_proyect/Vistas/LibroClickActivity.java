@@ -13,13 +13,14 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
 import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Objetos.Firebase.Chat;
 import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
+import com.example.tree_solution_proyect.Persistencia.LibroDAO;
 import com.example.tree_solution_proyect.R;
-import com.example.tree_solution_proyect.Vistas.ui.comunicacion.ComunicacionFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -65,7 +66,7 @@ public class LibroClickActivity extends AppCompatActivity {
         setContentView(R.layout.activity_libro_click);
 
         foto_libro=findViewById(R.id.foto_libro);
-        favorit=findViewById(R.id.favoritos);
+        favorit=findViewById(R.id.favoritos1);
         nombre=findViewById(R.id.nombre_chat);
         autor=findViewById(R.id.autor);
         categoria=findViewById(R.id.catergoria_chat);
@@ -81,6 +82,13 @@ public class LibroClickActivity extends AppCompatActivity {
         chat=new Chat();
 
         Llibro = (LLibro) getIntent().getExtras().getSerializable("objectLibro");
+        isExist= getIntent().getExtras().getBoolean("isFavorite");
+
+        if(isExist){
+            favorit.setBackgroundResource(R.drawable.favorite_libro);
+        }else{
+            favorit.setBackgroundResource(R.drawable.favorite);
+        }
 
         database=FirebaseDatabase.getInstance();
         mAuth=FirebaseAuth.getInstance();
@@ -88,6 +96,19 @@ public class LibroClickActivity extends AppCompatActivity {
         databaseReferenceDatosChat=database.getReference(Constantes.NODO_CHAT_DATOS);
         mAuth=FirebaseAuth.getInstance();
         LoadLibros(Llibro);
+
+        favorit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(favorit.getBackground().getConstantState().equals(favorit.getContext().getDrawable(R.drawable.favorite).getConstantState())){
+                    favorit.setBackgroundResource(R.drawable.favorite_libro);
+                    LibroDAO.getInstance().crearLibroFavorito(Llibro);
+                }else if(favorit.getBackground().getConstantState().equals(favorit.getContext().getDrawable(R.drawable.favorite_libro).getConstantState())){
+                    LibroDAO.getInstance().eliminarLibroFavorito(Llibro);
+                    favorit.setBackgroundResource(R.drawable.favorite);
+                }
+            }
+        });
 
 
 
@@ -133,6 +154,19 @@ public class LibroClickActivity extends AppCompatActivity {
             }else{
                 Toast.makeText(getApplicationContext(),"No se puede escribir mensajes a si mismo",Toast.LENGTH_SHORT).show();
             }
+            }
+        });
+        favorit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(favorit.getBackground().getConstantState().equals(favorit.getContext().getDrawable(R.drawable.favorite).getConstantState())){
+                    favorit.setBackgroundResource(R.drawable.favorite_libro);
+                    LibroDAO.getInstance().crearLibroFavorito(Llibro);
+                }else if(favorit.getBackground().getConstantState().equals(favorit.getContext().getDrawable(R.drawable.favorite_libro).getConstantState())){
+                    LibroDAO.getInstance().eliminarLibroFavorito(Llibro);
+                    favorit.setBackgroundResource(R.drawable.favorite);
+
+                }
             }
         });
 
@@ -273,5 +307,11 @@ public class LibroClickActivity extends AppCompatActivity {
 
         }
         return isigual;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
     }
 }

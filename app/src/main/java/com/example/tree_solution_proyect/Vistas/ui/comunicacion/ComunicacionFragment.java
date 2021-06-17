@@ -1,12 +1,14 @@
 package com.example.tree_solution_proyect.Vistas.ui.comunicacion;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,10 +22,13 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tree_solution_proyect.Adaptadores.Adapter_Chats;
+import com.example.tree_solution_proyect.Adaptadores.RecyclerChatRemoveListener;
+import com.example.tree_solution_proyect.Holders.Holder_Chats;
 import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Objetos.Firebase.Chat;
 import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
@@ -35,6 +40,7 @@ import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ChatsClick;
 import com.example.tree_solution_proyect.Vistas.Login;
 import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -58,7 +64,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class ComunicacionFragment extends Fragment{
+public class ComunicacionFragment extends Fragment implements RecyclerChatRemoveListener.IRecyclerChatRemoveListener {
 
     private RecyclerView recyclerView;
     private FirebaseDatabase database;
@@ -75,6 +81,9 @@ public class ComunicacionFragment extends Fragment{
     public String keyemisor;
     public String keylibro;
     private EditText buscar_chats_nombre;
+    private Dialog dialog;
+    private Button AceptarEliminar;
+    private Button CancelEliminar;
     public View vista;
 
 
@@ -88,6 +97,8 @@ public class ComunicacionFragment extends Fragment{
         buscar_chats_nombre=vista.findViewById(R.id.buscar_chats_nombre);
 
        mAuth=FirebaseAuth.getInstance();
+       dialog = new Dialog(getContext());
+       dialog.setCanceledOnTouchOutside(false);
 
        database=FirebaseDatabase.getInstance();
        databaseReferenceChats =database.getReference(Constantes.NODO_CHAT_DATOS);
@@ -104,6 +115,9 @@ public class ComunicacionFragment extends Fragment{
             LinearLayoutManager l=new LinearLayoutManager(getActivity().getApplicationContext());
             recyclerView.setLayoutManager(l);
             recyclerView.setAdapter(adapter_chats);
+
+            ItemTouchHelper.SimpleCallback simpleCallback=new RecyclerChatRemoveListener(0,ItemTouchHelper.LEFT, this);
+            new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
 
 
 
@@ -180,6 +194,39 @@ public class ComunicacionFragment extends Fragment{
             }
         }
     }
+
+    @Override
+    public void onSwipe(RecyclerView.ViewHolder viewHolder, int dirrection, int position) {
+
+        if(viewHolder instanceof Holder_Chats){
+            //asignamos layout a pop up
+            dialog.setContentView(R.layout.layout_dialog_eliminar_chat);
+
+            AceptarEliminar=dialog.findViewById(R.id.btn_aceptar);
+            CancelEliminar=dialog.findViewById(R.id.btn_cancelar);
+            AceptarEliminar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    LChat lChat=adapter_chats.getListChats().get(position);
+                    database.getReference(Constantes.NODO_CHAT_DATOS).child(lChat.getChat().getKeyemisor()).child(lChat.getChat().getKeyreceptor()).child(lChat.getChat().getKeylibro()).removeValue();
+                    database.getReference(Constantes.NODO_CHAT_DATOS).child(lChat.getChat().getKeyreceptor()).child(lChat.getChat().getKeyemisor()).child(lChat.getChat().getKeylibro()).removeValue();
+                    database.getReference(Constantes.NODO_CHATS).child(lChat.getChat().getKeyemisor()).child(lChat.getChat().getKeyreceptor()).child(lChat.getChat().getKeylibro()).removeValue();
+                    database.getReference(Constantes.NODO_CHATS).child(lChat.getChat().getKeyreceptor()).child(lChat.getChat().getKeyemisor()).child(lChat.getChat().getKeylibro()).removeValue();
+                    adapter_chats.removeChat(viewHolder.getBindingAdapterPosition());
+                    dialog.dismiss();
+                }
+            });
+            CancelEliminar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    adapter_chats.notifyDataSetChanged();
+                }
+            });
+        }
+        dialog.show();
+    }
+
     public class ChatOpen  implements ChatClickableInterface {
         Activity activity;
         Context context;

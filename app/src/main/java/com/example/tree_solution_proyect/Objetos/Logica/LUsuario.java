@@ -40,6 +40,7 @@ public class LUsuario implements Serializable {
         Date date =new Date(UsuarioDAO.getInstance().fechaDeCreacion());
         return  simpleDateFormat.format(date);
     }
+
     public String obtenerFechaDeLastLogIn(){
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         Date date =new Date(UsuarioDAO.getInstance().fechaDeCreacion());

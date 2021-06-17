@@ -18,6 +18,7 @@ public class Libro implements Serializable {
     private String userKey;
     private String referenceStorage;
     private String descripcion;
+    private boolean isFavoritos;
 
 
     public Libro() {
@@ -33,6 +34,14 @@ public class Libro implements Serializable {
 
     public void setReferenceStorage(String referenceStorage) {
         this.referenceStorage = referenceStorage;
+    }
+
+    public boolean isFavoritos() {
+        return isFavoritos;
+    }
+
+    public void setFavoritos(boolean favoritos) {
+        isFavoritos = favoritos;
     }
 
     public String getDescripcion() {
@@ -106,7 +115,8 @@ public class Libro implements Serializable {
     public void setPrecio(Double precio) {
         this.precio = precio;
     }
+
     public Object getCreateTimestamp() {
-        return createTimestamp;
+       return  createTimestamp;
     }
 }

@@ -5,6 +5,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
+import com.example.tree_solution_proyect.Persistencia.LibroDAO;
 import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 
 import org.ocpsoft.prettytime.PrettyTime;
@@ -25,14 +26,14 @@ public class LLibro implements Serializable  {
         this.key = key;
     }
 
-    public String obtenerFechaDeCreacionLibro(){
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        Date date =new Date(UsuarioDAO.getInstance().fechaDeCreacion());
-        return  simpleDateFormat.format(date);
-
+    public String obtenerFechaDeCreacionLibro() throws ClassCastException{
+        Date date=new Date(getCreateTimeLong());
+        PrettyTime prettyTime=new PrettyTime(new Date(),Locale.getDefault());
+        return prettyTime.format(date);
     }
     public long getCreateTimeLong(){
-        return (long) libro.getCreateTimestamp();
+        Long aLong=Long.parseLong(String.valueOf(libro.getCreateTimestamp()));
+        return aLong;
     }
 
     public Libro getLibro() {
@@ -66,4 +67,7 @@ public class LLibro implements Serializable  {
     public void setLUsuario(LUsuario LUsuario) {
         this.LUsuario = LUsuario;
     }
+
+
+
 }

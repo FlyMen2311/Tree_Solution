@@ -39,14 +39,15 @@ public class Holder_Libro extends  RecyclerView.ViewHolder{
 
         condition=itemView.findViewById(R.id.condition_chat);
         precio=itemView.findViewById(R.id.precio_chat);
-        Favorit=itemView.findViewById(R.id.favoritos);
+        Favorit=itemView.findViewById(R.id.favoritos1);
         ratingBar=itemView.findViewById(R.id.ratingBar_libro_chat);
         hora=itemView.findViewById(R.id.fechacreacion_chat);
         containerLibro= itemView.findViewById(R.id.container_holder_libro);
         this.librosClickablesIntefrace1=librosClickablesIntefrace;
 
 
-        itemView.setOnClickListener(new View.OnClickListener() {
+
+        containerLibro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

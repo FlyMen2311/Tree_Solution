@@ -16,6 +16,7 @@ import com.example.tree_solution_proyect.Holders.Holder_Libro;
 import com.example.tree_solution_proyect.Objetos.Logica.LChat;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
+import com.example.tree_solution_proyect.Persistencia.ChatDao;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.comunicacion.ComunicacionFragment;
 import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
@@ -62,6 +63,12 @@ public class Adapter_Chats extends RecyclerView.Adapter<Holder_Chats>implements 
         holder.getFoto_libro_chat().setVisibility(View.VISIBLE);
         holder.getName_libro_chat().setText(lChat.getChat().getNombrelibro());
         holder.getName_propietario().setText(lChat.getChat().getNombrePropietario());
+
+        if(ChatDao.getInstance().getUltimoMensaje(lChat.getChat().getKeyreceptor(),lChat.getChat().getKeylibro())!=null) {
+            holder.getUltimo_mensaje().setText(ChatDao.getInstance().getUltimoMensaje(lChat.getChat().getKeyreceptor(),lChat.getChat().getKeylibro()));
+        }else{
+            holder.getUltimo_mensaje().setText("Puedes empezar a chatear");
+        }
     }
     //En este metodo añdimos el Libro creado a nuestra lista y notificamos a nuestro activity
     public int addChat(LChat LChat){
@@ -69,6 +76,10 @@ public class Adapter_Chats extends RecyclerView.Adapter<Holder_Chats>implements 
         int posicion=listChats.size()-1;
         notifyItemInserted(listChats.size());
         return posicion;
+    }
+    public void removeChat(int pos){
+        listChats.remove(pos);
+        notifyItemRemoved(pos);
     }
 
     public List<LChat> getListChats() {

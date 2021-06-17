@@ -139,12 +139,14 @@
 
                 <EditText
                     android:id="@+id/editTextPrice"
+                    android:digits="123456789"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:layout_marginEnd="29dp"
                     android:layout_marginBottom="252dp"
+                    android:maxLength="4"
                     android:ems="10"
                     android:inputType="numberDecimal" />
 
@@ -184,6 +186,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginEnd="29dp"
                     android:layout_marginBottom="183dp"
+                    android:maxLength="13"
                     android:ems="10"
                     android:inputType="number" />
 

@@ -106,58 +106,61 @@ public class ChatsClick extends AppCompatActivity {
         setContentView(R.layout.fragment_chat);
 
 
-        enviar=findViewById(R.id.btn_enviar);
-        texto_mensaje=findViewById(R.id.Texto_mensaje);
-        recyclerView=findViewById(R.id.recycler);
+        enviar = findViewById(R.id.btn_enviar);
+        texto_mensaje = findViewById(R.id.Texto_mensaje);
+        recyclerView = findViewById(R.id.recycler);
 
-        foto_libro =findViewById(R.id.foto_libro);
+        foto_libro = findViewById(R.id.foto_libro);
 
-        nombre=findViewById(R.id.nombre_chat);
-        autor=findViewById(R.id.autor_chat);
-        categoria=findViewById(R.id.catergoria_chat);
-        ISBN=findViewById(R.id.Isbn_chat);
-        condition=findViewById(R.id.condition_chat);
-        precio=findViewById(R.id.precio_chat);
-        hora=findViewById(R.id.fechacreacion_chat);
-        ratingBar=findViewById(R.id.ratingBar_libro_chat);
-        foto_libro_propietario =findViewById(R.id.foto_propietario_libro_chat);
-        nombre_libro_propietario=findViewById(R.id.nombre_usuario_propietario_chat);
+        nombre = findViewById(R.id.nombre_chat);
+        autor = findViewById(R.id.autor_chat);
+        categoria = findViewById(R.id.catergoria_chat);
+        ISBN = findViewById(R.id.Isbn_chat);
+        condition = findViewById(R.id.condition_chat);
+        precio = findViewById(R.id.precio_chat);
+        hora = findViewById(R.id.fechacreacion_chat);
+        ratingBar = findViewById(R.id.ratingBar_libro_chat);
+        foto_libro_propietario = findViewById(R.id.foto_propietario_libro_chat);
+        nombre_libro_propietario = findViewById(R.id.nombre_usuario_propietario_chat);
 
 
-        envial_loc=findViewById(R.id.localizacion_env);
-        userName=findViewById(R.id.NameLibroChat);
-        mAuth=FirebaseAuth.getInstance();
+        envial_loc = findViewById(R.id.localizacion_env);
+        userName = findViewById(R.id.NameLibroChat);
+        mAuth = FirebaseAuth.getInstance();
 
-        Llibro= (LLibro) getIntent().getExtras().getSerializable("libro");
-        if(Llibro==null) {
-            Libro libro=new Libro();
-            String receptor=getIntent().getExtras().getString("keyreceptor");
+        Llibro = (LLibro) getIntent().getExtras().getSerializable("libro");
+        if (Llibro == null) {
+            Libro libro = new Libro();
+            String receptor = getIntent().getExtras().getString("keyreceptor");
 
-            if(!receptor.equals(mAuth.getCurrentUser().getUid())){
+            if (!receptor.equals(mAuth.getCurrentUser().getUid())) {
                 libro.setUserKey(receptor);
-            }else{
+            } else {
                 libro.setUserKey(getIntent().getExtras().getString("keyemisor"));
             }
-            Llibro=new LLibro(libro,getIntent().getExtras().getString("keylibro"));
+            Llibro = new LLibro(libro, getIntent().getExtras().getString("keylibro"));
         }
 
-        database=FirebaseDatabase.getInstance();
+        if((!Llibro.getKey().equals(""))&&(!Llibro.getLibro().getUserKey().equals(""))&&(Llibro!=null)){
+        database = FirebaseDatabase.getInstance();
         databaseReferenceChat = database.getReference(Constantes.NODO_CHATS).
                 child(mAuth.getCurrentUser().getUid()).
                 child(Llibro.getLibro().getUserKey()).
                 child(Llibro.getKey());
 
-        databaseReferenceLibros=database.getReference(Constantes.NODO_LIBROS).child(Llibro.getKey());
-        databaseReferenceUsuario=database.getReference(Constantes.NODO_USUARIOS).child(Llibro.getLibro().getUserKey());
+        databaseReferenceLibros = database.getReference(Constantes.NODO_LIBROS).child(Llibro.getKey());
+        databaseReferenceUsuario = database.getReference(Constantes.NODO_USUARIOS).child(Llibro.getLibro().getUserKey());
 
-        storage= FirebaseStorage.getInstance();;
+        storage = FirebaseStorage.getInstance();
+        ;
 
-        fotoPerfilString="";
+        fotoPerfilString = "";
 
-        mAuth=FirebaseAuth.getInstance();;
+        mAuth = FirebaseAuth.getInstance();
+        ;
 
-        adapter_mensaje=new Adapter_mensaje(getApplicationContext());
-        LinearLayoutManager l=new LinearLayoutManager(getApplicationContext());
+        adapter_mensaje = new Adapter_mensaje(getApplicationContext());
+        LinearLayoutManager l = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(l);
         recyclerView.setAdapter(adapter_mensaje);
 
@@ -165,18 +168,18 @@ public class ChatsClick extends AppCompatActivity {
         envial_loc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String textMensaje=geolocalizacion();
-                if(!textMensaje.isEmpty()){
-                    Mensaje mensaje =new Mensaje();
+                String textMensaje = geolocalizacion();
+                if (!textMensaje.isEmpty()) {
+                    Mensaje mensaje = new Mensaje();
                     mensaje.setMensaje(textMensaje);
                     mensaje.setUserKey(UsuarioDAO.getKeyUsuario());
 
-                    DatabaseReference referenceEmisor= database.getReference(Constantes.NODO_CHATS).
+                    DatabaseReference referenceEmisor = database.getReference(Constantes.NODO_CHATS).
                             child(mAuth.getCurrentUser().getUid()).
                             child(Llibro.getLibro().getUserKey())
                             .child(Llibro.getKey());
 
-                    DatabaseReference referenceReceptor= database.
+                    DatabaseReference referenceReceptor = database.
                             getReference(Constantes.NODO_CHATS).
                             child(Llibro.getLibro().getUserKey()).
                             child(mAuth.getCurrentUser().getUid()).
@@ -198,84 +201,82 @@ public class ChatsClick extends AppCompatActivity {
                 //leeremos un objeto de tipo Usuario
                 GenericTypeIndicator<Libro> libro = new GenericTypeIndicator<Libro>() {
                 };
+
                 Libro libro1 = dataSnapshot.getValue(libro);
-                Uri uri=Uri.parse(libro1.getFotoPrincipalUrl());
-                if(uri!=null) {
-                    try {
-                        Picasso.with(getApplicationContext())
-                                .load(uri.getPath())
-                                .into(foto_libro);
 
-                        nombre.setText(libro1.getNombre());
-                        autor.setText("by "+libro1.getAutor());
-                        categoria.setText(libro1.getCategoria());
-                        ISBN.setText(libro1.getISBN());
-                        condition.setText(libro1.getCondition());
-                        precio.setText(String.valueOf(libro1.getPrecio()+"€"));
-                        hora.setText(Llibro.obtenerFechaDeCreacionLibro());
+                    Uri uri = Uri.parse(libro1.getFotoPrincipalUrl());
+                    if (uri != null) {
+                        try {
+                            Picasso.with(getApplicationContext())
+                                    .load(uri.getPath())
+                                    .into(foto_libro);
 
-                        if(libro1.getCondition().equals("Nuevo")){
-                            ratingBar.setRating(5);
-                        }else if(libro1.getCondition().equals("Muy buen estado")){
-                            ratingBar.setRating(4);
-                        }
-                        else if(libro1.equals("Buen estado")){
-                            ratingBar.setRating(3);
-                        }
-                        else if(libro1.getCondition().equals("Defecto estético")){
-                            ratingBar.setRating(2);
-                        }
-                        else if(libro1.getCondition().equals("Mala condición")){
-                            ratingBar.setRating(1);
-                        }
-                        else{
-                            ratingBar.setRating(0);
-                        }
-                        databaseReferenceUsuario.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                                //leeremos un objeto de tipo Estudiante
-                                GenericTypeIndicator<Usuario> u = new GenericTypeIndicator<Usuario>() {};
-                                Usuario usuario = snapshot.getValue(u);
-                                Picasso.with(getApplicationContext()).load(usuario.getFotoPerfilUrl()).into(foto_libro_propietario);
-                                nombre_libro_propietario.setText(usuario.getUserName());
+                            nombre.setText(libro1.getNombre());
+                            autor.setText("by " + libro1.getAutor());
+                            categoria.setText(libro1.getCategoria());
+                            ISBN.setText(libro1.getISBN());
+                            condition.setText(libro1.getCondition());
+                            precio.setText(String.valueOf(libro1.getPrecio() + "€"));
+                            hora.setText(Llibro.obtenerFechaDeCreacionLibro());
+
+                            if (libro1.getCondition().equals("Nuevo")) {
+                                ratingBar.setRating(5);
+                            } else if (libro1.getCondition().equals("Muy buen estado")) {
+                                ratingBar.setRating(4);
+                            } else if (libro1.equals("Buen estado")) {
+                                ratingBar.setRating(3);
+                            } else if (libro1.getCondition().equals("Defecto estético")) {
+                                ratingBar.setRating(2);
+                            } else if (libro1.getCondition().equals("Mala condición")) {
+                                ratingBar.setRating(1);
+                            } else {
+                                ratingBar.setRating(0);
                             }
+                            databaseReferenceUsuario.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                                    //leeremos un objeto de tipo Estudiante
+                                    GenericTypeIndicator<Usuario> u = new GenericTypeIndicator<Usuario>() {
+                                    };
+                                    Usuario usuario = snapshot.getValue(u);
+                                    Picasso.with(getApplicationContext()).load(usuario.getFotoPerfilUrl()).into(foto_libro_propietario);
+                                    nombre_libro_propietario.setText(usuario.getUserName());
+                                }
 
-                            @Override
-                            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                                @Override
+                                public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
-                            }
-                        });
+                                }
+                            });
 
-                    } catch (Exception e) {
-                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                        }
                     }
-                }
 
             }
+
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
             }
         });
 
 
-
         //Gestion btn enviar mensaje
         enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String textMensaje=texto_mensaje.getText().toString();
-                if(!textMensaje.isEmpty()){
-                    Mensaje mensaje =new Mensaje();
+                String textMensaje = texto_mensaje.getText().toString();
+                if (!textMensaje.isEmpty()) {
+                    Mensaje mensaje = new Mensaje();
                     mensaje.setMensaje(textMensaje);
                     mensaje.setUserKey(UsuarioDAO.getInstance().getKeyUsuario());
 
-                    DatabaseReference referenceEmisor= database.getReference(Constantes.NODO_CHATS).
+                    DatabaseReference referenceEmisor = database.getReference(Constantes.NODO_CHATS).
                             child(mAuth.getCurrentUser().getUid()).
                             child(Llibro.getLibro().getUserKey())
                             .child(Llibro.getKey());
 
-                    DatabaseReference referenceReceptor= database.
+                    DatabaseReference referenceReceptor = database.
                             getReference(Constantes.NODO_CHATS).
                             child(Llibro.getLibro().getUserKey()).
                             child(mAuth.getCurrentUser().getUid()).
@@ -292,28 +293,29 @@ public class ChatsClick extends AppCompatActivity {
         //Gestion de eventos producidos en FIREBASE
         databaseReferenceChat.addChildEventListener(new ChildEventListener() {
 
-            Map<String, LUsuario> stringLUsuarioMap=new HashMap<>();
+            Map<String, LUsuario> stringLUsuarioMap = new HashMap<>();
+
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                final Mensaje m=dataSnapshot.getValue(Mensaje.class);
-                final LMensaje lMensaje=new LMensaje(m,dataSnapshot.getKey());
-                final int posicion=adapter_mensaje.addMensaje(lMensaje);
+                final Mensaje m = dataSnapshot.getValue(Mensaje.class);
+                final LMensaje lMensaje = new LMensaje(m, dataSnapshot.getKey());
+                final int posicion = adapter_mensaje.addMensaje(lMensaje);
 
-                if(stringLUsuarioMap.get(m.getUserKey())!=null){
+                if (stringLUsuarioMap.get(m.getUserKey()) != null) {
                     lMensaje.setlUsuario(stringLUsuarioMap.get(m.getUserKey()));
-                    adapter_mensaje.actualizarMensaje(posicion,lMensaje);
-                }else{
+                    adapter_mensaje.actualizarMensaje(posicion, lMensaje);
+                } else {
                     UsuarioDAO.getInstance().obtenerInformacionKey(m.getUserKey(), new UsuarioDAO.IDevolverUsuario() {
                         @Override
                         public void devolverUsuario(LUsuario lUsuario) {
-                            stringLUsuarioMap.put(m.getUserKey(),lUsuario);
+                            stringLUsuarioMap.put(m.getUserKey(), lUsuario);
                             lMensaje.setlUsuario(lUsuario);
-                            adapter_mensaje.actualizarMensaje(posicion,lMensaje);
+                            adapter_mensaje.actualizarMensaje(posicion, lMensaje);
                         }
 
                         @Override
                         public void devolverError(String mensajeError) {
-                            Toast.makeText(getApplicationContext(),"Error"+ mensajeError,Toast.LENGTH_SHORT);
+                            Toast.makeText(getApplicationContext(), "Error" + mensajeError, Toast.LENGTH_SHORT);
                         }
                     });
                 }
@@ -346,10 +348,12 @@ public class ChatsClick extends AppCompatActivity {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
-                recyclerView.scrollToPosition(adapter_mensaje.getItemCount()-1);
+                recyclerView.scrollToPosition(adapter_mensaje.getItemCount() - 1);
             }
         });
-
+    }else{
+            Toast.makeText(getApplicationContext(), "Libro no existe,hubo un error", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -363,6 +367,7 @@ public class ChatsClick extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     Libro libro = snapshot.getValue(Libro.class);
+                    LLibro llibro=new LLibro(libro,snapshot.getKey());
                     Picasso.with(getApplicationContext())
                             .load(libro.getFotoPrincipalUrl())
                             .into(foto_libro);
@@ -372,7 +377,7 @@ public class ChatsClick extends AppCompatActivity {
                     ISBN.setText(libro.getISBN());
                     condition.setText(libro.getCondition());
                     precio.setText(String.valueOf(libro.getPrecio() + "€"));
-                    hora.setText(Llibro.obtenerFechaDeCreacionLibro());
+                    hora.setText(llibro.obtenerFechaDeCreacionLibro());
 
                     if (libro.getCondition().equals("Nuevo")) {
                         ratingBar.setRating(5);

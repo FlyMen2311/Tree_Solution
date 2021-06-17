@@ -4,15 +4,16 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.comunicacion.ChatClickableInterface;
-import com.example.tree_solution_proyect.Vistas.ui.home.LibrosClickablesIntefrace;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -25,6 +26,8 @@ public class Holder_Chats extends  RecyclerView.ViewHolder{
     private Context context;
     private LinearLayout linearLayout;
     private ChatClickableInterface chatClickableInterface;
+    public RelativeLayout relativeLayout;
+    public CardView cardView;
 
     public Holder_Chats(@NonNull @NotNull View itemView,ChatClickableInterface chatClickableInterface) {
         super(itemView);
@@ -34,8 +37,10 @@ public class Holder_Chats extends  RecyclerView.ViewHolder{
         this.ultimo_mensaje=itemView.findViewById(R.id.ultimo_masege_chats);
         this.hora =itemView.findViewById(R.id.hora_ultimo_mesage);
         this.context =itemView.getContext();
-        this.linearLayout =itemView.findViewById(R.id.linearLayout);
+        this.linearLayout =itemView.findViewById(R.id.linear);
         this.chatClickableInterface=chatClickableInterface;
+        this.relativeLayout=itemView.findViewById(R.id.relative);
+        this.cardView=itemView.findViewById(R.id.cardView);
 
 
         itemView.setOnClickListener(new View.OnClickListener() {

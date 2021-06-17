@@ -31,13 +31,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.security.auth.callback.Callback;
+
 public class LibroDAO {
     private static LibroDAO libroDAO;
     private FirebaseDatabase database;
+    private FirebaseAuth mAuth;
     private FirebaseStorage storage;
     private StorageReference storageReferenceFotoLibro;
     private DatabaseReference referenceLibros;
     private String key;
+    private Libro libro;
+    public boolean isExist=false;
 
 
     public static LibroDAO getInstance() {
@@ -48,12 +53,16 @@ public class LibroDAO {
     }
     public LibroDAO() {
         database = FirebaseDatabase.getInstance();
+        mAuth=FirebaseAuth.getInstance();
         referenceLibros = database.getReference(Constantes.NODO_LIBROS);
         storage = FirebaseStorage.getInstance();
         storageReferenceFotoLibro = storage.getReference("Fotos/FotoLibros");
     }
 
-
+    public interface IDevolverBooleanExist{
+        void devolverExist(boolean isExist);
+        void devolverError(String mensajeError);
+    }
     public static String getKeyUsuario() {
         return FirebaseAuth.getInstance().getUid();
     }
@@ -74,6 +83,41 @@ public class LibroDAO {
                     iDevolverUrlFoto.DevolverUrlFoto(uri.toString());
                 }
             });
+        });
+
+    }
+
+    public boolean isExist() {
+        return isExist;
+    }
+
+    public void setExist(boolean exist) {
+        isExist = exist;
+    }
+
+    public void crearLibroFavorito(LLibro lLibro){
+        database.getReference(Constantes.NODO_LIB_FAV).child(mAuth.getCurrentUser().getUid()).child(lLibro.getKey()).setValue(lLibro.getLibro());
+    }
+    public void eliminarLibroFavorito(LLibro lLibro){
+        database.getReference(Constantes.NODO_LIB_FAV).child(mAuth.getCurrentUser().getUid()).child(lLibro.getKey()).removeValue();
+    }
+
+    public void libroExistFavoritos(LLibro lLibro, IDevolverBooleanExist iDevolverBooleanExist){
+     DatabaseReference reference=database.getReference(Constantes.NODO_LIB_FAV).child(mAuth.getCurrentUser().getUid()).child(lLibro.getKey());
+
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+               if(snapshot.exists()){
+                   isExist=true;
+                   iDevolverBooleanExist.devolverExist(isExist);
+               }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                iDevolverBooleanExist.devolverError(error.getMessage());
+            }
         });
 
     }
