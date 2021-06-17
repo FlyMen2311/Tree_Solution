@@ -1,8 +1,5 @@
 package com.example.tree_solution_proyect.Vistas.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +7,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
@@ -25,7 +25,7 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
-public class LibroClickActivity extends AppCompatActivity {
+public class MisLibrosClickActivity extends AppCompatActivity {
     private ImageView foto_libro,foto_libro_propietario,favorit;
     private TextView precio;
     private TextView hora;
@@ -41,12 +41,12 @@ public class LibroClickActivity extends AppCompatActivity {
     private DatabaseReference databaseReferenceUsuario;
     private FirebaseDatabase database;
     private FirebaseAuth mAuth;
-    private Button btnchat,btnVolver;
+    private Button btnEliminar,btnVolver,btnModificar,btnVendido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_libro_click);
+        setContentView(R.layout.activity_mislibros_click);
 
         foto_libro=findViewById(R.id.foto_libro);
         favorit=findViewById(R.id.favoritos);
@@ -61,7 +61,9 @@ public class LibroClickActivity extends AppCompatActivity {
         ratingBar=findViewById(R.id.ratingBar_libro);
         foto_libro_propietario =findViewById(R.id.foto_user_libro);
         nombre_libro_propietario=findViewById(R.id.nombre_user);
-        btnchat=findViewById(R.id.btn_aceptar);
+        btnEliminar=findViewById(R.id.btn_eliminar);
+        btnModificar=findViewById(R.id.btn_modificar);
+        btnVendido=findViewById(R.id.btn_vendido);
         btnVolver=findViewById(R.id.btn_cancelar);
 
         LLibro Llibro= (LLibro) getIntent().getExtras().getSerializable("objectLibro");

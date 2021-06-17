@@ -27,6 +27,7 @@ public class Holder_Libro extends  RecyclerView.ViewHolder{
     private TextView categoria;
     private TextView autor;
     private TextView descripcion;
+    private TextView esVendido;
     private Context context;
     private RatingBar ratingBar;
     private ImageView containerLibro;
@@ -60,7 +61,7 @@ public class Holder_Libro extends  RecyclerView.ViewHolder{
                         autor,precio,ISBN,
                         categoria,ratingBar,
                         condition,hora,
-                        Favorit, descripcion);
+                        Favorit, descripcion, esVendido);
             }
         });
     }

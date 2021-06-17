@@ -16,7 +16,7 @@ import com.example.tree_solution_proyect.Holders.Holder_Libro;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
 import com.example.tree_solution_proyect.R;
-import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
+import com.example.tree_solution_proyect.Vistas.ui.perfil.MisLibrosActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -25,15 +25,14 @@ import java.util.List;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
-public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements Filterable {
+public class Adapter_MisLibros extends RecyclerView.Adapter<Holder_Libro>implements Filterable {
     public List<LLibro> listLibros=new ArrayList<>();
     public List<LLibro> listLibrosFilter=new ArrayList<>();
     private Context x;
-    private HomeFragment homeFragment=new HomeFragment();
-    private  HomeFragment.LibroOpen libroOpen;
+    private  MisLibrosActivity.LibroOpen libroOpen;
     public ISBNFilter isbnFilter;
 
-    public Adapter_Libro(Context x,HomeFragment.LibroOpen libroOpen) {
+    public Adapter_MisLibros(Context x, MisLibrosActivity.LibroOpen libroOpen) {
         this.x = x;
         isbnFilter=new ISBNFilter(this);
         this.libroOpen=libroOpen;
@@ -49,7 +48,8 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
     @NotNull
     @Override
     public Holder_Libro onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(x).inflate(R.layout.layout_holder_libro,parent,false);
+        View v;
+        v= LayoutInflater.from(x).inflate(R.layout.layout_holder_mislibros,parent,false);
 
         return new Holder_Libro(v, libroOpen);
     }
@@ -136,10 +136,10 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
     }
 
     public class ISBNFilter extends Filter {
-        private Adapter_Libro listAdapter;
+        private Adapter_MisLibros listAdapter;
 
 
-        private ISBNFilter(Adapter_Libro listAdapter) {
+        private ISBNFilter(Adapter_MisLibros listAdapter) {
             super();
             this.listAdapter = listAdapter;
         }
