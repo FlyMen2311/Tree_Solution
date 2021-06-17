@@ -45,6 +45,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".Vistas.ui.MisLibrosActivity"/>
+
         <activity android:name=".Vistas.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

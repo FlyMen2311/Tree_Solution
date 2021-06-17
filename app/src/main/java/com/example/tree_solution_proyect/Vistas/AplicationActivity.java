@@ -214,6 +214,7 @@ public class AplicationActivity extends AppCompatActivity {
                 libro.setUserKey(LibroDAO.getKeyUsuario());
                 libro.setFotoPrincipalUrl(StrinUrl);
                 libro.setReferenceStorage(mGroupId);
+                libro.setEsVendido("No");
 
 
                 if (libro!=null) {

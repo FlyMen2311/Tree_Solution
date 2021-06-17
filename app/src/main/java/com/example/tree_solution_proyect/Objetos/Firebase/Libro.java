@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class Libro implements Serializable {
     private String FotoPrincipalUrl,categoria,descripcion,userKey,
-            referenceStorage,ISBN,condition,autor,nombre;
+            referenceStorage,ISBN,condition,autor,nombre, esVendido;
     private Double precio;
     private Object createTimestamp;
 
@@ -93,7 +93,16 @@ public class Libro implements Serializable {
     public void setPrecio(Double precio) {
         this.precio = precio;
     }
+
     public Object getCreateTimestamp() {
         return createTimestamp;
+    }
+
+    public String getEsVendido() {
+        return esVendido;
+    }
+
+    public void setEsVendido(String esVendido) {
+        this.esVendido = esVendido;
     }
 }

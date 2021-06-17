@@ -1,5 +1,6 @@
 package com.example.tree_solution_proyect.Vistas.ui.perfil;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
 import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.Login;
+import com.example.tree_solution_proyect.Vistas.ui.MisLibrosActivity;
 import com.example.tree_solution_proyect.Vistas.ui.comunicacion.ComunicacionFragment;
 import com.example.tree_solution_proyect.databinding.FragmentPerfilBinding;
 
@@ -67,8 +69,12 @@ public class PerfilFragment extends Fragment {
     private DatabaseReference databaseReferenceUsuario;
     private FirebaseStorage storage;
     private StorageReference storageReference;
+    private Dialog dialogResetpass;
+    private Dialog myDialogResetPass;
     private ImagePicker imagePicker;
     private Uri fotoUriPerfil;
+    private TextView editTextTextPassword,editTextTextPassword2,textViewAccept,textViewProducts
+            ,textViewMisProductos;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -76,6 +82,11 @@ public class PerfilFragment extends Fragment {
         View vista=inflater.inflate(R.layout.fragment_perfil, container, false);
 
         textViewResetPass = vista.findViewById(R.id.textViewResetPass);
+        textViewProducts = vista.findViewById(R.id.textViewProducts);
+
+        textViewProducts.setOnClickListener(new textViewMisProductos());
+
+        myDialogResetPass = new Dialog(getActivity());
 
         //reset pass action
         textViewResetPass.setOnClickListener(new textViewResetPass());
@@ -167,7 +178,25 @@ public class PerfilFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
+            myDialogResetPass.setContentView(R.layout.activity_resetpass);
 
+            textViewProducts = myDialogResetPass.findViewById(R.id.textViewExitPass);
+            editTextTextPassword = myDialogResetPass.findViewById(R.id.editTextTextPassword);
+            editTextTextPassword2 = myDialogResetPass.findViewById(R.id.editTextTextPassword2);
+            textViewAccept = myDialogResetPass.findViewById(R.id.textViewAccept);
+
+            myDialogResetPass.show();
+
+            textViewProducts.setOnClickListener(new resetPassExit());
+
+        }
+
+        class resetPassExit implements View.OnClickListener {
+
+            @Override
+            public void onClick(View v) {
+                myDialogResetPass.dismiss();
+            }
         }
     }
 
@@ -181,6 +210,15 @@ public class PerfilFragment extends Fragment {
         }
     }
 
+    class textViewMisProductos implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            Intent i = new Intent(getActivity(), MisLibrosActivity.class);
+            startActivity(i);
+        }
+    }
+
 
     @Override
     public void onDestroyView() {
@@ -190,47 +228,5 @@ public class PerfilFragment extends Fragment {
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
-    }
-
-    public void resetPass() {
-        AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater=getLayoutInflater();
-
-        View view=inflater.inflate(R.layout.layout_olvidar_contracena,null);
-        builder.setView(view);
-
-        AlertDialog dialog=builder.create();
-        dialog.show();
-
-        Button btnAceptar=view.findViewById(R.id.btn_aceptar);
-        btnAceptar.setOnClickListener(v -> {
-            /*if((!email.getText().toString().isEmpty())&&(isValidEmail(email.getText().toString()))) {
-                mAuth.sendPasswordResetEmail(email.getText().toString())
-                        .addOnCompleteListener(task -> {
-                            if(task.isSuccessful()){
-                                Toast.makeText(getApplicationContext(),
-                                        "Mensaje con instruciones de restablecimiento de contraseña enviado al: "+email.getText().toString()+". Revisa correo electronico",
-                                        Toast.LENGTH_LONG).show();
-                                dialog.dismiss();
-                            }
-                            else{
-                                Toast.makeText(getApplicationContext(),
-                                        "Hubo un error",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        });
-            }else{
-                Toast.makeText(getApplicationContext(),
-                        "Email introducido no es valido",
-                        Toast.LENGTH_SHORT).show();
-            }*/
-        });
-
-        Button btnCancelar=view.findViewById(R.id.btn_cancelar);
-        btnCancelar.setOnClickListener(v -> dialog.dismiss());
-    }
-
-    public final static boolean isValidEmail(CharSequence charsequence) {
-        return !TextUtils.isEmpty(charsequence) && Patterns.EMAIL_ADDRESS.matcher(charsequence).matches();
     }
 }

@@ -8,5 +8,5 @@ public interface LibrosClickablesIntefrace {
     void LibroClick(int pos, ImageView imgcontainer, ImageView fotoLibro, TextView nombre,
                     TextView autor, TextView precio, TextView ISBN, TextView categoria,
                     RatingBar ratingBar, TextView estado, TextView fechacreacion,
-                    ImageView favorite, TextView descripcion);
+                    ImageView favorite, TextView descripcion, TextView esVendido);
 }
