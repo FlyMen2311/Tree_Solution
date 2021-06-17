@@ -1,39 +1,45 @@
 package com.example.tree_solution_proyect.Vistas.ui.comunicacion;
 
-import android.Manifest;
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.example.tree_solution_proyect.Adaptadores.Adapter_mensaje;
-import com.example.tree_solution_proyect.Objetos.Firebase.Mensaje;
-import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
-import com.example.tree_solution_proyect.Objetos.Logica.LMensaje;
+import com.example.tree_solution_proyect.Adaptadores.Adapter_Chats;
+import com.example.tree_solution_proyect.Adaptadores.RecyclerChatRemoveListener;
+import com.example.tree_solution_proyect.Holders.Holder_Chats;
+import com.example.tree_solution_proyect.Objetos.Constantes;
+import com.example.tree_solution_proyect.Objetos.Firebase.Chat;
+import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
+import com.example.tree_solution_proyect.Objetos.Logica.LChat;
+import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
 import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
+import com.example.tree_solution_proyect.Vistas.ChatsClick;
 import com.example.tree_solution_proyect.Vistas.Login;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -46,8 +52,6 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -55,161 +59,90 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.Executor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static android.app.Activity.RESULT_OK;
 
+public class ComunicacionFragment extends Fragment implements RecyclerChatRemoveListener.IRecyclerChatRemoveListener {
 
-public class ComunicacionFragment extends Fragment {
-    private ImageButton enviar,envial_loc;
-    private EditText texto_mensaje;
     private RecyclerView recyclerView;
-    private ImageView foto_perfil;
-    private TextView nombre,userName;
     private FirebaseDatabase database;
-    private DatabaseReference databaseReferenceChat,databaseReferenceUsuario;
+    private DatabaseReference databaseReferenceChats;
+    private DatabaseReference databaseReferenceChatsUsuario;
     private FirebaseStorage storage;
     private StorageReference storageReference;
-
-    private Adapter_mensaje adapter_mensaje;
-
+    private Adapter_Chats adapter_chats;
     private Calendar calendario = Calendar.getInstance();
-
-    private LocationManager locationManager;
-
-    private String fotoPerfilString;
-
     private FirebaseAuth mAuth;
+    private static List<LChat> chatsListClick;
+    public String keyreceptor;
+    public String keyemisor;
+    public String keylibro;
+    private EditText buscar_chats_nombre;
+    private Dialog dialog;
+    private Button AceptarEliminar;
+    private Button CancelEliminar;
+    public View vista;
 
-    private String nombreUsuario;
+
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View vista =inflater.inflate(R.layout.fragment_chat, container, false);
-        enviar=vista.findViewById(R.id.btn_enviar);
-        texto_mensaje=vista.findViewById(R.id.Texto_mensaje);
-        recyclerView=vista.findViewById(R.id.recycler);
+        vista =inflater.inflate(R.layout.layout_chats, container, false);
+        recyclerView=vista.findViewById(R.id.recycler_chats);
+        buscar_chats_nombre=vista.findViewById(R.id.buscar_chats_nombre);
 
-       foto_perfil=vista.findViewById(R.id.FotoCambiarPerfil);
-
-
-       nombre=vista.findViewById(R.id.UserNamePerfil);
-       envial_loc=vista.findViewById(R.id.localizacion_env);
-       userName=vista.findViewById(R.id.UserNamePerfil);
        mAuth=FirebaseAuth.getInstance();
+       dialog = new Dialog(getContext());
+       dialog.setCanceledOnTouchOutside(false);
 
        database=FirebaseDatabase.getInstance();
-       databaseReferenceChat =database.getReference("chat");
-       databaseReferenceUsuario =database.getReference("Usuarios/"+mAuth.getCurrentUser().getUid());
+       databaseReferenceChats =database.getReference(Constantes.NODO_CHAT_DATOS);
+       databaseReferenceChatsUsuario=database.getReference(Constantes.NODO_CHAT_DATOS).child(mAuth.getCurrentUser().getUid());
 
-       storage= FirebaseStorage.getInstance();;
+        storage= FirebaseStorage.getInstance();;
 
-       Calendar calendario = Calendar.getInstance();
+        chatsListClick=new ArrayList<LChat>();
 
-      fotoPerfilString="";
 
       mAuth=FirebaseAuth.getInstance();;
 
-            adapter_mensaje=new Adapter_mensaje(getActivity());
+            adapter_chats=new Adapter_Chats(getActivity().getApplicationContext(),new ChatOpen(getActivity(),getContext()));
             LinearLayoutManager l=new LinearLayoutManager(getActivity().getApplicationContext());
             recyclerView.setLayoutManager(l);
-            recyclerView.setAdapter(adapter_mensaje);
 
-            //Gestion btn enviar localizacion
-            envial_loc.setOnClickListener(v -> {
-                String textMensaje=texto_mensaje.getText().toString();
-                if(!textMensaje.isEmpty()){
-                    Mensaje mensaje =new Mensaje();
-                    mensaje.setMensaje(textMensaje);
-                    mensaje.setUserKey(UsuarioDAO.getKeyUsuario());
+            recyclerView.setAdapter(adapter_chats);
 
-                    databaseReferenceChat.push().setValue(mensaje);
-                    texto_mensaje.setText("");
-                }
+            ItemTouchHelper.SimpleCallback simpleCallback=new RecyclerChatRemoveListener(0,ItemTouchHelper.LEFT, this);
+            new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
 
-            });
-
-        //Agregamos un ValueEventListener para que los cambios que se hagan en la base de datos
-        //se reflejen en la aplicacion
-        databaseReferenceUsuario.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                //leeremos un objeto de tipo Usuario
-                GenericTypeIndicator<Usuario> usuario = new GenericTypeIndicator<Usuario>() {
-                };
-                Usuario usuario1 = dataSnapshot.getValue(usuario);
-                Uri uri=Uri.parse(usuario1.getFotoPerfilUrl());
-                if(uri!=null) {
-                    try {
-                        Picasso.with(getActivity().getApplicationContext())
-                                .load(uri.getPath()).resize(50,50)
-                                .into(foto_perfil);
-                    } catch (Exception e) {
-                        Toast.makeText(getActivity().getApplicationContext(),
-                                e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-            }
-        });
-
-
-
-            //Gestion btn enviar mensaje
-            enviar.setOnClickListener(v -> {
-                String textMensaje=texto_mensaje.getText().toString();
-                if(!textMensaje.isEmpty()){
-                    Mensaje mensaje =new Mensaje();
-                    mensaje.setMensaje(textMensaje);
-                    mensaje.setUserKey(UsuarioDAO.getInstance().getKeyUsuario());
-
-                    databaseReferenceChat.push().setValue(mensaje);
-                    texto_mensaje.setText("");
-                }
-
-            });
-
-            //Gestion de eventos producidos en FIREBASE
-            databaseReferenceChat.addChildEventListener(new ChildEventListener() {
-
-                Map<String, LUsuario> stringLUsuarioMap=new HashMap<>();
-                @Override
+              //Gestion de eventos producidos en FIREBASE
+              databaseReferenceChatsUsuario.addChildEventListener(new ChildEventListener() {
+                  private DataSnapshot receptorsnapshot;
+                  private DataSnapshot librosnapshot;
+                  private DataSnapshot emisorsnashot;
+                  private long cont = 0;
+                  private long cont_libros=1;
+                  @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    final Mensaje m=dataSnapshot.getValue(Mensaje.class);
-                    final LMensaje lMensaje=new LMensaje(m,dataSnapshot.getKey());
-                    final int posicion=adapter_mensaje.addMensaje(lMensaje);
+                      keyreceptor=dataSnapshot.getKey();
+                      for (DataSnapshot librosnapshot : dataSnapshot.getChildren()) {
+                          this.librosnapshot = librosnapshot;
+                          keylibro = librosnapshot.getKey();
 
-                    if(stringLUsuarioMap.get(m.getUserKey())!=null){
-                        lMensaje.setlUsuario(stringLUsuarioMap.get(m.getUserKey()));
-                        adapter_mensaje.actualizarMensaje(posicion,lMensaje);
-                    }else{
-                        UsuarioDAO.getInstance().obtenerInformacionKey(m.getUserKey(),
-                                new UsuarioDAO.IDevolverUsuario() {
-                            @Override
-                            public void devolverUsuario(LUsuario lUsuario) {
-                                stringLUsuarioMap.put(m.getUserKey(),lUsuario);
-                                lMensaje.setlUsuario(lUsuario);
-                                adapter_mensaje.actualizarMensaje(posicion,lMensaje);
-                            }
+                          for (DataSnapshot chatsnapshot : librosnapshot.getChildren()) {
 
-                            @Override
-                            public void devolverError(String mensajeError) {
-                                Toast.makeText(getActivity().getApplicationContext(),
-                                        "Error"+ mensajeError,Toast.LENGTH_SHORT);
-                            }
-                        });
-                    }
-                }
-
+                              Chat m = chatsnapshot.getValue(Chat.class);
+                              final LChat lChat = new LChat(m, chatsnapshot.getKey());
+                              final int posicion = adapter_chats.addChat(lChat);
+                              chatsListClick.add(lChat);
+                              cont++;
+                          }
+                      }
+                  }
                 @Override
                 public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
@@ -230,14 +163,12 @@ public class ComunicacionFragment extends Fragment {
 
                 }
             });
-
-
             //Funcion para pasar al ultimo mensaje producido
-            adapter_mensaje.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            adapter_chats.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
                 @Override
                 public void onItemRangeInserted(int positionStart, int itemCount) {
                     super.onItemRangeInserted(positionStart, itemCount);
-                    recyclerView.scrollToPosition(adapter_mensaje.getItemCount()-1);
+                    recyclerView.scrollToPosition(adapter_chats.getItemCount()-1);
                 }
             });
 
@@ -250,23 +181,7 @@ public class ComunicacionFragment extends Fragment {
         FirebaseUser currentuser=mAuth.getCurrentUser();
 
         if(currentuser!=null){
-            DatabaseReference reference=database.getReference("Usuarios/"+currentuser.getUid());
-            reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot snapshot) {
-                    Usuario usuario=snapshot.getValue(Usuario.class);
-                    nombreUsuario=usuario.getUserName();
-                    nombre.setText(nombreUsuario);
-                    Picasso.with(getActivity().getApplicationContext())
-                            .load(Uri.parse(usuario.getFotoPerfilUrl())).resize(50,50)
-                            .into(foto_perfil);
 
-                }
-                @Override
-                public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                }
-            });
         }else{
             startActivity(new Intent(getActivity().getApplicationContext(), Login.class));
             try {
@@ -277,56 +192,97 @@ public class ComunicacionFragment extends Fragment {
         }
     }
 
-    //Funcion para obtener geolocalizacion actual
-    public String  geolocalizacion() {
-        if (ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(),
-                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{
+    @Override
+    public void onSwipe(RecyclerView.ViewHolder viewHolder, int dirrection, int position) {
 
-                    Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION
-            }, 100);
+        if(viewHolder instanceof Holder_Chats){
+            //asignamos layout a pop up
+            dialog.setContentView(R.layout.layout_dialog_eliminar_chat);
+
+            AceptarEliminar=dialog.findViewById(R.id.btn_aceptar);
+            CancelEliminar=dialog.findViewById(R.id.btn_cancelar);
+            AceptarEliminar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    LChat lChat=adapter_chats.getListChats().get(position);
+                    database.getReference(Constantes.NODO_CHAT_DATOS).child(lChat.getChat().getKeyemisor()).child(lChat.getChat().getKeyreceptor()).child(lChat.getChat().getKeylibro()).removeValue();
+                    database.getReference(Constantes.NODO_CHAT_DATOS).child(lChat.getChat().getKeyreceptor()).child(lChat.getChat().getKeyemisor()).child(lChat.getChat().getKeylibro()).removeValue();
+                    database.getReference(Constantes.NODO_CHATS).child(lChat.getChat().getKeyemisor()).child(lChat.getChat().getKeyreceptor()).child(lChat.getChat().getKeylibro()).removeValue();
+                    database.getReference(Constantes.NODO_CHATS).child(lChat.getChat().getKeyreceptor()).child(lChat.getChat().getKeyemisor()).child(lChat.getChat().getKeylibro()).removeValue();
+                    adapter_chats.removeChat(viewHolder.getBindingAdapterPosition());
+                    dialog.dismiss();
+                }
+            });
+            CancelEliminar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    adapter_chats.notifyDataSetChanged();
+                }
+            });
         }
-        locationManager = (LocationManager) getActivity()
-                .getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        Location loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-        String localizacion =
-                String.format(Locale.ENGLISH, "http://maps.google.com/maps?q=%f,%f ",
-                        loc.getLatitude(),loc.getLongitude());
-
-
-        return localizacion;
+        dialog.show();
     }
 
-    //Funcion para extraer desde una cadena de texto un Link
-    public static List<String> extractURL(String cadena) {
+    public class ChatOpen  implements ChatClickableInterface {
+        Activity activity;
+        Context context;
 
-        List<String> containedUrls = new ArrayList<String>();
-        String urlRegex = (String) "((https?|ftp|gopher|telnet|file):" +
-                "((//)|(\\\\))+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)";
-        Pattern pattern = Pattern.compile((String) urlRegex, Pattern.CASE_INSENSITIVE);
-        Matcher urlMatcher = pattern.matcher(cadena);
-
-        while (urlMatcher.find())
-        {
-            containedUrls.add((String) cadena.substring(urlMatcher.start(0),
-                    urlMatcher.end(0)));
+        public ChatOpen(Activity activity, Context context) {
+            this.activity = activity;
+            this.context = context;
         }
 
-        return containedUrls;
+        public Activity getActivity() {
+            return activity;
+        }
 
+        public void setActivity(Activity activity) {
+            this.activity = activity;
+        }
+
+        public Context getContext() {
+            return context;
+        }
+
+        public void setContext(Context context) {
+            this.context = context;
+        }
+
+
+
+
+        @Override
+        public void ChatClick(int pos,LinearLayout linearLayout, ImageView Foto_libro_chat, TextView name_libro_chat, TextView ultimo_mensaje, TextView name_propietario, TextView hora) {
+            try {
+                Intent intent = new Intent(activity, ChatsClick.class);
+                LChat lChat = chatsListClick.get(pos);
+                intent.putExtra(("keyemisor"),lChat.getChat().getKeyemisor());
+                intent.putExtra("keyreceptor",lChat.getChat().getKeyreceptor());
+                intent.putExtra("keylibro",lChat.getChat().getKeylibro());
+
+
+                if (lChat != null) {
+
+                    ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, Pair.create((View) linearLayout, " container_holder_chat_libro")
+                            , Pair.create((View) Foto_libro_chat, "fotolibro_TR")
+                            , Pair.create((View) name_libro_chat, "nombre_chat_TR")
+                            , Pair.create((View) ultimo_mensaje, "autor_chat_TR")
+                            , Pair.create((View) name_propietario, "precio_chat_TR")
+                            , Pair.create((View) hora, "fechacreacion_chat_TR"));
+
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(activity, "Error", Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception exception) {
+                Toast.makeText(activity, exception.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
 
-    public ImageView getFoto_perfil() {
-        return foto_perfil;
-    }
 
-    public void setFoto_perfil(ImageView foto_perfil) {
-        this.foto_perfil = foto_perfil;
-    }
 
     @Override
     public void onDestroyView() {

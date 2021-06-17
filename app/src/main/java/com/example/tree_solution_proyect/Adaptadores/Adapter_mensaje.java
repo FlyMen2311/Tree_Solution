@@ -16,6 +16,7 @@ import com.example.tree_solution_proyect.Objetos.Logica.LMensaje;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
 import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
+import com.example.tree_solution_proyect.Vistas.ChatsClick;
 import com.example.tree_solution_proyect.Vistas.ui.comunicacion.ComunicacionFragment;
 import com.squareup.picasso.Picasso;
 
@@ -27,7 +28,7 @@ public class Adapter_mensaje extends RecyclerView.Adapter<HolderMensaje> {
 
    private List<LMensaje> listMensaje=new ArrayList<>();
    private Context x;
-   private ComunicacionFragment mainActivity=new ComunicacionFragment();;
+   private ChatsClick chatsClick=new ChatsClick();;
 
 
    public Adapter_mensaje(Context x){
@@ -81,7 +82,7 @@ public class Adapter_mensaje extends RecyclerView.Adapter<HolderMensaje> {
         holder.mensaje.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<String> cadena=mainActivity.extractURL((String) holder.getMensaje().getText());
+                List<String> cadena=chatsClick.extractURL((String) holder.getMensaje().getText());
 
                 String URL = "";
                 for (String url : cadena)

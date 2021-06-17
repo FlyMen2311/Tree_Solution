@@ -9,7 +9,7 @@
     tools:context=".Vistas.ui.home.HomeFragment">
 
     <LinearLayout
-        android:id="@+id/container_buscar"
+        android:id="@+id/container_buscar_chats"
         android:layout_width="407dp"
         android:layout_height="109dp"
         android:layout_marginStart="3dp"
@@ -32,10 +32,11 @@
         app:layout_constraintVertical_bias="0.545">
 
         <EditText
-            android:id="@+id/buscar_libro_Isbn"
+            android:id="@+id/buscar_chats_nombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:maxLength="13"
             android:hint="Buscar por ISBN"
             android:inputType="number"
             android:textAlignment="center"
@@ -46,17 +47,17 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="428dp"
-        android:layout_height="569dp"
-        android:layout_marginTop="110dp"
-        android:layout_marginBottom="15dp"
+        android:layout_width="429dp"
+        android:layout_height="576dp"
+        android:layout_marginTop="129dp"
+        android:layout_marginBottom="26dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_home"
+            android:id="@+id/recycler_chats"
             android:layout_width="match_parent"
 
             android:layout_height="583dp"

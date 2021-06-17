@@ -2,7 +2,9 @@ package com.example.tree_solution_proyect.Objetos.Firebase;
 
 import com.google.firebase.database.ServerValue;
 
-public class Mensaje {
+import java.io.Serializable;
+
+public class Mensaje implements  Serializable{
 
     //Inicializamos los atributos
     private String mensaje,userKey;

@@ -74,13 +74,6 @@ public class MisLibrosClickActivity extends AppCompatActivity {
         LoadLibros(Llibro);
 
 
-        btnchat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
         btnVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

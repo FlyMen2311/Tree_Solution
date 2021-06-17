@@ -25,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/linear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -34,7 +34,7 @@
             android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/fotoMensaje"
+                android:id="@+id/fotoLibroChat"
                 android:layout_width="81dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
@@ -54,7 +54,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/UserNamePerfil"
+                        android:id="@+id/NameLibroChat"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -63,7 +63,7 @@
                         android:textColor="@color/black" />
 
                     <TextView
-                        android:id="@+id/hora_mensaje"
+                        android:id="@+id/hora_ultimo_mesage"
                         android:layout_width="136dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -75,7 +75,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/Mensaje_text"
+                    android:id="@+id/ultimo_masege_chats"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

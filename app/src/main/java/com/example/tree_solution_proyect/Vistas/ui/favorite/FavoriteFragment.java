@@ -5,18 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tree_solution_proyect.R;
-import com.example.tree_solution_proyect.databinding.FragmentFavoriteBinding;
-
-import java.util.zip.Inflater;
 
 
 public class FavoriteFragment extends Fragment {
@@ -28,7 +21,7 @@ public class FavoriteFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         vista = inflater.inflate(R.layout.fragment_favorite, container, false);
 
-        button = vista.findViewById(R.id.button2);
+        //button = vista.findViewById(R.id.button2);
 
         return vista;
     }

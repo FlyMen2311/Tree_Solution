@@ -7,9 +7,7 @@ public class Usuario implements Serializable {
     private long fechaDeNacimiento;
 
     public Usuario() {
-
     }
-
     public String getFotoPerfilUrl() {
         return fotoPerfilUrl;
     }

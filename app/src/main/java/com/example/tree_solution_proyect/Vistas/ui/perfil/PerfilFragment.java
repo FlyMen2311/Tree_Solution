@@ -73,7 +73,7 @@ public class PerfilFragment extends Fragment {
         database=FirebaseDatabase.getInstance();
         mAuth=FirebaseAuth.getInstance();
         storage= FirebaseStorage.getInstance();;
-        userName=vista.findViewById(R.id.UserNamePerfil);
+        userName=vista.findViewById(R.id.NameLibroChat);
 
         imagePicker=new ImagePicker(this);
 
@@ -100,8 +100,13 @@ public class PerfilFragment extends Fragment {
 
             }
         });
-        FotoCambioPerfil=vista.findViewById(R.id.FotoCambiarPerfil);
-        FotoCambioPerfil.setOnClickListener(view -> imagePicker.pickImage());
+        FotoCambioPerfil=vista.findViewById(R.id.FotoPerfil);
+        FotoCambioPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imagePicker.pickImage();
+            }
+        });
 
         databaseReferenceUsuario = database.getReference("Usuarios/"+mAuth
                 .getCurrentUser().getUid());

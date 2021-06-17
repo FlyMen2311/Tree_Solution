@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.example.tree_solution_proyect.Holders.Holder_Libro;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
+import com.example.tree_solution_proyect.Persistencia.LibroDAO;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
 
@@ -29,9 +30,9 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
     public List<LLibro> listLibros=new ArrayList<>();
     public List<LLibro> listLibrosFilter=new ArrayList<>();
     private Context x;
-    private HomeFragment homeFragment=new HomeFragment();
     private  HomeFragment.LibroOpen libroOpen;
     public ISBNFilter isbnFilter;
+    public boolean isFavorite=false;
 
     public Adapter_Libro(Context x,HomeFragment.LibroOpen libroOpen) {
         this.x = x;
@@ -74,6 +75,39 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
             holder.getCondition().setText(lLibro.getLibro().getCondition());
 
 
+            LibroDAO.getInstance().libroExistFavoritos(lLibro, new LibroDAO.IDevolverBooleanExist() {
+                @Override
+                public void devolverExist(boolean isExist) {
+                    if(isExist){
+                        holder.getFavorit().setBackgroundResource(R.drawable.favorite_libro);
+                    }else{
+                        holder.getFavorit().setBackgroundResource(R.drawable.favorite);
+                    }
+                }
+
+                @Override
+                public void devolverError(String mensajeError) {
+                    Toast.makeText(holder.getContext(), "Error" + mensajeError, Toast.LENGTH_SHORT);
+                }
+            });
+
+
+
+            holder.getFavorit().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(holder.getFavorit().getBackground().getConstantState().equals(holder.getFavorit().getContext().getDrawable(R.drawable.favorite).getConstantState())){
+                        holder.getFavorit().setBackgroundResource(R.drawable.favorite_libro);
+                        LibroDAO.getInstance().crearLibroFavorito(lLibro);
+                        isFavorite=true;
+                    }else if(holder.getFavorit().getBackground().getConstantState().equals(holder.getFavorit().getContext().getDrawable(R.drawable.favorite_libro).getConstantState())){
+                        LibroDAO.getInstance().eliminarLibroFavorito(lLibro);
+                        holder.getFavorit().setBackgroundResource(R.drawable.favorite);
+                        isFavorite=false;
+                    }
+                }
+            });
+
             if(lLibro.getLibro().getCondition().equals("Nuevo")){
                 holder.getRatingBar().setRating(5);
             }else if(lLibro.getLibro().getCondition().equals("Muy buen estado")){
@@ -111,6 +145,14 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
     }
     public void setListLibros(List<LLibro> listLibros) {
         this.listLibrosFilter = listLibros;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.example.tree_solution_proyect.Holders;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -10,12 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
-import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.home.LibrosClickablesIntefrace;
-
-import java.util.ArrayList;
 
 public class Holder_Libro extends  RecyclerView.ViewHolder{
     private ImageView Foto_libro,Favorit;
@@ -38,21 +33,22 @@ public class Holder_Libro extends  RecyclerView.ViewHolder{
         super(itemView);
         context=itemView.getContext();
         Foto_libro=itemView.findViewById(R.id.foto_libro);
-        nombre=itemView.findViewById(R.id.nombre);
+        nombre=itemView.findViewById(R.id.nombre_chat);
         autor=itemView.findViewById(R.id.autor);
-        categoria=itemView.findViewById(R.id.holder_catergoria);
-        ISBN=itemView.findViewById(R.id.holder_Isbn);
-        descripcion=itemView.findViewById(R.id.descripcion);
-        condition=itemView.findViewById(R.id.holder_condition);
-        precio=itemView.findViewById(R.id.holder_precio);
-        Favorit=itemView.findViewById(R.id.favoritos);
-        ratingBar=itemView.findViewById(R.id.ratingBar_libro);
-        hora=itemView.findViewById(R.id.holder_fechacreacion);
+        categoria=itemView.findViewById(R.id.catergoria_chat);
+        ISBN=itemView.findViewById(R.id.Isbn_chat);
+
+        condition=itemView.findViewById(R.id.condition_chat);
+        precio=itemView.findViewById(R.id.precio_chat);
+        Favorit=itemView.findViewById(R.id.favoritos1);
+        ratingBar=itemView.findViewById(R.id.ratingBar_libro_chat);
+        hora=itemView.findViewById(R.id.fechacreacion_chat);
         containerLibro= itemView.findViewById(R.id.container_holder_libro);
         this.librosClickablesIntefrace1=librosClickablesIntefrace;
 
 
-        itemView.setOnClickListener(new View.OnClickListener() {
+
+        containerLibro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

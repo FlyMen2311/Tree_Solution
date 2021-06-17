@@ -29,7 +29,7 @@
         app:srcCompat="@drawable/libro_ejemplo" />
 
     <TextView
-        android:id="@+id/nombre"
+        android:id="@+id/nombre_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="149dp"
@@ -55,11 +55,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <RatingBar
-        android:id="@+id/ratingBar_libro"
+        android:id="@+id/ratingBar_libro_chat"
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="81dp"
         android:layout_height="19dp"
-        android:layout_marginStart="149dp"
+        android:layout_marginStart="148dp"
         android:layout_marginTop="88dp"
         android:layout_marginBottom="47dp"
         android:isIndicator="true"
@@ -67,10 +67,11 @@
         android:transitionName="ratingbar_TR"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/holder_condition"
+        android:id="@+id/condition_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="272dp"
@@ -84,7 +85,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/holder_catergoria"
+        android:id="@+id/catergoria_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="149dp"
@@ -98,24 +99,26 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/holder_precio"
+        android:id="@+id/precio_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="272dp"
         android:layout_marginTop="113dp"
+        android:layout_marginEnd="98dp"
         android:layout_marginBottom="22dp"
         android:text="Precio"
         android:textColor="#000000"
         android:transitionName="precio_TR"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/holder_fechacreacion"
+        android:id="@+id/fechacreacion_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="276dp"
+        android:layout_marginStart="272dp"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="86dp"
         android:text="fechaCreacion"
@@ -126,12 +129,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/holder_Isbn"
+        android:id="@+id/Isbn_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="275dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginBottom="68dp"
+        android:layout_marginStart="272dp"
+        android:layout_marginTop="69dp"
+        android:layout_marginBottom="67dp"
         android:text="ISBN"
         android:textColor="#000000"
         android:transitionName="ISBN_TR"
@@ -140,16 +143,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/favoritos"
+        android:id="@+id/favoritos1"
         android:layout_width="26dp"
         android:layout_height="25dp"
-        android:layout_marginStart="369dp"
-        android:layout_marginTop="122dp"
-        android:layout_marginBottom="9dp"
+        android:layout_marginStart="360dp"
+        android:layout_marginTop="114dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/favorite"
         android:transitionName="favorite_TR"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/favorite_libro"
-        app:tint="#C5C3C3" />
+        app:tint="#5E5D5D" />
 </androidx.constraintlayout.widget.ConstraintLayout>
