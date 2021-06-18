@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".MisLibrosClickActivity">
+    tools:context=".Vistas.LibroClickActivity">
 
     <ImageView
         android:id="@+id/container_holder_libro_user"
