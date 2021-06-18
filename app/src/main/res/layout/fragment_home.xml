@@ -5,7 +5,7 @@
     android:id="@+id/constrait_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@drawable/origin_color"
     tools:context=".Vistas.ui.home.HomeFragment">
 
     <LinearLayout
@@ -15,7 +15,6 @@
         android:layout_marginStart="3dp"
         android:layout_marginEnd="14dp"
         android:layout_marginBottom="622dp"
-        android:background="@color/colorPrimaryDark"
         android:elevation="20dp"
         android:orientation="vertical"
         android:paddingHorizontal="10dp"
@@ -36,9 +35,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:maxLength="13"
             android:hint="Buscar por ISBN"
             android:inputType="number"
+            android:maxLength="13"
             android:textAlignment="center"
             android:textColor="#070707"
             android:textColorHighlight="#CA5454"
@@ -57,11 +56,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_chats"
+            android:id="@+id/recycler_favoritos"
             android:layout_width="match_parent"
 
-            android:layout_height="583dp"
-            android:background="@drawable/white_texture" />
+            android:layout_height="583dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

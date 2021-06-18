@@ -12,13 +12,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
@@ -31,16 +29,10 @@ import com.example.tree_solution_proyect.Adaptadores.RecyclerChatRemoveListener;
 import com.example.tree_solution_proyect.Holders.Holder_Chats;
 import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Objetos.Firebase.Chat;
-import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
 import com.example.tree_solution_proyect.Objetos.Logica.LChat;
-import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
-import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
-import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ChatsClick;
 import com.example.tree_solution_proyect.Vistas.Login;
-import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -48,20 +40,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 public class ComunicacionFragment extends Fragment implements RecyclerChatRemoveListener.IRecyclerChatRemoveListener {
@@ -93,7 +77,7 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
                              ViewGroup container, Bundle savedInstanceState) {
 
         vista =inflater.inflate(R.layout.layout_chats, container, false);
-        recyclerView=vista.findViewById(R.id.recycler_chats);
+        recyclerView=vista.findViewById(R.id.recycler_favoritos);
         buscar_chats_nombre=vista.findViewById(R.id.buscar_chats_nombre);
 
        mAuth=FirebaseAuth.getInstance();

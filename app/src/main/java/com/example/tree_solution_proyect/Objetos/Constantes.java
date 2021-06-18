@@ -8,4 +8,5 @@ public class Constantes {
     public static final String NODO_CHAT_DATOS="Datos_chat";
     public static final String NODO_CHATS="Chats";
     public static final String NODO_LIB_FAV="Libros_favoritos";
+
 }

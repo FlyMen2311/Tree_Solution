@@ -1,8 +1,5 @@
 package com.example.tree_solution_proyect.Vistas;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +10,9 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Objetos.Firebase.Chat;
 import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
@@ -33,11 +32,11 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
-public class LibroClickActivity extends AppCompatActivity {
+public class LibroFavClickActivity extends AppCompatActivity {
     private ImageView foto_libro;
     private ImageView favorit;
     private ImageView foto_libro_propietario;
-    private TextView  nombre_libro_propietario;
+    private TextView nombre_libro_propietario;
     private TextView nombre;
     private TextView autor;
     private TextView categoria;
@@ -53,12 +52,12 @@ public class LibroClickActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Button btnchat;
     private Button btnVolver;
-    private  Usuario receptor;
+    private Usuario receptor;
     private LUsuario lreceptor;
     private Usuario emisor;
     private LUsuario lemisor;
     private LLibro Llibro;
-    private  Chat chat ;
+    private Chat chat ;
     private Boolean isExist=false;
     private HomeFragment homeFragment;
 
@@ -151,12 +150,12 @@ public class LibroClickActivity extends AppCompatActivity {
         btnchat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            Boolean apto=comprobarDatos();
-            if(apto){
-                cargarDatosChat();
-            }else{
-                Toast.makeText(getApplicationContext(),"No se puede escribir mensajes a si mismo",Toast.LENGTH_SHORT).show();
-            }
+                Boolean apto=comprobarDatos();
+                if(apto){
+                    cargarDatosChat();
+                }else{
+                    Toast.makeText(getApplicationContext(),"No se puede escribir mensajes a si mismo",Toast.LENGTH_SHORT).show();
+                }
             }
         });
         favorit.setOnClickListener(new View.OnClickListener() {
@@ -225,51 +224,51 @@ public class LibroClickActivity extends AppCompatActivity {
     }
 
     public void cargarDatosChat(){
-                DatabaseReference reference=database.getReference(Constantes.NODO_CHAT_DATOS).
-                        child(mAuth.getCurrentUser().getUid()).
-                        child(lreceptor.getKey()).
-                        child(Llibro.getKey());
-                 reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            for (DataSnapshot chatSnapshot : snapshot.getChildren()) {
-                                Chat chat1 = chatSnapshot.getValue(Chat.class);
+        DatabaseReference reference=database.getReference(Constantes.NODO_CHAT_DATOS).
+                child(mAuth.getCurrentUser().getUid()).
+                child(lreceptor.getKey()).
+                child(Llibro.getKey());
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot chatSnapshot : snapshot.getChildren()) {
+                        Chat chat1 = chatSnapshot.getValue(Chat.class);
 
-                                if (chat1 != null) {
-                                    if (compararChats(chat1,chat)) {
-                                        isExist = true;
-                                    } else {
-                                        isExist = false;
-                                    }
-                                }
-                            }
-                            if (isExist) {
-                                Intent intent = new Intent(LibroClickActivity.this, ChatsClick.class);
-                                intent.putExtra("libro", Llibro);
-                                startActivity(intent);
+                        if (chat1 != null) {
+                            if (compararChats(chat1,chat)) {
+                                isExist = true;
                             } else {
-                                Intent intent = new Intent(LibroClickActivity.this, ChatsClick.class);
-                                intent.putExtra("libro", Llibro);
-                                databaseReferenceDatosChat.child(lemisor.getKey()).child(lreceptor.getKey()).child(Llibro.getKey()).push().setValue(chat);
-                                databaseReferenceDatosChat.child(lreceptor.getKey()).child(lemisor.getKey()).child(Llibro.getKey()).push().setValue(chat);
-                                startActivity(intent);
+                                isExist = false;
                             }
-                        } else {
-                            Intent intent = new Intent(LibroClickActivity.this, ChatsClick.class);
-                            intent.putExtra("libro", Llibro);
-                            databaseReferenceDatosChat.child(lemisor.getKey()).child(lreceptor.getKey()).child(Llibro.getKey()).push().setValue(chat);
-                            databaseReferenceDatosChat.child(lreceptor.getKey()).child(lemisor.getKey()).child(Llibro.getKey()).push().setValue(chat);
-                            startActivity(intent);
                         }
                     }
-                    @Override
-                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
+                    if (isExist) {
+                        Intent intent = new Intent(LibroFavClickActivity.this, ChatsClick.class);
+                        intent.putExtra("libro", Llibro);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(LibroFavClickActivity.this, ChatsClick.class);
+                        intent.putExtra("libro", Llibro);
+                        databaseReferenceDatosChat.child(lemisor.getKey()).child(lreceptor.getKey()).child(Llibro.getKey()).push().setValue(chat);
+                        databaseReferenceDatosChat.child(lreceptor.getKey()).child(lemisor.getKey()).child(Llibro.getKey()).push().setValue(chat);
+                        startActivity(intent);
                     }
-                });
+                } else {
+                    Intent intent = new Intent(LibroFavClickActivity.this, ChatsClick.class);
+                    intent.putExtra("libro", Llibro);
+                    databaseReferenceDatosChat.child(lemisor.getKey()).child(lreceptor.getKey()).child(Llibro.getKey()).push().setValue(chat);
+                    databaseReferenceDatosChat.child(lreceptor.getKey()).child(lemisor.getKey()).child(Llibro.getKey()).push().setValue(chat);
+                    startActivity(intent);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
             }
+        });
+
+    }
 
 
 

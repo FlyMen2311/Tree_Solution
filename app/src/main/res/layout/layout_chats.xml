@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_chats"
+            android:id="@+id/recycler_favoritos"
             android:layout_width="match_parent"
 
             android:layout_height="match_parent"
