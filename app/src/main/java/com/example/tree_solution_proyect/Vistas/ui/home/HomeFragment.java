@@ -68,13 +68,11 @@ public class HomeFragment extends Fragment {
     private String keyEmisor;
     private String keyreceptor;
     private String keyLibro;
-    int posicion = 0;
-
-
+    private int posicion = 0;
     private EditText buscar_librosISBN;
+
     public View vista;
     public  boolean isFavorite;
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -86,18 +84,16 @@ public class HomeFragment extends Fragment {
         mAuth=FirebaseAuth.getInstance();
 
         database=FirebaseDatabase.getInstance();
-        databaseReferenceLibro =database.getReference("Libros");
-
+        databaseReferenceLibro = database.getReference("Libros");
 
         storage= FirebaseStorage.getInstance();;
 
+        adapter_libro=new Adapter_Libro(getActivity().getApplicationContext(),new LibroOpen(getActivity(),getContext()));
 
-
-        adapter_libro=new Adapter_Libro(getActivity().getApplicationContext(),
-                new LibroOpen(getActivity(),getContext()));
         LinearLayoutManager l=new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(l);
         recyclerView.setAdapter(adapter_libro);
+
         //Funcion para pasar al ultimo mensaje producido
         adapter_libro.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
@@ -142,7 +138,6 @@ public class HomeFragment extends Fragment {
                 if(stringLUsuarioMap.get(m.getUserKey())!=null){
                     lLibro.setLUsuario(stringLUsuarioMap.get(m.getUserKey()));
                     adapter_libro.actualizarLibro(posicion,lLibro);
-
                 }else{
                     UsuarioDAO.getInstance().obtenerInformacionKey(m.getUserKey(), new UsuarioDAO.IDevolverUsuario() {
                         @Override
@@ -150,16 +145,13 @@ public class HomeFragment extends Fragment {
                             stringLUsuarioMap.put(m.getUserKey(),lUsuario);
                             lLibro.setLUsuario(lUsuario);
                             adapter_libro.actualizarLibro(posicion,lLibro);
-
                         }
-
                         @Override
                         public void devolverError(String mensajeError) {
                             Toast.makeText(getActivity().getApplicationContext(),"Error"+ mensajeError,Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
-
             }
 
             @Override
@@ -177,11 +169,14 @@ public class HomeFragment extends Fragment {
                         posicion=i;
                     }
                 }
+
                 DatabaseReference reference2=database.getReference(Constantes.NODO_CHAT_DATOS);
                 reference2.addValueEventListener(new ValueEventListener() {
+
                     private DataSnapshot snapshot1;
                     private DataSnapshot snapshot2;
                     private DataSnapshot snapshot3;
+
                     @Override
                     public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                         for(DataSnapshot snapshot1:snapshot.getChildren()){
@@ -192,6 +187,7 @@ public class HomeFragment extends Fragment {
                                 this.snapshot2=snapshot2;
                                 keyreceptor=snapshot2.getKey();
                             }
+
                             for(DataSnapshot snapshot3:snapshot2.getChildren()){
                                 this.snapshot3=snapshot3;
                                 keyLibro=snapshot3.getKey();
@@ -201,10 +197,6 @@ public class HomeFragment extends Fragment {
                                 }
                             }
                         }
-
-
-
-
                     }
 
                     @Override
@@ -216,13 +208,11 @@ public class HomeFragment extends Fragment {
                 database.getReference(Constantes.NODO_LIB_FAV).child(mAuth.getCurrentUser().getUid()).child( adapter_libro.getListLibros().get(posicion).getKey()).removeValue();
 
                             adapter_libro.getListLibros().remove(posicion);
+
                             adapter_libro.getListLibrosAll().remove(posicion);
 
-
                             adapter_libro.notifyItemRemoved(posicion);
-
                 }
-
 
             @Override
             public void onChildMoved(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
@@ -235,8 +225,6 @@ public class HomeFragment extends Fragment {
             }
         });
         return vista;
-
-
     }
 
     public Adapter_Libro getAdapter_libro() {
@@ -263,7 +251,8 @@ public class HomeFragment extends Fragment {
             }
         }
     }
-    public class LibroOpen  implements LibrosClickablesIntefrace, com.example.tree_solution_proyect.Vistas.ui.home.LibroOpen {
+
+    public class LibroOpen  implements LibrosClickablesIntefrace {
         Activity activity;
         Context context;
 
@@ -334,7 +323,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -344,5 +332,4 @@ public class HomeFragment extends Fragment {
             throwable.printStackTrace();
         }
     }
-
 }

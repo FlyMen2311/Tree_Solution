@@ -49,7 +49,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mislibros_click);
 
         foto_libro=findViewById(R.id.foto_libro);
-        favorit=findViewById(R.id.favoritos);
+        favorit=findViewById(R.id.favoritos1);
         nombre=findViewById(R.id.nombre);
         autor=findViewById(R.id.autor);
         categoria=findViewById(R.id.holder_catergoria);

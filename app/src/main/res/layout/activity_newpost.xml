@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/desc"
     android:layout_width="350dp"
     android:layout_height="475dp"
     android:layout_gravity="center"
@@ -11,6 +12,7 @@
 
     <androidx.gridlayout.widget.GridLayout
         android:layout_width="match_parent"
+        android:elevation="20dp"
         android:layout_height="wrap_content">
 
         <TextView
@@ -22,197 +24,231 @@
             android:text="X"
             android:textColor="@color/white"
             android:textStyle="bold"
-            app:layout_gravity="end" />
+            app:layout_column="1"
+            app:layout_gravity="end"
+            app:layout_row="0" />
 
         <TextView
             android:id="@+id/textView4"
-            style="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Large"
-            android:layout_width="307dp"
+            style="@style/Widget.AppCompat.TextView"
+            android:layout_width="309dp"
             android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:paddingLeft="40dp"
             android:text="AÑADIR LIBRO"
             android:textAlignment="center"
-            app:layout_column="1"
+            app:layout_column="0"
             app:layout_row="0" />
 
     </androidx.gridlayout.widget.GridLayout>
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="436dp"
-        android:layout_marginTop="-8dp"
-        android:layout_marginEnd="-2dp">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="651dp">
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textViewAuthor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="36dp"
-                    android:layout_marginTop="232dp"
-                    android:text="Author :" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="752dp">
 
-                <TextView
-                    android:id="@+id/textViewCondition"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="26dp"
-                    android:layout_marginTop="295dp"
-                    android:text="Condicion :" />
+                    <TextView
+                        android:id="@+id/textViewAuthor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="36dp"
+                        android:layout_marginTop="234dp"
+                        android:text="Author :" />
 
-                <TextView
-                    android:id="@+id/textViewPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="37dp"
-                    android:layout_marginTop="367dp"
-                    android:text="Precio :" />
+                    <TextView
+                        android:id="@+id/textViewCondition"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="26dp"
+                        android:layout_marginTop="295dp"
+                        android:text="Condicion :" />
 
-                <TextView
-                    android:id="@+id/textViewISBN"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="42dp"
-                    android:layout_marginTop="439dp"
-                    android:text="ISBN :" />
+                    <TextView
+                        android:id="@+id/textViewPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="37dp"
+                        android:layout_marginTop="367dp"
+                        android:text="Precio :" />
 
-                <EditText
-                    android:id="@+id/editTextName"
-                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="149dp"
-                    android:layout_marginEnd="26dp"
-                    android:ems="10"
-                    android:inputType="textPersonName" />
+                    <TextView
+                        android:id="@+id/textViewISBN"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="42dp"
+                        android:layout_marginTop="439dp"
+                        android:text="ISBN :" />
 
-                <EditText
-                    android:id="@+id/editTextAuthor"
-                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="217dp"
-                    android:layout_marginEnd="26dp"
-                    android:ems="10"
-                    android:inputType="textPersonName" />
+                    <EditText
+                        android:id="@+id/editTextName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="149dp"
+                        android:layout_marginEnd="26dp"
+                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+                        android:ems="10"
+                        android:inputType="textPersonName" />
 
-                <TextView
-                    android:id="@+id/textViewName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="33dp"
-                    android:layout_marginTop="162dp"
-                    android:text="Nombre :" />
+                    <EditText
+                        android:id="@+id/editTextAuthor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="217dp"
+                        android:layout_marginEnd="26dp"
+                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+                        android:ems="10"
+                        android:inputType="textPersonName" />
 
-                <ImageView
-                    android:id="@+id/imageViewImage"
-                    android:layout_width="115dp"
-                    android:layout_height="99dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="146dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginEnd="81dp"
-                    app:srcCompat="@android:drawable/ic_menu_gallery" />
+                    <TextView
+                        android:id="@+id/textViewName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="31dp"
+                        android:layout_marginTop="162dp"
+                        android:text="Nombre :" />
 
-                <EditText
-                    android:id="@+id/editTextPrice"
-                    android:digits="123456789."
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginEnd="29dp"
-                    android:layout_marginBottom="252dp"
-                    android:maxLength="4"
-                    android:ems="10"
-                    android:inputType="numberDecimal" />
+                    <ImageView
+                        android:id="@+id/imageViewImage"
+                        android:layout_width="115dp"
+                        android:layout_height="99dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="146dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginEnd="81dp"
+                        app:srcCompat="@android:drawable/ic_menu_gallery" />
 
-                <Spinner
-                    android:id="@+id/spinnerCondition"
-                    android:layout_width="212dp"
-                    android:layout_height="34dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginEnd="25dp"
-                    android:layout_marginBottom="327dp" />
+                    <EditText
+                        android:id="@+id/editTextPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="26dp"
+                        android:layout_marginBottom="350dp"
+                        android:ems="10"
+                        android:inputType="numberDecimal" />
 
-                <Spinner
-                    android:id="@+id/spinnerCategory"
-                    android:layout_width="212dp"
-                    android:layout_height="34dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginEnd="25dp"
-                    android:layout_marginBottom="110dp" />
+                    <Spinner
+                        android:id="@+id/spinnerCondition"
+                        android:layout_width="212dp"
+                        android:layout_height="34dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="26dp"
+                        android:layout_marginBottom="427dp" />
 
-                <TextView
-                    android:id="@+id/textViewCategory"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginBottom="117dp"
-                    android:text="Categoria :" />
+                    <Spinner
+                        android:id="@+id/spinnerCategory"
+                        android:layout_width="212dp"
+                        android:layout_height="34dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="26dp"
+                        android:layout_marginBottom="216dp" />
 
-                <EditText
-                    android:id="@+id/editTextISBN"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginEnd="29dp"
-                    android:layout_marginBottom="183dp"
-                    android:maxLength="13"
-                    android:ems="10"
-                    android:inputType="number" />
+                    <TextView
+                        android:id="@+id/textViewCategory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginBottom="223dp"
+                        android:text="Categoria :" />
 
-                <Button
-                    android:id="@+id/buttonSubmitBook"
-                    android:layout_width="125dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginEnd="100dp"
-                    android:layout_marginBottom="34dp"
-                    android:text="Añadir" />
+                    <TextView
+                        android:id="@+id/textViewDescription"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="26dp"
+                        android:layout_marginBottom="186dp"
+                        android:text="Description :" />
 
-                <TextView
-                    android:id="@+id/textViewImage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="31dp"
-                    android:layout_marginTop="67dp"
-                    android:text="Imagen :" />
+                    <EditText
+                        android:id="@+id/editTextISBN"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="26dp"
+                        android:layout_marginBottom="278dp"
+                        android:ems="10"
+                        android:inputType="number" />
 
-            </RelativeLayout>
+                    <Button
+                        android:id="@+id/buttonSubmitBook"
+                        android:layout_width="125dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="101dp"
+                        android:layout_marginBottom="11dp"
+                        android:text="Añadir" />
 
-        </LinearLayout>
-    </ScrollView>
+                    <TextView
+                        android:id="@+id/textViewImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="33dp"
+                        android:layout_marginTop="66dp"
+                        android:text="Imagen :" />
+
+                    <EditText
+                        android:id="@+id/editTextTextMultiLineDesc"
+                        android:layout_width="322dp"
+                        android:layout_height="98dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="80dp"
+                        android:ems="10"
+                        android:gravity="start|top"
+                        android:inputType="textMultiLine" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
