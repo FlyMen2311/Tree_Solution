@@ -29,7 +29,9 @@ import com.example.tree_solution_proyect.Adaptadores.RecyclerChatRemoveListener;
 import com.example.tree_solution_proyect.Holders.Holder_Chats;
 import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Objetos.Firebase.Chat;
+import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
 import com.example.tree_solution_proyect.Objetos.Logica.LChat;
+import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ChatsClick;
 import com.example.tree_solution_proyect.Vistas.Login;
@@ -69,6 +71,7 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
     private Button AceptarEliminar;
     private Button CancelEliminar;
     public View vista;
+    public int posicion =0;
 
 
 
@@ -137,7 +140,21 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
 
                 @Override
                 public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot librosnapshot : dataSnapshot.getChildren()) {
+                        for (DataSnapshot chatsnapshot : librosnapshot.getChildren()) {
+                            final Chat m = chatsnapshot.getValue(Chat.class);
+                            final LChat lLChat = new LChat(m, chatsnapshot.getKey());
 
+                            for (int i = 0; i < adapter_chats.getListChats().size(); i++) {
+                                String key1=adapter_chats.getListChats().get(i).getKey();
+                                String key2=lLChat.getKey();
+                                if (key1.equals(key2)) {
+                                    adapter_chats.getListChats().remove(i);
+                                }
+                            }
+
+                        }
+                    }
                 }
 
                 @Override
@@ -168,7 +185,7 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
         FirebaseUser currentuser=mAuth.getCurrentUser();
 
         if(currentuser!=null){
-
+            adapter_chats.notifyDataSetChanged();
         }else{
             startActivity(new Intent(getActivity().getApplicationContext(), Login.class));
             try {

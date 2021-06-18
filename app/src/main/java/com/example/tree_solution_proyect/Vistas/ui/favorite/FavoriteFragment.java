@@ -154,8 +154,6 @@ public class FavoriteFragment extends Fragment {
                     }
                 }
                 adapter_favoritos.getListLibros().remove(posicion);
-
-
                 adapter_favoritos.notifyItemRemoved(posicion);
 
             }

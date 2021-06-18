@@ -44,8 +44,12 @@ public class ChatDao {
         referenceChats = database.getReference(Constantes.NODO_CHATS);
         mAuth = FirebaseAuth.getInstance();
     }
+    public interface IDevolverUltimoMensaje{
+        void DevolverUltimoMensaje(String  mensaje);
+        void devolverError(String mensajeError);
+    }
 
-    public String getUltimoMensaje(String keyReceptor, String keyLibro) {
+    public String getUltimoMensaje(String keyReceptor, String keyLibro, IDevolverUltimoMensaje iDevolverBooDevolverUltimoMensaje) {
 
         DatabaseReference reference = database.getReference(Constantes.NODO_CHATS).child(mAuth.getCurrentUser().getUid()).child(keyReceptor).child(keyLibro);
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -56,14 +60,17 @@ public class ChatDao {
                     Mensaje mensaje = dataSnapshot.getValue(Mensaje.class);
                     LMensaje lMensaje = new LMensaje(mensaje, snapshot.getKey());
                     lMensajes.add(lMensaje);
-                    Log.i("pizda", "" + lMensajes.size());
                 }
-
+                if(lMensajes.size()!=0) {
+                    iDevolverBooDevolverUltimoMensaje.DevolverUltimoMensaje(lMensajes.get(lMensajes.size() - 1).getMensaje().getMensaje());
+                }else{
+                    iDevolverBooDevolverUltimoMensaje.DevolverUltimoMensaje("");
+                }
             }
 
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
+                iDevolverBooDevolverUltimoMensaje.devolverError(error.getMessage());
             }
 
         });

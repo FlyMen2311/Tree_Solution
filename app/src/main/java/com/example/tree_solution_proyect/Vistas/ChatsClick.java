@@ -152,12 +152,11 @@ public class ChatsClick extends AppCompatActivity {
         databaseReferenceUsuario = database.getReference(Constantes.NODO_USUARIOS).child(Llibro.getLibro().getUserKey());
 
         storage = FirebaseStorage.getInstance();
-        ;
 
         fotoPerfilString = "";
 
         mAuth = FirebaseAuth.getInstance();
-        ;
+
 
         adapter_mensaje = new Adapter_mensaje(getApplicationContext());
         LinearLayoutManager l = new LinearLayoutManager(getApplicationContext());
@@ -203,7 +202,7 @@ public class ChatsClick extends AppCompatActivity {
                 };
 
                 Libro libro1 = dataSnapshot.getValue(libro);
-
+                if (dataSnapshot.exists()) {
                     Uri uri = Uri.parse(libro1.getFotoPrincipalUrl());
                     if (uri != null) {
                         try {
@@ -252,9 +251,8 @@ public class ChatsClick extends AppCompatActivity {
                         } catch (Exception e) {
                         }
                     }
-
+                }
             }
-
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
             }
@@ -367,49 +365,52 @@ public class ChatsClick extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     Libro libro = snapshot.getValue(Libro.class);
-                    LLibro llibro=new LLibro(libro,snapshot.getKey());
-                    Picasso.with(getApplicationContext())
-                            .load(libro.getFotoPrincipalUrl())
-                            .into(foto_libro);
-                    nombre.setText(libro.getNombre());
-                    autor.setText("by " + libro.getAutor());
-                    categoria.setText(libro.getCategoria());
-                    ISBN.setText(libro.getISBN());
-                    condition.setText(libro.getCondition());
-                    precio.setText(String.valueOf(libro.getPrecio() + "€"));
-                    hora.setText(llibro.obtenerFechaDeCreacionLibro());
+                    LLibro llibro = new LLibro(libro, snapshot.getKey());
+                    if (libro != null) {
+                        Picasso.with(getApplicationContext())
+                                .load(libro.getFotoPrincipalUrl())
+                                .into(foto_libro);
 
-                    if (libro.getCondition().equals("Nuevo")) {
-                        ratingBar.setRating(5);
-                    } else if (libro.getCondition().equals("Muy buen estado")) {
-                        ratingBar.setRating(4);
-                    } else if (libro.equals("Buen estado")) {
-                        ratingBar.setRating(3);
-                    } else if (libro.getCondition().equals("Defecto estético")) {
-                        ratingBar.setRating(2);
-                    } else if (libro.getCondition().equals("Mala condición")) {
-                        ratingBar.setRating(1);
-                    } else {
-                        ratingBar.setRating(0);
+                        nombre.setText(libro.getNombre());
+                        autor.setText("by " + libro.getAutor());
+                        categoria.setText(libro.getCategoria());
+                        ISBN.setText(libro.getISBN());
+                        condition.setText(libro.getCondition());
+                        precio.setText(String.valueOf(libro.getPrecio() + "€"));
+                        hora.setText(llibro.obtenerFechaDeCreacionLibro());
+
+                        if (libro.getCondition().equals("Nuevo")) {
+                            ratingBar.setRating(5);
+                        } else if (libro.getCondition().equals("Muy buen estado")) {
+                            ratingBar.setRating(4);
+                        } else if (libro.equals("Buen estado")) {
+                            ratingBar.setRating(3);
+                        } else if (libro.getCondition().equals("Defecto estético")) {
+                            ratingBar.setRating(2);
+                        } else if (libro.getCondition().equals("Mala condición")) {
+                            ratingBar.setRating(1);
+                        } else {
+                            ratingBar.setRating(0);
+                        }
+                        databaseReferenceUsuario.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                                //leeremos un objeto de tipo Usuario
+                                GenericTypeIndicator<Usuario> u = new GenericTypeIndicator<Usuario>() {
+                                };
+                                Usuario usuario = snapshot.getValue(u);
+                                Picasso.with(getApplicationContext()).load(usuario.getFotoPerfilUrl()).into(foto_libro_propietario);
+                                nombre_libro_propietario.setText(usuario.getUserName());
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                            }
+
+                        });
+
                     }
-                    databaseReferenceUsuario.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                            //leeremos un objeto de tipo Usuario
-                            GenericTypeIndicator<Usuario> u = new GenericTypeIndicator<Usuario>() {
-                            };
-                            Usuario usuario = snapshot.getValue(u);
-                            Picasso.with(getApplicationContext()).load(usuario.getFotoPerfilUrl()).into(foto_libro_propietario);
-                            nombre_libro_propietario.setText(usuario.getUserName());
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                        }
-
-                    });
-
                 }
 
                 @Override

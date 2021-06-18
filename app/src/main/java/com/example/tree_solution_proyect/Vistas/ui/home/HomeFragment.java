@@ -41,6 +41,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -64,6 +65,11 @@ public class HomeFragment extends Fragment {
     private Adapter_Libro adapter_libro;
     private Calendar calendario = Calendar.getInstance();
     private FirebaseAuth mAuth;
+    private String keyEmisor;
+    private String keyreceptor;
+    private String keyLibro;
+    int posicion = 0;
+
 
     private EditText buscar_librosISBN;
     public View vista;
@@ -162,12 +168,48 @@ public class HomeFragment extends Fragment {
             public void onChildRemoved(@NonNull @NotNull DataSnapshot snapshot) {
                 final Libro m=snapshot.getValue(Libro.class);
                 final LLibro lLibro=new LLibro(m,snapshot.getKey());
-                int posicion = 0;
+
                 for(int i=0;i<adapter_libro.getListLibros().size();i++){
                     if(adapter_libro.getListLibros().get(i).getLibro().getReferenceStorage().equals(lLibro.getLibro().getReferenceStorage())){
                         posicion=i;
                     }
                 }
+                DatabaseReference reference2=database.getReference(Constantes.NODO_CHAT_DATOS);
+                reference2.addValueEventListener(new ValueEventListener() {
+                    private DataSnapshot snapshot1;
+                    private DataSnapshot snapshot2;
+                    private DataSnapshot snapshot3;
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        for(DataSnapshot snapshot1:snapshot.getChildren()){
+                            this.snapshot1=snapshot1;
+                            keyEmisor=snapshot1.getKey();
+
+                            for(DataSnapshot snapshot2:this.snapshot1.getChildren()){
+                                this.snapshot2=snapshot2;
+                                keyreceptor=snapshot2.getKey();
+                            }
+                            for(DataSnapshot snapshot3:snapshot2.getChildren()){
+                                this.snapshot3=snapshot3;
+                                keyLibro=snapshot3.getKey();
+                                if(keyLibro.equals(adapter_libro.getListLibros().get(posicion).getKey())){
+                                    database.getReference(Constantes.NODO_CHATS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
+                                    database.getReference(Constantes.NODO_CHAT_DATOS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
+                                }
+                            }
+                        }
+
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                    }
+                });
+
                 database.getReference(Constantes.NODO_LIB_FAV).child(mAuth.getCurrentUser().getUid()).child( adapter_libro.getListLibros().get(posicion).getKey()).removeValue();
 
                             adapter_libro.getListLibros().remove(posicion);

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -64,11 +65,25 @@ public class Adapter_Chats extends RecyclerView.Adapter<Holder_Chats>implements 
         holder.getName_libro_chat().setText(lChat.getChat().getNombrelibro());
         holder.getName_propietario().setText(lChat.getChat().getNombrePropietario());
 
-        if(ChatDao.getInstance().getUltimoMensaje(lChat.getChat().getKeyreceptor(),lChat.getChat().getKeylibro())!=null) {
-            holder.getUltimo_mensaje().setText(ChatDao.getInstance().getUltimoMensaje(lChat.getChat().getKeyreceptor(),lChat.getChat().getKeylibro()));
-        }else{
-            holder.getUltimo_mensaje().setText("Puedes empezar a chatear");
-        }
+        ChatDao.getInstance().getUltimoMensaje(lChat.getChat().getKeyreceptor(), lChat.getChat().getKeylibro(), new ChatDao.IDevolverUltimoMensaje() {
+                    @Override
+                    public void DevolverUltimoMensaje(String mensaje) {
+                        if(!mensaje.equals("")){
+                            holder.getUltimo_mensaje().setText(mensaje);
+                        }else{
+                            holder.getUltimo_mensaje().setText("Puedes empezar a chatear");
+                        }
+                    }
+
+                    @Override
+                    public void devolverError(String mensajeError) {
+                        Toast.makeText(holder.getContext(), "Error" + mensajeError, Toast.LENGTH_SHORT);
+                    }
+                });
+
+
+
+
     }
     //En este metodo añdimos el Libro creado a nuestra lista y notificamos a nuestro activity
     public int addChat(LChat LChat){
