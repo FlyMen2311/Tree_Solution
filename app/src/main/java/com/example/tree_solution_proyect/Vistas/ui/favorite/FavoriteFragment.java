@@ -77,7 +77,7 @@ public class FavoriteFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        vista =inflater.inflate(R.layout.fragment_home, container, false);
+        vista =inflater.inflate(R.layout.fragment_favorite, container, false);
 
         recyclerView=vista.findViewById(R.id.recycler_favoritos);
         buscar_librosISBN=vista.findViewById(R.id.buscar_chats_nombre);
