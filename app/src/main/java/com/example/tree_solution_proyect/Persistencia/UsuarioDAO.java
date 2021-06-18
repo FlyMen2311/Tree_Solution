@@ -92,7 +92,8 @@ public class UsuarioDAO {
 
                    for(LUsuario lUsuario1:lUsuarioList){
                        if(lUsuario1.getUsuario().getFotoPerfilUrl()==null){
-                           referenceUsuarios.child(lUsuario1.getKey()).child("fotoPerfilUrl").setValue(Constantes.URL_FOTO_PERFIL);
+                           referenceUsuarios.child(lUsuario1.getKey())
+                                   .child("fotoPerfilUrl").setValue(Constantes.URL_FOTO_PERFIL);
                        }
                    }
                 }

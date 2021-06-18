@@ -12,7 +12,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
 import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
 import com.example.tree_solution_proyect.R;
@@ -27,9 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class Registro extends AppCompatActivity {
     private EditText txtNombre,txtCorreo,txtContraseña,txtContraseñaRepetida;
-    private Button registro;
+    private Button registro,btn_atras;
     private FirebaseAuth mAuth;
-    private Button btn_atras;
 
     private FirebaseDatabase database;
     @Override
@@ -79,14 +77,11 @@ public class Registro extends AppCompatActivity {
                                         finish();
                                     } else {
                                         mAuth.fetchSignInMethodsForEmail(email)
-                                                .addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
-                                                        boolean isEmailExist = task.getResult().getSignInMethods().isEmpty();
-                                                        if (!isEmailExist) {
-                                                            Toast.makeText(Registro.this, "Email ya existe",
-                                                                    Toast.LENGTH_SHORT).show();
-                                                        }
+                                                .addOnCompleteListener(task1 -> {
+                                                    boolean isEmailExist = task1.getResult().getSignInMethods().isEmpty();
+                                                    if (!isEmailExist) {
+                                                        Toast.makeText(Registro.this, "Email ya existe",
+                                                                Toast.LENGTH_SHORT).show();
                                                     }
                                                 });
                                     }

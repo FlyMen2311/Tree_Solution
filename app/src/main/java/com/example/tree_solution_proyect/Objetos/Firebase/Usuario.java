@@ -1,15 +1,10 @@
 package com.example.tree_solution_proyect.Objetos.Firebase;
 
-import com.google.firebase.database.Exclude;
-import com.google.firebase.database.ServerValue;
-
 import java.io.Serializable;
 
 public class Usuario implements Serializable {
-    private String userName;
-    private String email;
+    private String userName,email,fotoPerfilUrl;
     private long fechaDeNacimiento;
-    private String fotoPerfilUrl;
 
     public Usuario() {
     }

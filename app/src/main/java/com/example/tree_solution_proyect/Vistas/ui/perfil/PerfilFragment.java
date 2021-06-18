@@ -1,12 +1,12 @@
 package com.example.tree_solution_proyect.Vistas.ui.perfil;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,7 +18,6 @@ import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
 import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.Login;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,20 +41,35 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class PerfilFragment extends Fragment {
-    private Button salir;
-    private TextView userName;
+    private TextView salir,userName,textViewResetPass;
     private ImageView FotoCambioPerfil;
     private FirebaseDatabase database;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReferenceUsuario;
     private FirebaseStorage storage;
     private StorageReference storageReference;
+    private Dialog dialogResetpass;
+    private Dialog myDialogResetPass;
     private ImagePicker imagePicker;
     private Uri fotoUriPerfil;
+    private TextView editTextTextPassword,editTextTextPassword2,textViewAccept,textViewProducts
+            ,textViewMisProductos;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         View vista=inflater.inflate(R.layout.fragment_perfil, container, false);
+
+        textViewResetPass = vista.findViewById(R.id.textViewResetPass);
+        textViewProducts = vista.findViewById(R.id.textViewProducts);
+
+        textViewProducts.setOnClickListener(new textViewMisProductos());
+
+        myDialogResetPass = new Dialog(getActivity());
+
+        //reset pass action
+        textViewResetPass.setOnClickListener(new textViewResetPass());
+
         database=FirebaseDatabase.getInstance();
         mAuth=FirebaseAuth.getInstance();
         storage= FirebaseStorage.getInstance();;
@@ -71,12 +85,11 @@ public class PerfilFragment extends Fragment {
                     String path=list.get(0).getOriginalPath();
                     fotoUriPerfil= Uri.parse(path);
                     if(fotoUriPerfil!=null) {
-                        UsuarioDAO.getInstance().cambiarFotoUri(fotoUriPerfil, new UsuarioDAO.IDevolverUrlFoto() {
-                            @Override
-                            public void DevolverUrlFoto(String uri) {
-                                FirebaseDatabase.getInstance().getReference().child("Usuarios").child(mAuth.getCurrentUser().getUid()).child("fotoPerfilUrl").setValue(uri);
-                            }
-                        });
+                        UsuarioDAO.getInstance().cambiarFotoUri(fotoUriPerfil,
+                                uri -> FirebaseDatabase.getInstance()
+                                        .getReference().child("Usuarios")
+                                        .child(mAuth.getCurrentUser().getUid())
+                                        .child("fotoPerfilUrl").setValue(uri));
                     }
 
                 }
@@ -95,7 +108,8 @@ public class PerfilFragment extends Fragment {
             }
         });
 
-        databaseReferenceUsuario = database.getReference("Usuarios/"+mAuth.getCurrentUser().getUid());
+        databaseReferenceUsuario = database.getReference("Usuarios/"+mAuth
+                .getCurrentUser().getUid());
         databaseReferenceUsuario.addValueEventListener(new ValueEventListener() {
 
             @Override
@@ -113,7 +127,8 @@ public class PerfilFragment extends Fragment {
                                 .into(FotoCambioPerfil);
                         userName.setText(usuario1.getUserName());
                     } catch (Exception e) {
-                        Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getApplicationContext(),
+                                e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -123,7 +138,7 @@ public class PerfilFragment extends Fragment {
             }
         });
 
-        salir=vista.findViewById(R.id.button);
+        salir=vista.findViewById(R.id.textViewLogOut);
         salir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,6 +158,32 @@ public class PerfilFragment extends Fragment {
 
     }
 
+    class textViewResetPass implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            myDialogResetPass.setContentView(R.layout.activity_resetpass);
+
+            textViewProducts = myDialogResetPass.findViewById(R.id.textViewExitPass);
+            editTextTextPassword = myDialogResetPass.findViewById(R.id.editTextTextPassword);
+            editTextTextPassword2 = myDialogResetPass.findViewById(R.id.editTextTextPassword2);
+            textViewAccept = myDialogResetPass.findViewById(R.id.textViewAccept);
+
+            myDialogResetPass.show();
+
+            textViewProducts.setOnClickListener(new resetPassExit());
+
+        }
+
+        class resetPassExit implements View.OnClickListener {
+
+            @Override
+            public void onClick(View v) {
+                myDialogResetPass.dismiss();
+            }
+        }
+    }
+
     //Recoger datos de Intent producido en esta clase
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -150,6 +191,15 @@ public class PerfilFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == Picker.PICK_IMAGE_DEVICE && resultCode == RESULT_OK){
             imagePicker.submit(data);
+        }
+    }
+
+    class textViewMisProductos implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            Intent i = new Intent(getActivity(), MisLibrosActivity.class);
+            startActivity(i);
         }
     }
 

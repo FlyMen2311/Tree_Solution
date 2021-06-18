@@ -47,6 +47,7 @@ public class LibroClickActivity extends AppCompatActivity {
     private TextView hora;
     private Context context;
     private RatingBar ratingBar;
+    private TextView descripcion;
     private DatabaseReference databaseReferenceUsuario;
     private DatabaseReference databaseReferenceDatosChat;
     private FirebaseDatabase database;
@@ -81,6 +82,7 @@ public class LibroClickActivity extends AppCompatActivity {
         nombre_libro_propietario=findViewById(R.id.nombre_user);
         btnchat=findViewById(R.id.btn_aceptar);
         btnVolver=findViewById(R.id.btn_cancelar);
+        descripcion=findViewById(R.id.descripcion2);
         chat=new Chat();
 
         Llibro = (LLibro) getIntent().getExtras().getSerializable("objectLibro");
@@ -188,7 +190,9 @@ public class LibroClickActivity extends AppCompatActivity {
         ISBN.setText(libro.getLibro().getISBN());
         condition.setText(libro.getLibro().getCondition());
         precio.setText(String.valueOf(libro.getLibro().getPrecio()+"€"));
+        descripcion.setText(libro.getLibro().getDescripcion());
         hora.setText(libro.obtenerFechaDeCreacionLibro());
+
 
         if(libro.getLibro().getCondition().equals("Nuevo")){
             ratingBar.setRating(5);

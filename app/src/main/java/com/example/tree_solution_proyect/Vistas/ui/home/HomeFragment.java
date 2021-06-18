@@ -89,6 +89,7 @@ public class HomeFragment extends Fragment {
         storage= FirebaseStorage.getInstance();;
 
         adapter_libro=new Adapter_Libro(getActivity().getApplicationContext(),new LibroOpen(getActivity(),getContext()));
+
         LinearLayoutManager l=new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(l);
         recyclerView.setAdapter(adapter_libro);
@@ -125,7 +126,9 @@ public class HomeFragment extends Fragment {
             Map<String, LUsuario> stringLUsuarioMap=new HashMap<>();
 
             @Override
-            public void onChildAdded(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
+            public void onChildAdded(@NonNull @NotNull DataSnapshot snapshot,
+                                     @Nullable @org.jetbrains.annotations.Nullable
+                                             String previousChildName) {
                 final Libro m=snapshot.getValue(Libro.class);
                 final LLibro lLibro=new LLibro(m,snapshot.getKey());
 
@@ -275,15 +278,16 @@ public class HomeFragment extends Fragment {
         }
 
         @Override
-        public void LibroClick ( int pos, ImageView imgcontainer, ImageView fotoLibro, TextView nombre, TextView autor, TextView precio, TextView ISBN, TextView categoria,
-                                 RatingBar ratingBar, TextView estado, TextView fechacreacion, ImageView favorite){
+        public void LibroClick (int pos, ImageView imgcontainer, ImageView fotoLibro, TextView nombre,
+                                TextView autor, TextView precio, TextView ISBN, TextView categoria,
+                                RatingBar ratingBar, TextView estado, TextView fechacreacion,
+                                ImageView favorite, TextView descripcion, TextView esVendido){
 
             try {
                 Intent intent = new Intent(activity, LibroClickActivity.class);
                 LLibro llibro = adapter_libro.getListLibros().get(pos);
 
                 if (llibro != null) {
-
                     if(favorite.getBackground().getConstantState().equals(favorite.getContext().getDrawable(R.drawable.favorite).getConstantState())){
                         isFavorite=false;
                         intent.putExtra("isFavorite", isFavorite);

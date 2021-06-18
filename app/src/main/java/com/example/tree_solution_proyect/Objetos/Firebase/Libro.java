@@ -1,5 +1,6 @@
 package com.example.tree_solution_proyect.Objetos.Firebase;
 
+
 import android.widget.TextView;
 
 import com.google.firebase.database.ServerValue;
@@ -7,17 +8,10 @@ import com.google.firebase.database.ServerValue;
 import java.io.Serializable;
 
 public class Libro implements Serializable {
-    private String FotoPrincipalUrl;
-    private String nombre;
-    private String autor;
-    private String condition;
-    private String ISBN;
+    private String FotoPrincipalUrl,categoria,descripcion,userKey,
+            referenceStorage,ISBN,condition,autor,nombre, esVendido;
     private Double precio;
     private Object createTimestamp;
-    private String categoria;
-    private String userKey;
-    private String referenceStorage;
-    private String descripcion;
     private boolean isFavoritos;
 
 
@@ -48,9 +42,7 @@ public class Libro implements Serializable {
         return descripcion;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
     public void setCreateTimestamp(Object createTimestamp) {
         this.createTimestamp = createTimestamp;
@@ -118,5 +110,13 @@ public class Libro implements Serializable {
 
     public Object getCreateTimestamp() {
        return  createTimestamp;
+    }
+
+    public String getEsVendido() {
+        return esVendido;
+    }
+
+    public void setEsVendido(String esVendido) {
+        this.esVendido = esVendido;
     }
 }

@@ -56,7 +56,6 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
     private FirebaseDatabase database;
     private DatabaseReference databaseReferenceChats;
     private DatabaseReference databaseReferenceChatsUsuario;
-
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private Adapter_Chats adapter_chats;
@@ -101,13 +100,11 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
             adapter_chats=new Adapter_Chats(getActivity().getApplicationContext(),new ChatOpen(getActivity(),getContext()));
             LinearLayoutManager l=new LinearLayoutManager(getActivity().getApplicationContext());
             recyclerView.setLayoutManager(l);
+
             recyclerView.setAdapter(adapter_chats);
 
             ItemTouchHelper.SimpleCallback simpleCallback=new RecyclerChatRemoveListener(0,ItemTouchHelper.LEFT, this);
             new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
-
-
-
 
               //Gestion de eventos producidos en FIREBASE
               databaseReferenceChatsUsuario.addChildEventListener(new ChildEventListener() {

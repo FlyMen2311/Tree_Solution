@@ -29,10 +29,8 @@ import com.example.tree_solution_proyect.Vistas.ui.favorite.FavoriteFragment;
 import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
 import com.example.tree_solution_proyect.Vistas.ui.perfil.PerfilFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
 import com.kbeanie.multipicker.api.ImagePicker;
 import com.kbeanie.multipicker.api.Picker;
 import com.kbeanie.multipicker.api.callbacks.ImagePickerCallback;
@@ -43,34 +41,18 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class AplicationActivity extends AppCompatActivity {
+
     private FirebaseDatabase database;
-    private FirebaseAuth mAuth;
-    private DatabaseReference databaseReference;
     private DatabaseReference databaseReferenceLibro;
-    private FirebaseStorage storage;
-
-
-    private int Image_Request_Code = 7;
-
-    Dialog myDialog;
-
+    private Dialog myDialog;
     private ImagePicker imagePicker;
-    private TextView editTextAuthor;
-    private TextView editTextName;
-    private TextView editTextPrice;
-    private TextView editTextISBN;
-    private TextView textViewExit;
-
+    private TextView editTextAuthor,textViewExit,editTextISBN,
+            editTextPrice,editTextName,editTextDescripcion;
     private Button buttonSubmitBook;
-
-    private Spinner spinnerContidion;
-    private Spinner spinnerCategory;
-
+    private Spinner spinnerContidion,spinnerCategory;
     private ImageView imageView;
-
     protected Uri imageUri;
-    private String StrinUrl;
-    private String mGroupId;
+    private String StrinUrl,mGroupId;
 
 
     @Override
@@ -80,9 +62,7 @@ public class AplicationActivity extends AppCompatActivity {
         myDialog = new Dialog(this);
 
 
-        mAuth=FirebaseAuth.getInstance();
         database=FirebaseDatabase.getInstance();
-        storage= FirebaseStorage.getInstance();
         databaseReferenceLibro=database.getReference("Libros");
 
 
@@ -145,10 +125,12 @@ public class AplicationActivity extends AppCompatActivity {
                         editTextPrice = myDialog.findViewById(R.id.editTextPrice);
                         editTextISBN = myDialog.findViewById(R.id.editTextISBN);
                         textViewExit = myDialog.findViewById(R.id.textViewExit);
+                        editTextDescripcion = myDialog.findViewById(R.id.editTextTextMultiLineDesc);
                         imageView = myDialog.findViewById(R.id.imageViewImage);
                         buttonSubmitBook = myDialog.findViewById(R.id.buttonSubmitBook);
                         spinnerContidion = myDialog.findViewById(R.id.spinnerCondition);
                         spinnerCategory = myDialog.findViewById(R.id.spinnerCategory);
+
 
                         adapterCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         adapterCondition.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -233,6 +215,8 @@ public class AplicationActivity extends AppCompatActivity {
                 libro.setUserKey(LibroDAO.getKeyUsuario());
                 libro.setFotoPrincipalUrl(StrinUrl);
                 libro.setReferenceStorage(mGroupId);
+                libro.setEsVendido("No");
+                libro.setDescripcion(editTextDescripcion.getText().toString());
 
                 try {
                     if (libro != null) {

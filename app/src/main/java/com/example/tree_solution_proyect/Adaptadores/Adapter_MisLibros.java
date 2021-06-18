@@ -15,9 +15,8 @@ import com.bumptech.glide.Glide;
 import com.example.tree_solution_proyect.Holders.Holder_Libro;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
-import com.example.tree_solution_proyect.Persistencia.LibroDAO;
 import com.example.tree_solution_proyect.R;
-import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
+import com.example.tree_solution_proyect.Vistas.ui.perfil.MisLibrosActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -26,15 +25,14 @@ import java.util.List;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
-public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements Filterable {
+public class Adapter_MisLibros extends RecyclerView.Adapter<Holder_Libro>implements Filterable {
     public List<LLibro> listLibros=new ArrayList<>();
     public List<LLibro> listLibrosFilter=new ArrayList<>();
     private Context x;
-    private  HomeFragment.LibroOpen libroOpen;
+    private  MisLibrosActivity.LibroOpen libroOpen;
     public ISBNFilter isbnFilter;
-    public boolean isFavorite=false;
 
-    public Adapter_Libro(Context x,HomeFragment.LibroOpen libroOpen) {
+    public Adapter_MisLibros(Context x, MisLibrosActivity.LibroOpen libroOpen) {
         this.x = x;
         isbnFilter=new ISBNFilter(this);
         this.libroOpen=libroOpen;
@@ -50,7 +48,8 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
     @NotNull
     @Override
     public Holder_Libro onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(x).inflate(R.layout.layout_holder_libro,parent,false);
+        View v;
+        v= LayoutInflater.from(x).inflate(R.layout.layout_holder_mislibros,parent,false);
 
         return new Holder_Libro(v, libroOpen);
     }
@@ -74,45 +73,6 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
             holder.getFoto_libro().setVisibility(View.VISIBLE);
             holder.getCondition().setText(lLibro.getLibro().getCondition());
 
-
-            LibroDAO.getInstance().libroExistFavoritos(lLibro, new LibroDAO.IDevolverBooleanExist() {
-                @Override
-                public void devolverExist(boolean isExist) {
-                    if(isExist){
-                        holder.getFavorit().setBackgroundResource(R.drawable.favorite_libro);
-                    }else{
-                        holder.getFavorit().setBackgroundResource(R.drawable.favorite);
-                    }
-                }
-
-                @Override
-                public void devolverError(String mensajeError) {
-                    Toast.makeText(holder.getContext(), "Error" + mensajeError, Toast.LENGTH_SHORT);
-                }
-            });
-
-
-
-            holder.getFavorit().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(holder.getFavorit().getBackground().getConstantState().equals(holder.getFavorit().getContext().getDrawable(R.drawable.favorite).getConstantState())){
-                        holder.getFavorit().setBackgroundResource(R.drawable.favorite_libro);
-                        LibroDAO.getInstance().crearLibroFavorito(lLibro);
-                        isFavorite=true;
-                    }else if(holder.getFavorit().getBackground().getConstantState().equals(holder.getFavorit().getContext().getDrawable(R.drawable.favorite_libro).getConstantState())){
-                        LibroDAO.getInstance().eliminarLibroFavorito(lLibro);
-                        holder.getFavorit().setBackgroundResource(R.drawable.favorite);
-                        isFavorite=false;
-                    }
-                }
-            });
-            holder.getFoto_libro().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
 
             if(lLibro.getLibro().getCondition().equals("Nuevo")){
                 holder.getRatingBar().setRating(5);
@@ -153,14 +113,6 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
         this.listLibrosFilter = listLibros;
     }
 
-    public boolean isFavorite() {
-        return isFavorite;
-    }
-
-    public void setFavorite(boolean favorite) {
-        isFavorite = favorite;
-    }
-
     @Override
     public int getItemCount() {
         return listLibrosFilter.size();
@@ -184,10 +136,10 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
     }
 
     public class ISBNFilter extends Filter {
-        private Adapter_Libro listAdapter;
+        private Adapter_MisLibros listAdapter;
 
 
-        private ISBNFilter(Adapter_Libro listAdapter) {
+        private ISBNFilter(Adapter_MisLibros listAdapter) {
             super();
             this.listAdapter = listAdapter;
         }

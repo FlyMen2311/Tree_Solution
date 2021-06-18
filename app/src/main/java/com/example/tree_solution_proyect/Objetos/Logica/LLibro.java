@@ -1,9 +1,5 @@
 package com.example.tree_solution_proyect.Objetos.Logica;
 
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.TextView;
-
 import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
 import com.example.tree_solution_proyect.Persistencia.LibroDAO;
 import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;

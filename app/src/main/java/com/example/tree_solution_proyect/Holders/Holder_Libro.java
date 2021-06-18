@@ -13,15 +13,16 @@ import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.home.LibrosClickablesIntefrace;
 
 public class Holder_Libro extends  RecyclerView.ViewHolder{
-    private ImageView Foto_libro;
-    private ImageView Favorit;
+    private ImageView Foto_libro,Favorit;
     private TextView nombre;
-    private TextView autor;
-    private TextView categoria;
-    private TextView ISBN;
-    private TextView condition;
-    private TextView precio;
     private TextView hora;
+    private TextView precio;
+    private TextView condition;
+    private TextView ISBN;
+    private TextView categoria;
+    private TextView autor;
+    private TextView descripcion;
+    private TextView esVendido;
     private Context context;
     private RatingBar ratingBar;
     private ImageView containerLibro;
@@ -56,7 +57,7 @@ public class Holder_Libro extends  RecyclerView.ViewHolder{
                         autor,precio,ISBN,
                         categoria,ratingBar,
                         condition,hora,
-                        Favorit);
+                        Favorit, descripcion, esVendido);
             }
         });
     }
@@ -158,5 +159,15 @@ public class Holder_Libro extends  RecyclerView.ViewHolder{
     public void setContext(Context context) {
         this.context = context;
     }
+
+    public TextView getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(TextView descripcion) {
+        this.descripcion = descripcion;
+    }
+
+
 
 }

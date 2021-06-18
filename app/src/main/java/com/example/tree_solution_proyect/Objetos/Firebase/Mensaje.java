@@ -7,8 +7,7 @@ import java.io.Serializable;
 public class Mensaje implements  Serializable{
 
     //Inicializamos los atributos
-    private String mensaje;
-    private String userKey;
+    private String mensaje,userKey;
     private Object createTimestamp;
 
     //Metodo constructor vacio
