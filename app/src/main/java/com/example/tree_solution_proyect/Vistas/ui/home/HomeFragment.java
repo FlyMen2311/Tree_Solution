@@ -26,7 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
-import com.example.tree_solution_proyect.Persistencia.LibroDAO;
+import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Vistas.LibroClickActivity;
 import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
@@ -41,6 +41,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -64,7 +65,12 @@ public class HomeFragment extends Fragment {
     private Adapter_Libro adapter_libro;
     private Calendar calendario = Calendar.getInstance();
     private FirebaseAuth mAuth;
-    private static List<LLibro> libroListClick;
+    private String keyEmisor;
+    private String keyreceptor;
+    private String keyLibro;
+    int posicion = 0;
+
+
     private EditText buscar_librosISBN;
     public View vista;
     public  boolean isFavorite;
@@ -75,7 +81,7 @@ public class HomeFragment extends Fragment {
 
         vista =inflater.inflate(R.layout.fragment_home, container, false);
 
-        recyclerView=vista.findViewById(R.id.recycler_chats);
+        recyclerView=vista.findViewById(R.id.recycler_favoritos);
         buscar_librosISBN=vista.findViewById(R.id.buscar_chats_nombre);
         mAuth=FirebaseAuth.getInstance();
 
@@ -84,7 +90,7 @@ public class HomeFragment extends Fragment {
 
 
         storage= FirebaseStorage.getInstance();;
-        libroListClick =new ArrayList<LLibro>();
+
 
 
         adapter_libro=new Adapter_Libro(getActivity().getApplicationContext(),
@@ -136,7 +142,7 @@ public class HomeFragment extends Fragment {
                 if(stringLUsuarioMap.get(m.getUserKey())!=null){
                     lLibro.setLUsuario(stringLUsuarioMap.get(m.getUserKey()));
                     adapter_libro.actualizarLibro(posicion,lLibro);
-                    libroListClick.add(lLibro);
+
                 }else{
                     UsuarioDAO.getInstance().obtenerInformacionKey(m.getUserKey(), new UsuarioDAO.IDevolverUsuario() {
                         @Override
@@ -144,7 +150,7 @@ public class HomeFragment extends Fragment {
                             stringLUsuarioMap.put(m.getUserKey(),lUsuario);
                             lLibro.setLUsuario(lUsuario);
                             adapter_libro.actualizarLibro(posicion,lLibro);
-                            libroListClick.add(lLibro);
+
                         }
 
                         @Override
@@ -165,15 +171,53 @@ public class HomeFragment extends Fragment {
             public void onChildRemoved(@NonNull @NotNull DataSnapshot snapshot) {
                 final Libro m=snapshot.getValue(Libro.class);
                 final LLibro lLibro=new LLibro(m,snapshot.getKey());
-                int posicion = 0;
+
                 for(int i=0;i<adapter_libro.getListLibros().size();i++){
                     if(adapter_libro.getListLibros().get(i).getLibro().getReferenceStorage().equals(lLibro.getLibro().getReferenceStorage())){
                         posicion=i;
                     }
                 }
+                DatabaseReference reference2=database.getReference(Constantes.NODO_CHAT_DATOS);
+                reference2.addValueEventListener(new ValueEventListener() {
+                    private DataSnapshot snapshot1;
+                    private DataSnapshot snapshot2;
+                    private DataSnapshot snapshot3;
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        for(DataSnapshot snapshot1:snapshot.getChildren()){
+                            this.snapshot1=snapshot1;
+                            keyEmisor=snapshot1.getKey();
+
+                            for(DataSnapshot snapshot2:this.snapshot1.getChildren()){
+                                this.snapshot2=snapshot2;
+                                keyreceptor=snapshot2.getKey();
+                            }
+                            for(DataSnapshot snapshot3:snapshot2.getChildren()){
+                                this.snapshot3=snapshot3;
+                                keyLibro=snapshot3.getKey();
+                                if(keyLibro.equals(adapter_libro.getListLibros().get(posicion).getKey())){
+                                    database.getReference(Constantes.NODO_CHATS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
+                                    database.getReference(Constantes.NODO_CHAT_DATOS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
+                                }
+                            }
+                        }
+
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                    }
+                });
+
+                database.getReference(Constantes.NODO_LIB_FAV).child(mAuth.getCurrentUser().getUid()).child( adapter_libro.getListLibros().get(posicion).getKey()).removeValue();
+
                             adapter_libro.getListLibros().remove(posicion);
                             adapter_libro.getListLibrosAll().remove(posicion);
-                            libroListClick.remove(posicion);
+
 
                             adapter_libro.notifyItemRemoved(posicion);
 
@@ -194,6 +238,15 @@ public class HomeFragment extends Fragment {
 
 
     }
+
+    public Adapter_Libro getAdapter_libro() {
+        return adapter_libro;
+    }
+
+    public void setAdapter_libro(Adapter_Libro adapter_libro) {
+        this.adapter_libro = adapter_libro;
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -280,6 +333,7 @@ public class HomeFragment extends Fragment {
 
         }
     }
+
 
     @Override
     public void onDestroyView() {

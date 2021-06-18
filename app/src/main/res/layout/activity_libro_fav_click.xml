@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".Vistas.LibroFavClickActivity">
+
+    <ImageView
+        android:id="@+id/container_holder_libro_user"
+        android:layout_width="410dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="451dp"
+        android:background="@drawable/container"
+        android:transitionName="container_holder_libro_user"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/container_holder_libro"
+        android:layout_width="406dp"
+        android:layout_height="104dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="47dp"
+        android:layout_marginBottom="577dp"
+        android:background="@drawable/container"
+        android:transitionName=" container_holder_libro"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/autor"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="69dp"
+        android:layout_marginBottom="66dp"
+        android:text="Autor"
+        android:textColor="#101010"
+        android:transitionName="autor_TR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <RatingBar
+        android:id="@+id/ratingBar_libro_chat"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="81dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginBottom="47dp"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:transitionName="ratingbar_TR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.006" />
+
+    <TextView
+        android:id="@+id/condition_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="284dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="65dp"
+        android:layout_marginBottom="624dp"
+        android:text="Condicion"
+        android:textColor="#131313"
+        android:transitionName="condition_TR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/catergoria_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="111dp"
+        android:layout_marginBottom="24dp"
+        android:text="Categoria"
+        android:textColor="#000000"
+        android:transitionName="categoria_TN"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/precio_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="285dp"
+        android:layout_marginTop="111dp"
+        android:layout_marginEnd="86dp"
+        android:layout_marginBottom="601dp"
+        android:text="Precio"
+        android:textColor="#000000"
+        android:transitionName="precio_TR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/fechacreacion_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="284dp"
+        android:layout_marginTop="49dp"
+        android:layout_marginBottom="663dp"
+        android:text="fechaCreacion"
+        android:textColor="#131313"
+        android:transitionName="fechacreacion_TR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Isbn_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="284dp"
+        android:layout_marginTop="69dp"
+        android:layout_marginBottom="643dp"
+        android:text="ISBN"
+        android:textColor="#000000"
+        android:transitionName="ISBN_TR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/favoritos1"
+        android:layout_width="26dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="356dp"
+        android:layout_marginTop="122dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginBottom="584dp"
+        android:background="@drawable/favorite"
+        android:transitionName="favorite_TR"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:tint="#6A6A6A" />
+
+    <ImageView
+        android:id="@+id/foto_libro"
+        android:layout_width="126dp"
+        android:layout_height="151dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="47dp"
+        android:layout_marginBottom="533dp"
+        android:transitionName="fotolibro_TR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/libro_ejemplo" />
+
+    <TextView
+        android:id="@+id/nombre_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="149dp"
+        android:layout_marginTop="50dp"
+        android:text="Nombre"
+        android:textColor="#000000"
+        android:transitionName="nombre_TR"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/descripcion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="monospace"
+        android:text="fhuigasuidhghksdghkfghskdghfgshdggsfdhgfsgdhgfsgdhfgsgdhfgshjdgfsgdjgfsgdjfgsdhgfsgdfgshjgdjgh"
+        android:textColor="#020202"
+        android:textSize="10sp"
+        android:transitionName="descripcion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/foto_libro" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/foto_user_libro"
+        android:layout_width="71dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="458dp"
+        android:layout_marginBottom="228dp"
+        android:transitionName="fotouser"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/nombre_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="97dp"
+        android:layout_marginTop="462dp"
+        android:layout_marginBottom="250dp"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:transitionName="nombreuser"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="187dp"
+        android:layout_height="107dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="616dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        android:paddingLeft="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/btn_cancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_redond_red"
+            android:text="Volver"
+            android:transitionName="btn_cancelar" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout8"
+        android:layout_width="221dp"
+        android:layout_height="116dp"
+        android:layout_marginStart="189dp"
+        android:layout_marginTop="614dp"
+        android:layout_marginBottom="1dp"
+        android:orientation="horizontal"
+        android:paddingLeft="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/btn_aceptar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_redond_verde"
+            android:text="Chat"
+
+            android:textColor="#131313" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
