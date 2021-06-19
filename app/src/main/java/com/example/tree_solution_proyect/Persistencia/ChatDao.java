@@ -77,10 +77,5 @@ public class ChatDao {
         return res;
 
     }
-    public String devolverRes(ArrayList<LMensaje> mensajes){
-        if(mensajes.size()>0) {
-            return mensajes.get(mensajes.size() - 1).getMensaje().getMensaje();
-        }
-        return null;
-    }
+
 }

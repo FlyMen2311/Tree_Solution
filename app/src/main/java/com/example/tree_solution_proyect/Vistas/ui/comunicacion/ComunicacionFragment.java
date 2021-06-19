@@ -61,7 +61,6 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
     private Adapter_Chats adapter_chats;
     private Calendar calendario = Calendar.getInstance();
     private FirebaseAuth mAuth;
-    private static List<LChat> chatsListClick;
     public String keyreceptor;
     public String keyemisor;
     public String keylibro;
@@ -77,7 +76,6 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         vista =inflater.inflate(R.layout.layout_chats, container, false);
         recyclerView=vista.findViewById(R.id.recycler_favoritos);
         buscar_chats_nombre=vista.findViewById(R.id.buscar_chats_nombre);
@@ -90,12 +88,12 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
        databaseReferenceChats =database.getReference(Constantes.NODO_CHAT_DATOS);
        databaseReferenceChatsUsuario=database.getReference(Constantes.NODO_CHAT_DATOS).child(mAuth.getCurrentUser().getUid());
 
-        storage= FirebaseStorage.getInstance();;
-
-        chatsListClick=new ArrayList<LChat>();
+       storage= FirebaseStorage.getInstance();;
 
 
-      mAuth=FirebaseAuth.getInstance();;
+
+
+        mAuth=FirebaseAuth.getInstance();;
 
             adapter_chats=new Adapter_Chats(getActivity().getApplicationContext(),new ChatOpen(getActivity(),getContext()));
             LinearLayoutManager l=new LinearLayoutManager(getActivity().getApplicationContext());
@@ -125,7 +123,7 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
                               Chat m = chatsnapshot.getValue(Chat.class);
                               final LChat lChat = new LChat(m, chatsnapshot.getKey());
                               final int posicion = adapter_chats.addChat(lChat);
-                              chatsListClick.add(lChat);
+
                               cont++;
                           }
                       }
@@ -250,21 +248,16 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
             this.context = context;
         }
 
-
-
-
         @Override
         public void ChatClick(int pos,LinearLayout linearLayout, ImageView Foto_libro_chat, TextView name_libro_chat, TextView ultimo_mensaje, TextView name_propietario, TextView hora) {
             try {
                 Intent intent = new Intent(activity, ChatsClick.class);
-                LChat lChat = chatsListClick.get(pos);
+                LChat lChat = adapter_chats.getListChats().get(pos);
                 intent.putExtra(("keyemisor"),lChat.getChat().getKeyemisor());
                 intent.putExtra("keyreceptor",lChat.getChat().getKeyreceptor());
                 intent.putExtra("keylibro",lChat.getChat().getKeylibro());
 
-
                 if (lChat != null) {
-
                     ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, Pair.create((View) linearLayout, " container_holder_chat_libro")
                             , Pair.create((View) Foto_libro_chat, "fotolibro_TR")
                             , Pair.create((View) name_libro_chat, "nombre_chat_TR")
