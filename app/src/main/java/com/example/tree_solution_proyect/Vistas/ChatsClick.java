@@ -108,9 +108,9 @@ public class ChatsClick extends AppCompatActivity {
 
         enviar = findViewById(R.id.btn_enviar);
         texto_mensaje = findViewById(R.id.Texto_mensaje);
-        recyclerView = findViewById(R.id.recycler);
+        recyclerView = findViewById(R.id.recycler_chat);
 
-        foto_libro = findViewById(R.id.foto_libro);
+        foto_libro = findViewById(R.id.foto_libro_chat);
 
         nombre = findViewById(R.id.nombre_chat);
         autor = findViewById(R.id.autor_chat);

@@ -75,6 +75,7 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
             holder.getCondition().setText(lLibro.getLibro().getCondition());
 
 
+
             LibroDAO.getInstance().libroExistFavoritos(lLibro, new LibroDAO.IDevolverBooleanExist() {
                 @Override
                 public void devolverExist(boolean isExist) {

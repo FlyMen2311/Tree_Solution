@@ -27,6 +27,7 @@ public class LLibro implements Serializable  {
         PrettyTime prettyTime=new PrettyTime(new Date(),Locale.getDefault());
         return prettyTime.format(date);
     }
+
     public long getCreateTimeLong(){
         Long aLong=Long.parseLong(String.valueOf(libro.getCreateTimestamp()));
         return aLong;

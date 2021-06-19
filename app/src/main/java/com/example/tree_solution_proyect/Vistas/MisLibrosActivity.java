@@ -1,4 +1,4 @@
-package com.example.tree_solution_proyect.Vistas.ui.perfil;
+package com.example.tree_solution_proyect.Vistas;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,14 +18,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tree_solution_proyect.Adaptadores.Adapter_MisLibros;
-import com.example.tree_solution_proyect.Vistas.ui.LibroClickActivity;
 import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
 import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
-import com.example.tree_solution_proyect.Vistas.ui.MisLibrosClickActivity;
-import com.example.tree_solution_proyect.Vistas.ui.home.LibrosClickablesIntefrace;
+import com.example.tree_solution_proyect.Vistas.ui.perfil.MisLibrosClickablesIntefrace;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -36,10 +34,7 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -48,9 +43,8 @@ public class MisLibrosActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReferenceLibro;
-    public static List<LLibro> libroListClick;
     private FirebaseStorage storage;
-    private Adapter_MisLibros adapter_libro;
+    private Adapter_MisLibros adapter_misLibros;
 
     private String currentUserKey;
 
@@ -71,20 +65,18 @@ public class MisLibrosActivity extends AppCompatActivity {
 
         storage = FirebaseStorage.getInstance();
 
-        libroListClick =new ArrayList<LLibro>();
-        Calendar calendario = Calendar.getInstance();
 
-        adapter_libro=new Adapter_MisLibros(MisLibrosActivity.this,
+        adapter_misLibros =new Adapter_MisLibros(MisLibrosActivity.this,
                 new LibroOpen(this,MisLibrosActivity.this));
         LinearLayoutManager l=new LinearLayoutManager(MisLibrosActivity.this);
         recyclerView.setLayoutManager(l);
-        recyclerView.setAdapter(adapter_libro);
+        recyclerView.setAdapter(adapter_misLibros);
         //Funcion para pasar al ultimo mensaje producido
-        adapter_libro.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+        adapter_misLibros.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
-                recyclerView.scrollToPosition(adapter_libro.getItemCount()-1);
+                recyclerView.scrollToPosition(adapter_misLibros.getItemCount()-1);
             }
         });
 
@@ -95,24 +87,20 @@ public class MisLibrosActivity extends AppCompatActivity {
                                      @Nullable @org.jetbrains.annotations.Nullable
                                              String previousChildName) {
                 final Libro m=snapshot.getValue(Libro.class);
-                Toast.makeText(MisLibrosActivity.this, m.getUserKey() + "", Toast.LENGTH_SHORT).show();
-                if (m.getUserKey().equals(currentUserKey)){
-                    final LLibro lLibro=new LLibro(m,snapshot.getKey());
-                    final int posicion=adapter_libro.addLibro(lLibro);
-                    adapter_libro.addLibroAll(lLibro);
+                final LLibro lLibro=new LLibro(m,snapshot.getKey());
+                if (lLibro.getLibro().getUserKey().equals(currentUserKey)){
+                    final int posicion= adapter_misLibros.addLibro(lLibro);
 
                     if (stringLUsuarioMap.get(m.getUserKey()) != null) {
                         lLibro.setLUsuario(stringLUsuarioMap.get(m.getUserKey()));
-                        adapter_libro.actualizarLibro(posicion, lLibro);
-                        libroListClick.add(lLibro);
+                        adapter_misLibros.actualizarLibro(posicion, lLibro);
                     } else {
                         UsuarioDAO.getInstance().obtenerInformacionKey(m.getUserKey(), new UsuarioDAO.IDevolverUsuario() {
                             @Override
                             public void devolverUsuario(LUsuario lUsuario) {
                                 stringLUsuarioMap.put(m.getUserKey(), lUsuario);
                                 lLibro.setLUsuario(lUsuario);
-                                adapter_libro.actualizarLibro(posicion, lLibro);
-                                libroListClick.add(lLibro);
+                                adapter_misLibros.actualizarLibro(posicion, lLibro);
                             }
 
                             @Override
@@ -134,16 +122,15 @@ public class MisLibrosActivity extends AppCompatActivity {
                 final Libro m=snapshot.getValue(Libro.class);
                 final LLibro lLibro=new LLibro(m,snapshot.getKey());
                 int posicion = 0;
-                for(int i=0;i<adapter_libro.getListLibros().size();i++){
-                    if(adapter_libro.getListLibros().get(i).getLibro().getReferenceStorage().equals(lLibro.getLibro().getReferenceStorage())){
+                for(int i = 0; i< adapter_misLibros.getListLibros().size(); i++){
+                    if(adapter_misLibros.getListLibros().get(i).getLibro().getReferenceStorage().equals(lLibro.getLibro().getReferenceStorage())){
                         posicion=i;
                     }
                 }
-                adapter_libro.getListLibros().remove(posicion);
-                adapter_libro.getListLibrosAll().remove(posicion);
-                libroListClick.remove(posicion);
+                adapter_misLibros.getListLibros().remove(posicion);
 
-                adapter_libro.notifyItemRemoved(posicion);
+
+                adapter_misLibros.notifyItemRemoved(posicion);
 
             }
 
@@ -162,7 +149,7 @@ public class MisLibrosActivity extends AppCompatActivity {
 
     }
 
-    public class LibroOpen  implements LibrosClickablesIntefrace {
+    public class LibroOpen  implements MisLibrosClickablesIntefrace {
         Activity activity;
         Context context;
 
@@ -188,13 +175,13 @@ public class MisLibrosActivity extends AppCompatActivity {
         }
 
         @Override
-        public void LibroClick(int pos, ImageView imgcontainer, ImageView fotoLibro,
+        public void MisLibrosClick(int pos, ImageView imgcontainer, ImageView fotoLibro,
                                TextView nombre, TextView autor, TextView precio, TextView ISBN,
                                TextView categoria, RatingBar ratingBar, TextView estado,
-                               TextView fechacreacion, ImageView favorite, TextView descripcion, TextView status){
+                               TextView fechacreacion, TextView descripcion){
             try {
                 Intent intent = new Intent(activity, MisLibrosClickActivity.class);
-                LLibro llibro = libroListClick.get(pos);
+                LLibro llibro = adapter_misLibros.getListLibros().get(pos);
                 if (llibro != null) {
                     intent.putExtra("objectLibro", llibro);
                     ActivityOptionsCompat activityOptionsCompat =
@@ -208,8 +195,7 @@ public class MisLibrosActivity extends AppCompatActivity {
                                     ,Pair.create(categoria, "categoria_TN")
                                     ,Pair.create(ratingBar, "ratingbar_TR")
                                     ,Pair.create(estado, "condition_TR")
-                                    ,Pair.create(fechacreacion, "fechacreacion_TR")
-                                    ,Pair.create(favorite, "favorite_TR"));
+                                    ,Pair.create(fechacreacion, "fechacreacion_TR"));
                     startActivity(intent, activityOptionsCompat.toBundle());
 
                 } else {

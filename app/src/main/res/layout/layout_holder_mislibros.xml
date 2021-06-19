@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/container_holder_libro"
+        android:id="@+id/container_holder_libro_mislibros"
         android:layout_width="410dp"
         android:layout_height="107dp"
         android:layout_marginTop="47dp"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/foto_libro"
+        android:id="@+id/foto_libro_mislibros"
         android:layout_width="126dp"
         android:layout_height="151dp"
         android:layout_marginStart="16dp"
@@ -29,7 +29,7 @@
         app:srcCompat="@drawable/libro_ejemplo" />
 
     <TextView
-        android:id="@+id/nombre"
+        android:id="@+id/nombre_mislibros"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="149dp"
@@ -41,7 +41,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/autor"
+        android:id="@+id/autor_mislibros"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="149dp"
@@ -55,7 +55,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <RatingBar
-        android:id="@+id/ratingBar_libro"
+        android:id="@+id/ratingBar_libro_mislibros"
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="81dp"
         android:layout_height="19dp"
@@ -70,7 +70,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/holder_condition"
+        android:id="@+id/holder_condition_mislibros"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="272dp"
@@ -84,7 +84,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/holder_catergoria"
+        android:id="@+id/holder_categoria_mislibros"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="149dp"
@@ -98,7 +98,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/holder_precio"
+        android:id="@+id/holder_precio_mislibros"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="272dp"
@@ -112,7 +112,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/holder_fechacreacion"
+        android:id="@+id/holder_fechacreacion_mislibros"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="276dp"
@@ -126,7 +126,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/holder_Isbn"
+        android:id="@+id/holder_Isbn_mislibros"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="275dp"

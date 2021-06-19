@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/container_holder_libro"
+        android:id="@+id/container_holder_libro_libro"
         android:layout_width="410dp"
         android:layout_height="107dp"
         android:layout_marginTop="47dp"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/foto_libro"
+        android:id="@+id/foto_libro_libro"
         android:layout_width="126dp"
         android:layout_height="151dp"
         android:layout_marginStart="16dp"
@@ -29,7 +29,7 @@
         app:srcCompat="@drawable/libro_ejemplo" />
 
     <TextView
-        android:id="@+id/nombre_chat"
+        android:id="@+id/nombre_libro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="149dp"
@@ -41,7 +41,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/autor"
+        android:id="@+id/autor_libro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="149dp"
@@ -55,7 +55,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <RatingBar
-        android:id="@+id/ratingBar_libro_chat"
+        android:id="@+id/ratingBar_libro_libro"
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="81dp"
         android:layout_height="19dp"
@@ -71,7 +71,7 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/condition_chat"
+        android:id="@+id/condition_libro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="272dp"
@@ -85,7 +85,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/catergoria_chat"
+        android:id="@+id/categoria_libro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="149dp"
@@ -99,7 +99,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/precio_chat"
+        android:id="@+id/precio_libro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="272dp"
@@ -115,7 +115,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/fechacreacion_chat"
+        android:id="@+id/fechacreacion_libro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="272dp"
@@ -129,7 +129,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/Isbn_chat"
+        android:id="@+id/Isbn_libro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="272dp"
@@ -143,7 +143,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/favoritos1"
+        android:id="@+id/favoritos_libro"
         android:layout_width="26dp"
         android:layout_height="25dp"
         android:layout_marginStart="360dp"

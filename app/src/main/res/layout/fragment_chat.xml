@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/container_holder_libro"
+            android:id="@+id/container_holder_libro_chat"
             android:layout_width="410dp"
             android:layout_height="107dp"
             android:layout_marginTop="47dp"
@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/foto_libro"
+            android:id="@+id/foto_libro_chat"
             android:layout_width="126dp"
             android:layout_height="151dp"
             android:layout_marginStart="16dp"
@@ -198,7 +198,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler"
+            android:id="@+id/recycler_chat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"></androidx.recyclerview.widget.RecyclerView>
