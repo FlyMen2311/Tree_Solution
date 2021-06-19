@@ -112,6 +112,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="149dp"
                         android:layout_marginEnd="26dp"
+                        android:maxLength="15"
                         android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
                         android:ems="10"
                         android:inputType="textPersonName" />
@@ -124,6 +125,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="217dp"
                         android:layout_marginEnd="26dp"
+                        android:maxLength="20"
                         android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
                         android:ems="10"
                         android:inputType="textPersonName" />
@@ -156,7 +158,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
-                        android:digits="123456789."
+                        android:digits="1234567890."
+                        android:maxLength="4"
                         android:layout_marginEnd="26dp"
                         android:layout_marginBottom="350dp"
                         android:ems="10"

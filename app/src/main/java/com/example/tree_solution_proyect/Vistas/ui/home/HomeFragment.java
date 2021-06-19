@@ -59,6 +59,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private FirebaseDatabase database;
     private DatabaseReference databaseReferenceLibro;
+    private DatabaseReference databaseReferenceChatDatos;
 
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -84,7 +85,8 @@ public class HomeFragment extends Fragment {
         mAuth=FirebaseAuth.getInstance();
 
         database=FirebaseDatabase.getInstance();
-        databaseReferenceLibro = database.getReference("Libros");
+        databaseReferenceLibro = database.getReference(Constantes.NODO_LIBROS);
+        databaseReferenceChatDatos=database.getReference(Constantes.NODO_CHAT_DATOS);
 
         storage= FirebaseStorage.getInstance();;
 
@@ -129,28 +131,31 @@ public class HomeFragment extends Fragment {
             public void onChildAdded(@NonNull @NotNull DataSnapshot snapshot,
                                      @Nullable @org.jetbrains.annotations.Nullable
                                              String previousChildName) {
-                final Libro m=snapshot.getValue(Libro.class);
-                final LLibro lLibro=new LLibro(m,snapshot.getKey());
+                final Libro m = snapshot.getValue(Libro.class);
+                final LLibro lLibro = new LLibro(m, snapshot.getKey());
 
-                final int posicion=adapter_libro.addLibro(lLibro);//listFilter
+                if(lLibro.getLibro().getEsVendido().equals("No")){
+                final int posicion = adapter_libro.addLibro(lLibro);//listFilter
                 adapter_libro.addLibroAll(lLibro);//listAll
 
-                if(stringLUsuarioMap.get(m.getUserKey())!=null){
+                if (stringLUsuarioMap.get(m.getUserKey()) != null) {
                     lLibro.setLUsuario(stringLUsuarioMap.get(m.getUserKey()));
-                    adapter_libro.actualizarLibro(posicion,lLibro);
-                }else{
+                    adapter_libro.actualizarLibro(posicion, lLibro);
+                } else {
                     UsuarioDAO.getInstance().obtenerInformacionKey(m.getUserKey(), new UsuarioDAO.IDevolverUsuario() {
                         @Override
                         public void devolverUsuario(LUsuario lUsuario) {
-                            stringLUsuarioMap.put(m.getUserKey(),lUsuario);
+                            stringLUsuarioMap.put(m.getUserKey(), lUsuario);
                             lLibro.setLUsuario(lUsuario);
-                            adapter_libro.actualizarLibro(posicion,lLibro);
+                            adapter_libro.actualizarLibro(posicion, lLibro);
                         }
+
                         @Override
                         public void devolverError(String mensajeError) {
-                            Toast.makeText(getActivity().getApplicationContext(),"Error"+ mensajeError,Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity().getApplicationContext(), "Error" + mensajeError, Toast.LENGTH_SHORT).show();
                         }
                     });
+                }
                 }
             }
 
@@ -170,8 +175,10 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
-                DatabaseReference reference2=database.getReference(Constantes.NODO_CHAT_DATOS);
-                reference2.addValueEventListener(new ValueEventListener() {
+                database.getReference(Constantes.NODO_LIB_FAV).child(mAuth.getCurrentUser().getUid()).child(adapter_libro.getListLibros().get(posicion).getKey()).removeValue();
+
+
+                   databaseReferenceChatDatos.addListenerForSingleValueEvent(new ValueEventListener() {
 
                     private DataSnapshot snapshot1;
                     private DataSnapshot snapshot2;
@@ -182,18 +189,17 @@ public class HomeFragment extends Fragment {
                         for(DataSnapshot snapshot1:snapshot.getChildren()){
                             this.snapshot1=snapshot1;
                             keyEmisor=snapshot1.getKey();
-
-                            for(DataSnapshot snapshot2:this.snapshot1.getChildren()){
-                                this.snapshot2=snapshot2;
-                                keyreceptor=snapshot2.getKey();
-                            }
-
-                            for(DataSnapshot snapshot3:snapshot2.getChildren()){
-                                this.snapshot3=snapshot3;
-                                keyLibro=snapshot3.getKey();
-                                if(keyLibro.equals(adapter_libro.getListLibros().get(posicion).getKey())){
-                                    database.getReference(Constantes.NODO_CHATS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
-                                    database.getReference(Constantes.NODO_CHAT_DATOS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
+                            for(DataSnapshot snapshot2:this.snapshot1.getChildren()) {
+                                this.snapshot2 = snapshot2;
+                                keyreceptor = snapshot2.getKey();
+                                for (DataSnapshot snapshot3 : snapshot2.getChildren()) {
+                                    this.snapshot3 = snapshot3;
+                                    keyLibro = snapshot3.getKey();
+                                    String keyComprar=adapter_libro.getListLibros().get(posicion-1).getKey();
+                                    if (keyLibro.equals(keyComprar)) {
+                                        database.getReference(Constantes.NODO_CHATS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
+                                        database.getReference(Constantes.NODO_CHAT_DATOS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
+                                    }
                                 }
                             }
                         }
@@ -204,15 +210,13 @@ public class HomeFragment extends Fragment {
 
                     }
                 });
+                adapter_libro.getListLibros().remove(posicion);
 
-                database.getReference(Constantes.NODO_LIB_FAV).child(mAuth.getCurrentUser().getUid()).child( adapter_libro.getListLibros().get(posicion).getKey()).removeValue();
+                adapter_libro.getListLibrosAll().remove(posicion);
 
-                            adapter_libro.getListLibros().remove(posicion);
+                adapter_libro.notifyItemRemoved(posicion);
 
-                            adapter_libro.getListLibrosAll().remove(posicion);
-
-                            adapter_libro.notifyItemRemoved(posicion);
-                }
+            }
 
             @Override
             public void onChildMoved(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {

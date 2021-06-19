@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.favorite.LibrosFavClickableInteface;
 
-public class Holder_Favoritos extends  RecyclerView.ViewHolder{ {
+public class Holder_Favoritos extends  RecyclerView.ViewHolder{
 
-}
+
 
     private ImageView Foto_libro;
     private ImageView Favorit;
