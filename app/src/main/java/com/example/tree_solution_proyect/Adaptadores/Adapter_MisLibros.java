@@ -12,11 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.tree_solution_proyect.Holders.Holder_Libro;
+import com.example.tree_solution_proyect.Holders.Holder_MisLibros;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
 import com.example.tree_solution_proyect.R;
-import com.example.tree_solution_proyect.Vistas.ui.perfil.MisLibrosActivity;
+import com.example.tree_solution_proyect.Vistas.MisLibrosActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -25,21 +25,20 @@ import java.util.List;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
-public class Adapter_MisLibros extends RecyclerView.Adapter<Holder_Libro>implements Filterable {
-    public List<LLibro> listLibros=new ArrayList<>();
-    public List<LLibro> listLibrosFilter=new ArrayList<>();
+public class Adapter_MisLibros extends RecyclerView.Adapter<Holder_MisLibros> {
+    public List<LLibro> listMisLibros =new ArrayList<>();
     private Context x;
     private  MisLibrosActivity.LibroOpen libroOpen;
-    public ISBNFilter isbnFilter;
+    public boolean isFavorite=false;
 
     public Adapter_MisLibros(Context x, MisLibrosActivity.LibroOpen libroOpen) {
         this.x = x;
-        isbnFilter=new ISBNFilter(this);
+
         this.libroOpen=libroOpen;
     }
 
     public void actualizarLibro(int posicion,LLibro lLibro){
-        listLibrosFilter.set(posicion,lLibro);
+        listMisLibros.set(posicion,lLibro);
         notifyItemChanged(posicion);
     }
 
@@ -47,17 +46,16 @@ public class Adapter_MisLibros extends RecyclerView.Adapter<Holder_Libro>impleme
     @NonNull
     @NotNull
     @Override
-    public Holder_Libro onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View v;
-        v= LayoutInflater.from(x).inflate(R.layout.layout_holder_mislibros,parent,false);
+    public Holder_MisLibros onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+        View v= LayoutInflater.from(x).inflate(R.layout.layout_holder_mislibros,parent,false);
 
-        return new Holder_Libro(v, libroOpen);
+        return new Holder_MisLibros(v, libroOpen);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull Holder_Libro holder, int position) {
+    public void onBindViewHolder(@NonNull @NotNull Holder_MisLibros holder, int position) {
 
-        LLibro lLibro=listLibrosFilter.get(position);
+        LLibro lLibro= listMisLibros.get(position);
         LUsuario lUsuario=lLibro.getLUsuario();
 
         if((lLibro!=null)&&(lUsuario!=null)){
@@ -73,6 +71,12 @@ public class Adapter_MisLibros extends RecyclerView.Adapter<Holder_Libro>impleme
             holder.getFoto_libro().setVisibility(View.VISIBLE);
             holder.getCondition().setText(lLibro.getLibro().getCondition());
 
+            holder.getFoto_libro().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
 
             if(lLibro.getLibro().getCondition().equals("Nuevo")){
                 holder.getRatingBar().setRating(5);
@@ -95,80 +99,39 @@ public class Adapter_MisLibros extends RecyclerView.Adapter<Holder_Libro>impleme
         holder.getHora().setText(lLibro.obtenerFechaDeCreacionLibro());
 
 
-            try {
+        try {
 
-            }catch (Exception exception){
-                Toast.makeText(x.getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
-            }
+        }catch (Exception exception){
+            Toast.makeText(x.getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
+        }
 
     }
 
     public List<LLibro> getListLibros() {
-        return listLibrosFilter;
-    }
-    public List<LLibro> getListLibrosAll() {
-        return listLibros;
+        return listMisLibros;
     }
     public void setListLibros(List<LLibro> listLibros) {
-        this.listLibrosFilter = listLibros;
+        this.listMisLibros = listLibros;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 
     @Override
     public int getItemCount() {
-        return listLibrosFilter.size();
+        return listMisLibros.size();
     }
 
     //En este metodo añdimos el Libro creado a nuestra lista y notificamos a nuestro activity
     public int addLibro(LLibro lLibro){
-        listLibrosFilter.add(lLibro);
-        int posicion=listLibrosFilter.size()-1;
-        notifyItemInserted(listLibrosFilter.size());
+        listMisLibros.add(lLibro);
+        int posicion= listMisLibros.size()-1;
+        notifyItemInserted(listMisLibros.size());
         return posicion;
     }
-    public void addLibroAll(LLibro Libro){
-        this.listLibros.add(Libro);
-    }
-
-
-    @Override
-    public Filter getFilter() {
-        return isbnFilter;
-    }
-
-    public class ISBNFilter extends Filter {
-        private Adapter_MisLibros listAdapter;
-
-
-        private ISBNFilter(Adapter_MisLibros listAdapter) {
-            super();
-            this.listAdapter = listAdapter;
-        }
-
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            listLibrosFilter.clear();
-            final FilterResults results = new FilterResults();
-            if (constraint.length() == 0) {
-                listLibrosFilter.addAll(listLibros);
-            } else {
-                final String filterPattern = constraint.toString().toLowerCase().trim();
-
-                for (LLibro libro  : listLibros) {
-                    if (libro.getLibro().getISBN().toLowerCase().contains(filterPattern)) {
-                        listLibrosFilter.add(libro);
-                    }
-                }
-            }
-            results.values = listLibrosFilter;
-            results.count = listLibrosFilter.size();
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            this.listAdapter.notifyDataSetChanged();
-        }
-    }
-
-
 }

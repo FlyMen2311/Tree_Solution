@@ -79,8 +79,8 @@ public class HomeFragment extends Fragment {
 
         vista =inflater.inflate(R.layout.fragment_home, container, false);
 
-        recyclerView=vista.findViewById(R.id.recycler_favoritos);
-        buscar_librosISBN=vista.findViewById(R.id.buscar_chats_nombre);
+        recyclerView=vista.findViewById(R.id.recycler_home);
+        buscar_librosISBN=vista.findViewById(R.id.buscar_libro_isbn);
         mAuth=FirebaseAuth.getInstance();
 
         database=FirebaseDatabase.getInstance();
@@ -281,7 +281,7 @@ public class HomeFragment extends Fragment {
         public void LibroClick (int pos, ImageView imgcontainer, ImageView fotoLibro, TextView nombre,
                                 TextView autor, TextView precio, TextView ISBN, TextView categoria,
                                 RatingBar ratingBar, TextView estado, TextView fechacreacion,
-                                ImageView favorite, TextView descripcion, TextView esVendido){
+                                ImageView favorite, TextView descripcion){
 
             try {
                 Intent intent = new Intent(activity, LibroClickActivity.class);

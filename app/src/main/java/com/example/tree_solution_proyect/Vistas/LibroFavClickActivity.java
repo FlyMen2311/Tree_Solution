@@ -59,27 +59,26 @@ public class LibroFavClickActivity extends AppCompatActivity {
     private LLibro Llibro;
     private Chat chat ;
     private Boolean isExist=false;
-    private HomeFragment homeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_libro_click);
 
-        foto_libro=findViewById(R.id.foto_libro);
-        favorit=findViewById(R.id.favoritos1);
-        nombre=findViewById(R.id.nombre_chat);
-        autor=findViewById(R.id.autor);
-        categoria=findViewById(R.id.catergoria_chat);
-        ISBN=findViewById(R.id.Isbn_chat);
-        condition=findViewById(R.id.condition_chat);
-        precio=findViewById(R.id.precio_chat);
-        hora=findViewById(R.id.fechacreacion_chat);
-        ratingBar=findViewById(R.id.ratingBar_libro_chat);
-        foto_libro_propietario =findViewById(R.id.foto_user_libro);
-        nombre_libro_propietario=findViewById(R.id.nombre_user);
-        btnchat=findViewById(R.id.btn_aceptar);
-        btnVolver=findViewById(R.id.btn_cancelar);
+        foto_libro=findViewById(R.id.foto_libro_favotirosclick);
+        favorit=findViewById(R.id.favoritos_favotirosclick);
+        nombre=findViewById(R.id.nombre_favotirosclick);
+        autor=findViewById(R.id.autor_favotirosclick);
+        categoria=findViewById(R.id.categoria_favotirosclick);
+        ISBN=findViewById(R.id.Isbn_favotirosclick);
+        condition=findViewById(R.id.condition_favotirosclick);
+        precio=findViewById(R.id.precio_favotirosclick);
+        hora=findViewById(R.id.fechacreacion_favotirosclick);
+        ratingBar=findViewById(R.id.ratingBar_libro_favotirosclick);
+        foto_libro_propietario =findViewById(R.id.foto_user_libro_favotirosclick);
+        nombre_libro_propietario=findViewById(R.id.nombre_user_favotirosclick);
+        btnchat=findViewById(R.id.btn_chat_favotirosclick);
+        btnVolver=findViewById(R.id.btn_volver_favotirosclick);
         chat=new Chat();
 
         Llibro = (LLibro) getIntent().getExtras().getSerializable("objectLibro");
@@ -90,7 +89,6 @@ public class LibroFavClickActivity extends AppCompatActivity {
         }else{
             favorit.setBackgroundResource(R.drawable.favorite);
         }
-        homeFragment=new HomeFragment();
 
         database=FirebaseDatabase.getInstance();
         mAuth=FirebaseAuth.getInstance();

@@ -70,7 +70,6 @@ public class FavoriteFragment extends Fragment {
     private Adapter_Favoritos adapter_favoritos;
     private Calendar calendario = Calendar.getInstance();
     private FirebaseAuth mAuth;
-    private EditText buscar_librosISBN;
     public  boolean isFavorite;
 
 
@@ -80,7 +79,7 @@ public class FavoriteFragment extends Fragment {
         vista =inflater.inflate(R.layout.fragment_favorite, container, false);
 
         recyclerView=vista.findViewById(R.id.recycler_favoritos);
-        buscar_librosISBN=vista.findViewById(R.id.buscar_chats_nombre);
+
         mAuth=FirebaseAuth.getInstance();
 
         database=FirebaseDatabase.getInstance();

@@ -10,10 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tree_solution_proyect.R;
-import com.example.tree_solution_proyect.Vistas.ui.home.LibrosClickablesIntefrace;
+import com.example.tree_solution_proyect.Vistas.ui.perfil.MisLibrosClickablesIntefrace;
 
-public class Holder_Libro extends  RecyclerView.ViewHolder{
-    private ImageView Foto_libro,Favorit;
+public class Holder_MisLibros extends  RecyclerView.ViewHolder{
+    private ImageView Foto_libro;
     private TextView nombre;
     private TextView hora;
     private TextView precio;
@@ -22,52 +22,35 @@ public class Holder_Libro extends  RecyclerView.ViewHolder{
     private TextView categoria;
     private TextView autor;
     private TextView descripcion;
-    private TextView esVendido;
     private Context context;
     private RatingBar ratingBar;
     private ImageView containerLibro;
-    private LibrosClickablesIntefrace librosClickablesIntefrace1;
+    private MisLibrosClickablesIntefrace librosClickablesIntefrace1;
 
 
-    public Holder_Libro(@NonNull View itemView ,LibrosClickablesIntefrace librosClickablesIntefrace) {
+    public Holder_MisLibros(@NonNull View itemView , MisLibrosClickablesIntefrace librosClickablesIntefrace) {
         super(itemView);
         context=itemView.getContext();
-        Foto_libro=itemView.findViewById(R.id.foto_libro_libro);
-        nombre=itemView.findViewById(R.id.nombre_libro);
-        autor=itemView.findViewById(R.id.autor_libro);
-        categoria=itemView.findViewById(R.id.categoria_libro);
-        ISBN=itemView.findViewById(R.id.Isbn_libro);
+        Foto_libro=itemView.findViewById(R.id.foto_libro_mislibros);
+        nombre=itemView.findViewById(R.id.nombre_mislibros);
+        autor=itemView.findViewById(R.id.autor_mislibros);
+        categoria=itemView.findViewById(R.id.holder_categoria_mislibros);
+        ISBN=itemView.findViewById(R.id.holder_Isbn_mislibros);
 
-        condition=itemView.findViewById(R.id.condition_libro);
-        precio=itemView.findViewById(R.id.precio_libro);
-        Favorit=itemView.findViewById(R.id.favoritos_libro);
-        ratingBar=itemView.findViewById(R.id.ratingBar_libro_libro);
-        hora=itemView.findViewById(R.id.fechacreacion_libro);
-        containerLibro= itemView.findViewById(R.id.container_holder_libro_libro);
+        condition=itemView.findViewById(R.id.holder_condition_mislibros);
+        precio=itemView.findViewById(R.id.holder_precio_mislibros);
+        ratingBar=itemView.findViewById(R.id.ratingBar_libro_mislibros);
+        hora=itemView.findViewById(R.id.holder_fechacreacion_mislibros);
+        containerLibro= itemView.findViewById(R.id.container_holder_libro_mislibros);
         this.librosClickablesIntefrace1=librosClickablesIntefrace;
 
 
 
-        containerLibro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                librosClickablesIntefrace1.LibroClick(getAdapterPosition(),containerLibro,
-                        Foto_libro,nombre,
-                        autor,precio,ISBN,
-                        categoria,ratingBar,
-                        condition,hora,
-                        Favorit, descripcion);
-            }
-        });
-    }
-
-    public ImageView getFavorit() {
-        return Favorit;
-    }
-
-    public void setFavorit(ImageView favorit) {
-        Favorit = favorit;
+        containerLibro.setOnClickListener(v -> librosClickablesIntefrace1.MisLibrosClick(getAdapterPosition(),containerLibro,
+                Foto_libro,nombre,
+                autor,precio,ISBN,
+                categoria,ratingBar,
+                condition,hora, descripcion));
     }
 
     public TextView getHora() {

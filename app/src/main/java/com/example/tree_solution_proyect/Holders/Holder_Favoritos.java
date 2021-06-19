@@ -11,9 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.favorite.LibrosFavClickableInteface;
-import com.example.tree_solution_proyect.Vistas.ui.home.LibrosClickablesIntefrace;
-
-import org.jetbrains.annotations.NotNull;
 
 public class Holder_Favoritos extends  RecyclerView.ViewHolder{ {
 
@@ -37,18 +34,18 @@ public class Holder_Favoritos extends  RecyclerView.ViewHolder{ {
     public Holder_Favoritos(@NonNull View itemView , LibrosFavClickableInteface librosFavClickableInteface) {
         super(itemView);
         context=itemView.getContext();
-        Foto_libro=itemView.findViewById(R.id.foto_libro);
-        nombre=itemView.findViewById(R.id.nombre_chat);
-        autor=itemView.findViewById(R.id.autor);
-        categoria=itemView.findViewById(R.id.catergoria_chat);
-        ISBN=itemView.findViewById(R.id.Isbn_chat);
+        Foto_libro=itemView.findViewById(R.id.foto_libro_favotiros);
+        nombre=itemView.findViewById(R.id.nombre_favotiros);
+        autor=itemView.findViewById(R.id.autor_favotiros);
+        categoria=itemView.findViewById(R.id.categoria_favoritos);
+        ISBN=itemView.findViewById(R.id.Isbn_favotiros);
 
-        condition=itemView.findViewById(R.id.condition_chat);
-        precio=itemView.findViewById(R.id.precio_chat);
-        Favorit=itemView.findViewById(R.id.favoritos1);
-        ratingBar=itemView.findViewById(R.id.ratingBar_libro_chat);
-        hora=itemView.findViewById(R.id.fechacreacion_chat);
-        containerLibro= itemView.findViewById(R.id.container_holder_libro);
+        condition=itemView.findViewById(R.id.condition_favotitos);
+        precio=itemView.findViewById(R.id.precio_favotiros);
+        Favorit=itemView.findViewById(R.id.favoritos_favotiros);
+        ratingBar=itemView.findViewById(R.id.ratingBar_libro_favotiros);
+        hora=itemView.findViewById(R.id.fechacreacion_favotiros);
+        containerLibro= itemView.findViewById(R.id.container_holder_libro_favoritos);
         this.librosFavClickableInteface=librosFavClickableInteface;
 
 

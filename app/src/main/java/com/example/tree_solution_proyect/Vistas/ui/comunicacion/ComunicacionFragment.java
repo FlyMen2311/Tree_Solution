@@ -64,7 +64,6 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
     public String keyreceptor;
     public String keyemisor;
     public String keylibro;
-    private EditText buscar_chats_nombre;
     private Dialog dialog;
     private Button AceptarEliminar;
     private Button CancelEliminar;
@@ -77,8 +76,8 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         vista =inflater.inflate(R.layout.layout_chats, container, false);
-        recyclerView=vista.findViewById(R.id.recycler_favoritos);
-        buscar_chats_nombre=vista.findViewById(R.id.buscar_chats_nombre);
+        recyclerView=vista.findViewById(R.id.recycler_chats);
+
 
        mAuth=FirebaseAuth.getInstance();
        dialog = new Dialog(getContext());

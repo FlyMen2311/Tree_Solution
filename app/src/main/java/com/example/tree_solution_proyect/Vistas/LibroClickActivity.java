@@ -13,7 +13,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
 import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Objetos.Firebase.Chat;
 import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
@@ -68,21 +67,21 @@ public class LibroClickActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_libro_click);
 
-        foto_libro=findViewById(R.id.foto_libro);
-        favorit=findViewById(R.id.favoritos1);
-        nombre=findViewById(R.id.nombre_chat);
-        autor=findViewById(R.id.autor);
-        categoria=findViewById(R.id.catergoria_chat);
-        ISBN=findViewById(R.id.Isbn_chat);
-        condition=findViewById(R.id.condition_chat);
-        precio=findViewById(R.id.precio_chat);
-        hora=findViewById(R.id.fechacreacion_chat);
-        ratingBar=findViewById(R.id.ratingBar_libro_chat);
-        foto_libro_propietario =findViewById(R.id.foto_user_libro);
-        nombre_libro_propietario=findViewById(R.id.nombre_user);
-        btnchat=findViewById(R.id.btn_aceptar);
-        btnVolver=findViewById(R.id.btn_cancelar);
-        descripcion=findViewById(R.id.descripcion2);
+        foto_libro=findViewById(R.id.foto_libro_libroclick);
+        favorit=findViewById(R.id.favoritos_libroclick);
+        nombre=findViewById(R.id.nombre_libroclick);
+        autor=findViewById(R.id.autor_libroclick);
+        categoria=findViewById(R.id.categoria_libroclick);
+        ISBN=findViewById(R.id.Isbn_libroclick);
+        condition=findViewById(R.id.condition_libroclick);
+        precio=findViewById(R.id.precio_libroclick);
+        hora=findViewById(R.id.fechacreacion_libroclick);
+        ratingBar=findViewById(R.id.ratingBar_libro_libroclick);
+        foto_libro_propietario =findViewById(R.id.foto_user_libroclick);
+        nombre_libro_propietario=findViewById(R.id.nombre_user_libroclick);
+        btnchat=findViewById(R.id.btn_chat_libroclick);
+        btnVolver=findViewById(R.id.btn_volver_libroclick);
+        descripcion=findViewById(R.id.descripcion_libroclick);
         chat=new Chat();
 
         Llibro = (LLibro) getIntent().getExtras().getSerializable("objectLibro");
