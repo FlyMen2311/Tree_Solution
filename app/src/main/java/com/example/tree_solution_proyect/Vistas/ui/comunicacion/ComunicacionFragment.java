@@ -87,12 +87,9 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
        databaseReferenceChats =database.getReference(Constantes.NODO_CHAT_DATOS);
        databaseReferenceChatsUsuario=database.getReference(Constantes.NODO_CHAT_DATOS).child(mAuth.getCurrentUser().getUid());
 
-       storage= FirebaseStorage.getInstance();;
+       storage= FirebaseStorage.getInstance();
 
-
-
-
-        mAuth=FirebaseAuth.getInstance();;
+       mAuth=FirebaseAuth.getInstance();
 
             adapter_chats=new Adapter_Chats(getActivity().getApplicationContext(),new ChatOpen(getActivity(),getContext()));
             LinearLayoutManager l=new LinearLayoutManager(getActivity().getApplicationContext());
@@ -197,8 +194,8 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
             //asignamos layout a pop up
             dialog.setContentView(R.layout.layout_dialog_eliminar_chat);
 
-            AceptarEliminar=dialog.findViewById(R.id.btn_aceptar);
-            CancelEliminar=dialog.findViewById(R.id.btn_cancelar);
+            AceptarEliminar=dialog.findViewById(R.id.btn_aceptar_eliminarchat);
+            CancelEliminar=dialog.findViewById(R.id.btn_cancelar_eliminachat);
             AceptarEliminar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

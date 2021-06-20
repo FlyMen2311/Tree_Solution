@@ -1,5 +1,6 @@
 package com.example.tree_solution_proyect.Vistas;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,9 +14,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
+import com.example.tree_solution_proyect.Holders.Holder_Chats;
 import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Objetos.Firebase.Chat;
 import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
+import com.example.tree_solution_proyect.Objetos.Logica.LChat;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
 import com.example.tree_solution_proyect.Persistencia.LibroDAO;
@@ -48,16 +52,18 @@ public class MisLibrosClickActivity extends AppCompatActivity {
     private RatingBar ratingBar;
     private TextView descripcion;
     private DatabaseReference databaseReferenceUsuario;
-    private DatabaseReference databaseReferenceDatosChat;
+    private DatabaseReference databaseReferenceDatosLibro;
     private FirebaseDatabase database;
+    private Adapter_Libro alibro;
     private FirebaseAuth mAuth;
-    private Button btnchat;
-    private Button btnVolver;
+    private Button btnVolver,btnVendido,btnModificar,btnEliminar
+            ,aceptarEliminar,cancelEliminar;
     private  Usuario receptor;
     private LUsuario lreceptor;
     private Usuario emisor;
     private LUsuario lemisor;
     private LLibro Llibro;
+    private Dialog dialog;
     private  Chat chat ;
     private Boolean isExist=false;
     private HomeFragment homeFragment;
@@ -66,6 +72,9 @@ public class MisLibrosClickActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mislibros_click);
+
+        dialog = new Dialog(this);
+        dialog.setCanceledOnTouchOutside(false);
 
         foto_libro=findViewById(R.id.foto_libro_mislibrosclick);
         nombre=findViewById(R.id.nombre_mislibrosclick);
@@ -78,17 +87,24 @@ public class MisLibrosClickActivity extends AppCompatActivity {
         ratingBar=findViewById(R.id.ratingBar_libro_mislibrosclick);
         foto_libro_propietario =findViewById(R.id.foto_user_libro_mislibrosclick);
         nombre_libro_propietario=findViewById(R.id.nombre_user_mislibrosclick);
-        //btnchat=findViewById(R.id.btn_aceptar);
-        //btnVolver=findViewById(R.id.btn_cancelar);
+        btnVendido=findViewById(R.id.btns_vendido_mislibrosclick);
+        btnVolver=findViewById(R.id.btn_volver_mislibrosclick);
+        btnEliminar=findViewById(R.id.btn_eliminar_mislibrosclick);
+        btnModificar=findViewById(R.id.btn_modificar_mislibrosclick);
         descripcion=findViewById(R.id.descripcion_mislibrosclick);
         chat=new Chat();
+
+        btnVolver.setOnClickListener(new btnVolver());
+        btnVendido.setOnClickListener(new btnVendido());
+        btnEliminar.setOnClickListener(new btnEliminar());
+        btnModificar.setOnClickListener(new btnModificar());
 
         Llibro = (LLibro) getIntent().getExtras().getSerializable("objectLibro");
 
         database=FirebaseDatabase.getInstance();
         mAuth=FirebaseAuth.getInstance();
         databaseReferenceUsuario =database.getReference("Usuarios/"+Llibro.getLibro().getUserKey());
-        databaseReferenceDatosChat=database.getReference(Constantes.NODO_CHAT_DATOS);
+        databaseReferenceDatosLibro=database.getReference(Constantes.NODO_CHAT_DATOS);
         mAuth=FirebaseAuth.getInstance();
         LoadLibros(Llibro);
 
@@ -171,5 +187,55 @@ public class MisLibrosClickActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    class btnVolver implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            finish();
+        }
+    }
+    class btnEliminar implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            //asignamos layout a pop up
+            dialog.setContentView(R.layout.layout_dialog_eliminar_libro);
+
+            aceptarEliminar=dialog.findViewById(R.id.btn_aceptar_eliminarlibro);
+            cancelEliminar=dialog.findViewById(R.id.btn_cancelar_eliminarlibro);
+            aceptarEliminar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    LLibro lLibro=alibro.getListChats().get(position);
+                    //database.getReference(Constantes.NODO_CHAT_DATOS).child(lChat.getChat().getKeyemisor()).child(lChat.getChat().getKeyreceptor()).child(lChat.getChat().getKeylibro()).removeValue();
+
+                    dialog.dismiss();
+                }
+            });
+            cancelEliminar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    // adapter_chats.notifyDataSetChanged();
+                }
+            });
+            dialog.show();
+        }
+    }
+    class btnModificar implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+
+        }
+    }
+    class btnVendido implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+
+        }
     }
 }

@@ -180,9 +180,10 @@ public class HomeFragment extends Fragment {
 
                    databaseReferenceChatDatos.addListenerForSingleValueEvent(new ValueEventListener() {
 
-                    private DataSnapshot snapshot1;
-                    private DataSnapshot snapshot2;
-                    private DataSnapshot snapshot3;
+                       DataSnapshot snapshot1;
+                       DataSnapshot snapshot2;
+                       DataSnapshot snapshot3;
+                       boolean keyExiste = false;
 
                     @Override
                     public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -193,10 +194,23 @@ public class HomeFragment extends Fragment {
                                 this.snapshot2 = snapshot2;
                                 keyreceptor = snapshot2.getKey();
                                 for (DataSnapshot snapshot3 : snapshot2.getChildren()) {
+                                    keyExiste = false;
                                     this.snapshot3 = snapshot3;
                                     keyLibro = snapshot3.getKey();
-                                    String keyComprar=adapter_libro.getListLibros().get(posicion-1).getKey();
-                                    if (keyLibro.equals(keyComprar)) {
+                                    if (adapter_libro.getListLibrosAll().size() != 0) {
+                                        int a = adapter_libro.getListLibrosAll().size();
+                                        for (int i = 0; i < adapter_libro.getListLibrosAll().size(); i ++) {
+                                            if (keyLibro.equals(adapter_libro.getListLibrosAll().get(i).getKey())) {
+                                                keyExiste = true;
+                                            }
+                                        }
+                                            if (!keyExiste) {
+                                                database.getReference(Constantes.NODO_CHATS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
+                                                database.getReference(Constantes.NODO_CHAT_DATOS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
+                                                keyExiste = false;
+                                            }
+
+                                    } else {
                                         database.getReference(Constantes.NODO_CHATS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
                                         database.getReference(Constantes.NODO_CHAT_DATOS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
                                     }
