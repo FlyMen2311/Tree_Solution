@@ -177,19 +177,6 @@ public class HomeFragment extends Fragment {
                 }
 
                 database.getReference(Constantes.NODO_LIB_FAV).child(mAuth.getCurrentUser().getUid()).child(adapter_libro.getListLibros().get(posicion).getKey()).removeValue();
-                LibroDAO.getInstance().borrarStorage(adapter_libro.getListLibros().get(posicion).getKey(), new LibroDAO.IDevolverBooleanBorrar() {
-                    @Override
-                    public void devolverSuccesfull(boolean succesfull) {
-                        if(succesfull==false){
-                            Toast.makeText(getActivity().getApplicationContext(),"Error",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    @Override
-                    public void devolverError(String mensajeError) {
-                        Toast.makeText(getActivity().getApplicationContext(),mensajeError,Toast.LENGTH_SHORT).show();
-                    }
-                });
-
                    databaseReferenceChatDatos.addListenerForSingleValueEvent(new ValueEventListener() {
 
                        DataSnapshot snapshot1;

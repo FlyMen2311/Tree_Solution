@@ -62,17 +62,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="615dp">
-
-                    <TextView
-                        android:id="@+id/textViewAuthor_modificar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginStart="36dp"
-                        android:layout_marginTop="234dp"
-                        android:text="Author :" />
+                    android:layout_height="531dp">
 
                     <EditText
                         android:id="@+id/editTextName_modificar"
@@ -80,7 +70,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginTop="149dp"
+                        android:layout_marginTop="21dp"
                         android:layout_marginEnd="23dp"
                         android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
                         android:ems="10"
@@ -93,8 +83,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginTop="217dp"
-                        android:layout_marginEnd="24dp"
+                        android:layout_marginTop="128dp"
+                        android:layout_marginEnd="23dp"
                         android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
                         android:ems="10"
                         android:inputType="textPersonName"
@@ -106,21 +96,9 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:layout_marginStart="31dp"
-                        android:layout_marginTop="162dp"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="34dp"
                         android:text="Nombre :" />
-
-                    <ImageView
-                        android:id="@+id/imageViewImage_modificar"
-                        android:layout_width="115dp"
-                        android:layout_height="99dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginStart="146dp"
-                        android:layout_marginTop="25dp"
-                        android:layout_marginEnd="81dp"
-                        app:srcCompat="@android:drawable/ic_menu_gallery" />
 
                     <EditText
                         android:id="@+id/editTextPrice_modificar"
@@ -128,8 +106,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="24dp"
-                        android:layout_marginBottom="247dp"
+                        android:layout_marginEnd="23dp"
+                        android:layout_marginBottom="295dp"
                         android:digits="1234567890."
                         android:ems="10"
                         android:inputType="numberDecimal"
@@ -141,8 +119,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:layout_marginStart="39dp"
-                        android:layout_marginTop="335dp"
+                        android:layout_marginStart="37dp"
+                        android:layout_marginTop="206dp"
                         android:text="Precio :" />
 
                     <Spinner
@@ -151,8 +129,8 @@
                         android:layout_height="36dp"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="26dp"
-                        android:layout_marginBottom="197dp" />
+                        android:layout_marginEnd="23dp"
+                        android:layout_marginBottom="242dp" />
 
                     <TextView
                         android:id="@+id/textViewCondition_modificar"
@@ -160,8 +138,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:layout_marginStart="29dp"
-                        android:layout_marginTop="390dp"
+                        android:layout_marginStart="27dp"
+                        android:layout_marginTop="262dp"
                         android:text="Condicion :" />
 
                     <Spinner
@@ -170,8 +148,8 @@
                         android:layout_height="34dp"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="21dp"
-                        android:layout_marginBottom="306dp" />
+                        android:layout_marginEnd="22dp"
+                        android:layout_marginBottom="418dp" />
 
                     <TextView
                         android:id="@+id/textViewCategory_modificar"
@@ -179,8 +157,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginStart="28dp"
-                        android:layout_marginBottom="313dp"
+                        android:layout_marginStart="27dp"
+                        android:layout_marginBottom="426dp"
                         android:text="Categoria :" />
 
                     <TextView
@@ -189,8 +167,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginStart="29dp"
-                        android:layout_marginBottom="170dp"
+                        android:layout_marginStart="27dp"
+                        android:layout_marginBottom="200dp"
                         android:text="Description :" />
 
                     <Button
@@ -200,18 +178,8 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
                         android:layout_marginEnd="106dp"
-                        android:layout_marginBottom="11dp"
+                        android:layout_marginBottom="20dp"
                         android:text="Modificar" />
-
-                    <TextView
-                        android:id="@+id/textViewImage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginStart="33dp"
-                        android:layout_marginTop="66dp"
-                        android:text="Imagen :" />
 
                     <EditText
                         android:id="@+id/editTextTextMultiLineDesc_modificar"
@@ -220,13 +188,23 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginStart="29dp"
+                        android:layout_marginStart="27dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginEnd="29dp"
-                        android:layout_marginBottom="71dp"
+                        android:layout_marginEnd="31dp"
+                        android:layout_marginBottom="100dp"
                         android:ems="10"
                         android:gravity="start|top"
                         android:inputType="textMultiLine" />
+
+                    <TextView
+                        android:id="@+id/textViewAuthor_modificar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="36dp"
+                        android:layout_marginTop="145dp"
+                        android:text="Author :" />
 
                 </RelativeLayout>
 

@@ -39,6 +39,7 @@ import com.example.tree_solution_proyect.Vistas.Login;
 import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
 import com.example.tree_solution_proyect.Vistas.ui.home.LibrosClickablesIntefrace;
 import com.example.tree_solution_proyect.databinding.FragmentFavoriteBinding;
+import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -47,10 +48,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -139,33 +142,34 @@ public class FavoriteFragment extends Fragment {
 
             @Override
             public void onChildChanged(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
-
+                try {
+                } catch (Exception e) {
+                adapter_favoritos.notifyDataSetChanged();
+                 }
             }
 
             @Override
             public void onChildRemoved(@NonNull @NotNull DataSnapshot snapshot) {
-                final Libro m=snapshot.getValue(Libro.class);
-                final LLibro lLibro=new LLibro(m,snapshot.getKey());
-                int posicion = 0;
-                for(int i=0;i<adapter_favoritos.getListLibros().size();i++){
-                    if(adapter_favoritos.getListLibros().get(i).getLibro().getReferenceStorage().equals(lLibro.getLibro().getReferenceStorage())){
-                        posicion=i;
+                    final Libro m = snapshot.getValue(Libro.class);
+                    final LLibro lLibro = new LLibro(m, snapshot.getKey());
+                    int posicion = 0;
+                    for (int i = 0; i < adapter_favoritos.getListLibros().size(); i++) {
+                        if (adapter_favoritos.getListLibros().get(i).getLibro().getReferenceStorage().equals(lLibro.getLibro().getReferenceStorage())) {
+                            posicion = i;
+                        }
                     }
-                }
-                adapter_favoritos.getListLibros().remove(posicion);
-                adapter_favoritos.notifyItemRemoved(posicion);
+                    adapter_favoritos.getListLibros().remove(posicion);
+                    adapter_favoritos.notifyItemRemoved(posicion);
 
             }
 
 
             @Override
             public void onChildMoved(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
-
             }
 
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
             }
         });
         return vista;

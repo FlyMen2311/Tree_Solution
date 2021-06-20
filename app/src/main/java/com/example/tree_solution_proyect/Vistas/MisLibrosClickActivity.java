@@ -57,8 +57,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MisLibrosClickActivity extends AppCompatActivity {
-    private ImageView foto_libro,imageViewdialog;
-    private ImageView favorit;
+    private ImageView foto_libro;
     private ImageView foto_libro_propietario;
     private TextView  nombre_libro_propietario;
     private TextView nombre;
@@ -74,7 +73,6 @@ public class MisLibrosClickActivity extends AppCompatActivity {
     private DatabaseReference databaseReferenceUsuario;
     private DatabaseReference databaseReferenceDatosLibro;
     private FirebaseDatabase database;
-    private Adapter_Libro alibro;
     private FirebaseAuth mAuth;
     private Button btnVolver,btnVendido,btnModificar,btnEliminar
             ,aceptarEliminar,cancelEliminar,empezarModificar,cancelModificar,aceptarModificar;
@@ -88,9 +86,13 @@ public class MisLibrosClickActivity extends AppCompatActivity {
     private EditText editTextAuthor,editTextName,editTextPrice,editTextDescripcion;
     private TextView textViewExit;
     private Spinner spinnerContidion,spinnerCategory;
+<<<<<<< HEAD
     public  ImagePicker imagePicker2;
     private Uri imageUri;
     private String urlImage;
+=======
+    public  ImagePicker imagePicker;
+>>>>>>> denys
     private int posCondition;
     private int posCategoria;
 
@@ -177,6 +179,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
             }
         });
 
+<<<<<<< HEAD
         imagePicker2=new ImagePicker(this);
 
         imagePicker2.setImagePickerCallback(new ImagePickerCallback() {
@@ -206,6 +209,8 @@ public class MisLibrosClickActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
             }
         });
+=======
+>>>>>>> denys
     }
 
     public void LoadLibros(LLibro libro){
@@ -215,9 +220,13 @@ public class MisLibrosClickActivity extends AppCompatActivity {
         categoria.setText(libro.getLibro().getCategoria());
         ISBN.setText(libro.getLibro().getISBN());
         condition.setText(libro.getLibro().getCondition());
-        precio.setText(String.valueOf(libro.getLibro().getPrecio()+"€"));
+        precio.setText(libro.getLibro().getPrecio() + "€");
         descripcion.setText(libro.getLibro().getDescripcion());
-        hora.setText(libro.obtenerFechaDeCreacionLibro());
+        try {
+            hora.setText(libro.obtenerFechaDeCreacionLibro());
+        } catch (Exception e) {
+            hora.setText(libro.getFecha());
+        }
 
 
         if(libro.getLibro().getCondition().equals("Nuevo")){
@@ -311,13 +320,13 @@ public class MisLibrosClickActivity extends AppCompatActivity {
                 R.layout.support_simple_spinner_dropdown_item
         );
 
-
         editTextAuthor = dialog.findViewById(R.id.editTextAuthor_modificar);
         editTextName = dialog.findViewById(R.id.editTextName_modificar);
         editTextPrice = dialog.findViewById(R.id.editTextPrice_modificar);
         textViewExit = dialog.findViewById(R.id.textViewExit_modificar);
         editTextDescripcion = dialog.findViewById(R.id.editTextTextMultiLineDesc_modificar);
 
+<<<<<<< HEAD
         imageViewdialog = dialog.findViewById(R.id.imageViewImage_modificar);
         imageViewdialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -326,6 +335,8 @@ public class MisLibrosClickActivity extends AppCompatActivity {
             }
         });
 
+=======
+>>>>>>> denys
         empezarModificar=dialog.findViewById(R.id.buttonModificarLibro_modificar);
         spinnerContidion = dialog.findViewById(R.id.spinnerCondition_modificar);
         spinnerCategory = dialog.findViewById(R.id.spinnerCategory_modificar);
@@ -368,9 +379,6 @@ public class MisLibrosClickActivity extends AppCompatActivity {
         spinnerContidion.setSelection(posCondition);
         spinnerCategory.setSelection(posCategoria);
 
-        Glide.with(getApplication().getApplicationContext())
-                .load(lLibro.getLibro().getFotoPrincipalUrl())
-                .into(imageViewdialog);
 
 
         textViewExit.setOnClickListener(new View.OnClickListener() {
@@ -391,6 +399,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         try {
 
+<<<<<<< HEAD
                             Map<String, Object> libroUpdate = new HashMap<>();
                             libroUpdate.put("autor", editTextAuthor.getText().toString());
                             libroUpdate.put("categoria", spinnerCategory.getSelectedItem().toString());
@@ -413,28 +422,48 @@ public class MisLibrosClickActivity extends AppCompatActivity {
                             if(!urlImage.equals("")){
                                 libro.setFotoPrincipalUrl(urlImage);
                             }else{
+=======
+                            if ((!editTextAuthor.getText().toString().isEmpty()) && (!editTextName.getText().toString().isEmpty())
+                                    && (!editTextPrice.getText().toString().isEmpty())) {
+                                Map<String, Object> libroUpdate = new HashMap<>();
+                                libroUpdate.put("autor", editTextAuthor.getText().toString());
+                                libroUpdate.put("categoria", spinnerCategory.getSelectedItem().toString());
+                                libroUpdate.put("condition", spinnerContidion.getSelectedItem().toString());
+                                libroUpdate.put("descripcion", editTextDescripcion.getText().toString());
+                                libroUpdate.put("nombre", editTextName.getText().toString());
+                                libroUpdate.put("precio", Double.parseDouble(editTextPrice.getText().toString()));
+                                database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).updateChildren(libroUpdate);
+                                Toast.makeText(getApplicationContext(), "Datosmodificados", Toast.LENGTH_SHORT).show();
+
+                                dialog.dismiss();
+                                confirmacionDialog.dismiss();
+
+                                Libro libro = new Libro();
+                                libro.setAutor(editTextAuthor.getText().toString());
+                                libro.setNombre(editTextName.getText().toString());
+                                libro.setISBN(lLibro.getLibro().getISBN());
+                                libro.setDescripcion(editTextDescripcion.getText().toString());
+>>>>>>> denys
                                 libro.setFotoPrincipalUrl(lLibro.getLibro().getFotoPrincipalUrl());
+                                libro.setCategoria(spinnerCategory.getSelectedItem().toString());
+                                libro.setCondition(spinnerContidion.getSelectedItem().toString());
+                                libro.setUserKey(lLibro.getLibro().getUserKey());
+                                libro.setPrecio(Double.parseDouble(editTextPrice.getText().toString()));
+
+                                LLibro lLibro2 = new LLibro(libro, lLibro.getKey());
+                                lLibro2.setFecha(lLibro.obtenerFechaDeCreacionLibro());
+                                Intent intent = new Intent(getApplicationContext(), MisLibrosClickActivity.class);
+                                intent.putExtra("objectLibro", lLibro2);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(MisLibrosClickActivity.this, "Todos los datos tienen que esta rellenados", Toast.LENGTH_SHORT).show();
                             }
-                            libro.setCategoria(spinnerCategory.getSelectedItem().toString());
-                            libro.setCondition(spinnerContidion.getSelectedItem().toString());
-
-                            LLibro lLibro2=new LLibro(libro,lLibro.getKey());
-                            Intent intent= new Intent(getApplicationContext(),MisLibrosClickActivity.class);
-                            intent.putExtra("objectLibro",lLibro2);
-                            startActivity(intent);
-
                         }catch(Exception e){
                             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
                 });
-                cancelModificar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                        confirmacionDialog.dismiss();
-                    }
-                });
+                cancelModificar.setOnClickListener(v1 -> confirmacionDialog.dismiss());
                confirmacionDialog.show();
             }
         });

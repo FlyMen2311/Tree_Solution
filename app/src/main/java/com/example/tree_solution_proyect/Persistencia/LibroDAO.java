@@ -57,10 +57,6 @@ public class LibroDAO {
         void devolverExist(boolean isExist);
         void devolverError(String mensajeError);
     }
-    public interface IDevolverBooleanBorrar{
-        void devolverSuccesfull(boolean succesfull);
-        void devolverError(String mensajeError);
-    }
     public static String getKeyUsuario() {
         return FirebaseAuth.getInstance().getUid();
     }
@@ -84,6 +80,7 @@ public class LibroDAO {
         });
 
     }
+<<<<<<< HEAD
     public void borrarStorage(String key, IDevolverBooleanBorrar iDevolverBooleanBorrar){
 
        storageReferenceFotoLibro.child(key).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -99,6 +96,8 @@ public class LibroDAO {
            }
        });
     }
+=======
+>>>>>>> denys
 
     public boolean isExist() {
         return isExist;
