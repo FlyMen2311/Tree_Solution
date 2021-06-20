@@ -53,8 +53,8 @@ public class PerfilFragment extends Fragment {
     private Dialog myDialogResetPass;
     private ImagePicker imagePicker;
     private Uri fotoUriPerfil;
-    private TextView editTextTextPassword,editTextTextPassword2,textViewAccept,textViewProducts
-            ,textViewMisProductos;
+    private TextView editTextTextPassword,editTextTextPassword2,textViewAccept,textViewMisLibros
+            ,textViewLibrosVendidos;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -62,9 +62,11 @@ public class PerfilFragment extends Fragment {
         View vista=inflater.inflate(R.layout.fragment_perfil, container, false);
 
         textViewResetPass = vista.findViewById(R.id.textViewResetPass);
-        textViewProducts = vista.findViewById(R.id.textViewProducts);
+        textViewMisLibros = vista.findViewById(R.id.textViewMisLibros);
+        textViewLibrosVendidos = vista.findViewById(R.id.textViewLibrosVendidos);
 
-        textViewProducts.setOnClickListener(new textViewMisProductos());
+        textViewMisLibros.setOnClickListener(new textViewMisLibros());
+        textViewLibrosVendidos.setOnClickListener(new textViewLibrosVendidos());
 
         myDialogResetPass = new Dialog(getActivity());
 
@@ -165,14 +167,14 @@ public class PerfilFragment extends Fragment {
         public void onClick(View v) {
             myDialogResetPass.setContentView(R.layout.activity_resetpass);
 
-            textViewProducts = myDialogResetPass.findViewById(R.id.textViewExitPass);
+            textViewMisLibros = myDialogResetPass.findViewById(R.id.textViewExitPass);
             editTextTextPassword = myDialogResetPass.findViewById(R.id.editTextTextPassword);
             editTextTextPassword2 = myDialogResetPass.findViewById(R.id.editTextTextPassword2);
             textViewAccept = myDialogResetPass.findViewById(R.id.textViewAccept);
 
             myDialogResetPass.show();
 
-            textViewProducts.setOnClickListener(new resetPassExit());
+            textViewMisLibros.setOnClickListener(new resetPassExit());
 
         }
 
@@ -182,6 +184,14 @@ public class PerfilFragment extends Fragment {
             public void onClick(View v) {
                 myDialogResetPass.dismiss();
             }
+        }
+    }
+
+    class textViewLibrosVendidos implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            
         }
     }
 
@@ -195,7 +205,7 @@ public class PerfilFragment extends Fragment {
         }
     }
 
-    class textViewMisProductos implements View.OnClickListener {
+    class textViewMisLibros implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {

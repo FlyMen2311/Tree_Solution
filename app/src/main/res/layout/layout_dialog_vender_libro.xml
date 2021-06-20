@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="51dp"
                 android:fontFamily="monospace"
-                android:text="Estas seguro de que quieres eliminar el chat para ambas personas?"
+                android:text="Estas seguro de que libro esta vendido?"
                 android:textAlignment="center"
                 android:textSize="16sp" />
 
@@ -38,7 +38,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btn_cancelar_eliminachat"
+                    android:id="@+id/btn_cancelar_venderlibro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -53,7 +53,7 @@
                     android:text="Cancelar" />
 
                 <Button
-                    android:id="@+id/btn_aceptar_eliminarchat"
+                    android:id="@+id/btn_aceptar_venderlibro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
