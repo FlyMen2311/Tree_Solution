@@ -14,6 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +29,7 @@ import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.perfil.MisLibrosClickablesIntefrace;
 import com.example.tree_solution_proyect.Vistas.ui.perfil.MisLibrosVendidosClickableInterface;
+import com.example.tree_solution_proyect.Vistas.ui.perfil.PerfilFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -189,7 +192,7 @@ public class MisLibrosVendidosActivity extends AppCompatActivity {
                     intent.putExtra("objectLibro", llibro);
                     ActivityOptionsCompat activityOptionsCompat =
                             ActivityOptionsCompat.makeSceneTransitionAnimation(activity,
-                                    Pair.create(imgcontainer, " container_holder_libro")
+                                    Pair.create(imgcontainer, "container_holder_libro")
                                     ,Pair.create(fotoLibro, "fotolibro_TR")
                                     ,Pair.create(nombre, "nombre_TR")
                                     ,Pair.create( autor, "autor_TR")

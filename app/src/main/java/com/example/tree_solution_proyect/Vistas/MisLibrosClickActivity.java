@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
 import com.example.tree_solution_proyect.Adaptadores.Adapter_MisLibros;
@@ -26,6 +28,7 @@ import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
 import com.example.tree_solution_proyect.Persistencia.LibroDAO;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
+import com.example.tree_solution_proyect.Vistas.ui.perfil.PerfilFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -215,8 +218,8 @@ public class MisLibrosClickActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).removeValue();
-                    startActivity(new Intent(getApplicationContext(),MisLibrosActivity.class));
                     dialog.dismiss();
+                    startActivity(new Intent(getApplicationContext(),MisLibrosActivity.class));
                 }
             });
             cancelEliminar.setOnClickListener(new View.OnClickListener() {
@@ -261,4 +264,5 @@ public class MisLibrosClickActivity extends AppCompatActivity {
             dialog.show();
         }
     }
+
 }

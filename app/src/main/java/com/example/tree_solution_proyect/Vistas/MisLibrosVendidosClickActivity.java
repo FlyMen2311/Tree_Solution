@@ -2,6 +2,7 @@ package com.example.tree_solution_proyect.Vistas;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -189,7 +190,7 @@ public class MisLibrosVendidosClickActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            finish();
+            startActivity(new Intent(getApplicationContext(),MisLibrosVendidosActivity.class));
         }
     }
 
@@ -207,7 +208,7 @@ public class MisLibrosVendidosClickActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).removeValue();
                     dialog.dismiss();
-                    finish();
+                    startActivity(new Intent(getApplicationContext(),MisLibrosVendidosActivity.class));
                 }
             });
             cancelEliminar.setOnClickListener(new View.OnClickListener() {
