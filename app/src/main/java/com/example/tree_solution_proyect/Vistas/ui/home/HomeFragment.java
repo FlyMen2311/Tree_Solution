@@ -196,10 +196,7 @@ public class HomeFragment extends Fragment {
                                     keyExiste = false;
                                     this.snapshot3 = snapshot3;
                                     keyLibro = snapshot3.getKey();
-<<<<<<< HEAD
-                                    String keyComprar=adapter_libro.getListLibros().get(posicion).getKey();
-                                    if (keyLibro.equals(keyComprar)) {
-=======
+
                                     if (adapter_libro.getListLibrosAll().size() != 0) {
                                         int a = adapter_libro.getListLibrosAll().size();
                                         for (int i = 0; i < adapter_libro.getListLibrosAll().size(); i ++) {
@@ -214,7 +211,7 @@ public class HomeFragment extends Fragment {
                                             }
 
                                     } else {
->>>>>>> denys
+
                                         database.getReference(Constantes.NODO_CHATS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
                                         database.getReference(Constantes.NODO_CHAT_DATOS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
                                     }

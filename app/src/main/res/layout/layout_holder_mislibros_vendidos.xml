@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:layout_editor_absoluteY="25dp">
+
+    <ImageView
+        android:id="@+id/container_holder_libro_mislibros_vendidos"
+        android:layout_width="410dp"
+        android:layout_height="107dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="47dp"
+        android:background="@drawable/container"
+        android:transitionName="container_holder_libro"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/autor_mislibros_vendidos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="149dp"
+        android:layout_marginTop="69dp"
+        android:layout_marginEnd="228dp"
+        android:layout_marginBottom="33dp"
+        android:text="Autor"
+        android:textColor="#101010"
+        android:transitionName="autor_TR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.029" />
+
+    <RatingBar
+        android:id="@+id/ratingBar_libro_mislibros_vendidos"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="81dp"
+        android:layout_height="19dp"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:transitionName="ratingbar_TR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.451"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.661" />
+
+    <TextView
+        android:id="@+id/holder_condition_mislibros_vendidos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Condicion"
+        android:textColor="#131313"
+        android:transitionName="condition_TR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.793"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.661" />
+
+    <TextView
+        android:id="@+id/holder_categoria_mislibros_vendidos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Categoria"
+        android:textColor="#000000"
+        android:transitionName="categoria_TN"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.425"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.801" />
+
+    <TextView
+        android:id="@+id/holder_precio_mislibros_vendidos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="277dp"
+        android:layout_marginTop="109dp"
+        android:layout_marginEnd="94dp"
+        android:layout_marginBottom="27dp"
+        android:text="Precio"
+        android:textColor="#000000"
+        android:transitionName="precio_TR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/holder_fechacreacion_mislibros_vendidos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="277dp"
+        android:layout_marginTop="49dp"
+        android:layout_marginEnd="43dp"
+        android:layout_marginBottom="87dp"
+        android:text="fechaCreacion"
+        android:textColor="#131313"
+        android:transitionName="fechacreacion_TR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/holder_Isbn_mislibros_vendidos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="277dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="103dp"
+        android:layout_marginBottom="34dp"
+        android:text="ISBN"
+        android:textColor="#000000"
+        android:transitionName="ISBN_TR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.058" />
+
+    <ImageView
+        android:id="@+id/foto_libro_mislibros_vendidos"
+        android:layout_width="126dp"
+        android:layout_height="151dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="269dp"
+        android:layout_marginBottom="2dp"
+        android:transitionName="fotolibro_TR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/libro_ejemplo" />
+
+    <TextView
+        android:id="@+id/nombre_mislibros_vendidos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="149dp"
+        android:layout_marginTop="49dp"
+        android:layout_marginEnd="211dp"
+        android:layout_marginBottom="87dp"
+        android:text="Nombre"
+        android:textColor="#000000"
+        android:transitionName="nombre_TR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

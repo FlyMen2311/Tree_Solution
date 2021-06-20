@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
+import com.example.tree_solution_proyect.Adaptadores.Adapter_MisLibros;
 import com.example.tree_solution_proyect.Holders.Holder_Chats;
 import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Objetos.Firebase.Chat;
@@ -68,9 +69,9 @@ public class MisLibrosClickActivity extends AppCompatActivity {
     private LUsuario lemisor;
     private LLibro lLibro;
     private Dialog dialog;
-    private  Chat chat ;
-    private Boolean isExist=false;
-    private HomeFragment homeFragment;
+    private MisLibrosActivity misLibrosActivity;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
 
         dialog = new Dialog(this);
         dialog.setCanceledOnTouchOutside(false);
+        misLibrosActivity=new MisLibrosActivity();
 
         foto_libro=findViewById(R.id.foto_libro_mislibrosclick);
         nombre=findViewById(R.id.nombre_mislibrosclick);
@@ -96,7 +98,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
         btnEliminar=findViewById(R.id.btn_eliminar_mislibrosclick);
         btnModificar=findViewById(R.id.btn_modificar_mislibrosclick);
         descripcion=findViewById(R.id.descripcion_mislibrosclick);
-        chat=new Chat();
+
 
         btnVolver.setOnClickListener(new btnVolver());
         btnVendido.setOnClickListener(new btnVendido());
@@ -197,7 +199,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            finish();
+            startActivity(new Intent(getApplicationContext(),MisLibrosActivity.class));
         }
     }
     class btnEliminar implements View.OnClickListener {
@@ -213,8 +215,8 @@ public class MisLibrosClickActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).removeValue();
+                    startActivity(new Intent(getApplicationContext(),MisLibrosActivity.class));
                     dialog.dismiss();
-                    finish();
                 }
             });
             cancelEliminar.setOnClickListener(new View.OnClickListener() {
@@ -234,7 +236,6 @@ public class MisLibrosClickActivity extends AppCompatActivity {
         }
     }
     class btnVendido implements View.OnClickListener {
-
         @Override
         public void onClick(View v) {
             dialog.setContentView(R.layout.layout_dialog_vender_libro);
@@ -248,7 +249,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
                     hopperUpdates.put("esVendido", "Si");
                     database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).updateChildren(hopperUpdates);
                     dialog.dismiss();
-                    finish();
+                    startActivity(new Intent(getApplicationContext(),MisLibrosVendidosActivity.class));
                 }
             });
             cancelEliminar.setOnClickListener(new View.OnClickListener() {

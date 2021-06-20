@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tree_solution_proyect.Adaptadores.Adapter_MisLibros;
+import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
@@ -25,6 +26,7 @@ import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.perfil.MisLibrosClickablesIntefrace;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -61,7 +63,7 @@ public class MisLibrosActivity extends AppCompatActivity {
         currentUserKey = mAuth.getCurrentUser().getUid();
 
         database=FirebaseDatabase.getInstance();
-        databaseReferenceLibro =database.getReference("Libros");
+        databaseReferenceLibro =database.getReference(Constantes.NODO_LIBROS);
 
         storage = FirebaseStorage.getInstance();
 
@@ -146,7 +148,6 @@ public class MisLibrosActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     public class LibroOpen  implements MisLibrosClickablesIntefrace {
@@ -178,7 +179,7 @@ public class MisLibrosActivity extends AppCompatActivity {
         public void MisLibrosClick(int pos, ImageView imgcontainer, ImageView fotoLibro,
                                TextView nombre, TextView autor, TextView precio, TextView ISBN,
                                TextView categoria, RatingBar ratingBar, TextView estado,
-                               TextView fechacreacion, TextView descripcion){
+                               TextView fechacreacion){
             try {
                 Intent intent = new Intent(activity, MisLibrosClickActivity.class);
                 LLibro llibro = adapter_misLibros.getListLibros().get(pos);
@@ -213,6 +214,13 @@ public class MisLibrosActivity extends AppCompatActivity {
 
     }
 
+    public Adapter_MisLibros getAdapter_misLibros() {
+        return adapter_misLibros;
+    }
+
+    public void setAdapter_misLibros(Adapter_MisLibros adapter_misLibros) {
+        this.adapter_misLibros = adapter_misLibros;
+    }
 }
 
 

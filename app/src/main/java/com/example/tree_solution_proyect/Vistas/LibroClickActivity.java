@@ -60,7 +60,7 @@ public class LibroClickActivity extends AppCompatActivity {
     private LLibro Llibro;
     private  Chat chat ;
     private Boolean isExist=false;
-    private HomeFragment homeFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +92,7 @@ public class LibroClickActivity extends AppCompatActivity {
         }else{
             favorit.setBackgroundResource(R.drawable.favorite);
         }
-        homeFragment=new HomeFragment();
+
 
         database=FirebaseDatabase.getInstance();
         mAuth=FirebaseAuth.getInstance();

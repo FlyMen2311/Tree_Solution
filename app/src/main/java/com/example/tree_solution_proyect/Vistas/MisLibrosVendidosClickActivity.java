@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
+import com.example.tree_solution_proyect.Adaptadores.Adapter_MisLibros_Vendidos;
 import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Objetos.Firebase.Chat;
 import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
@@ -52,9 +53,9 @@ public class MisLibrosVendidosClickActivity extends AppCompatActivity {
     private DatabaseReference databaseReferenceUsuario;
     private DatabaseReference databaseReferenceDatosLibro;
     private FirebaseDatabase database;
-    private Adapter_Libro alibro;
+    private Adapter_MisLibros_Vendidos alibro;
     private FirebaseAuth mAuth;
-    private Button btnVolver,btnVendido,btnModificar,btnEliminar
+    private Button btnVolver,btnEliminar
             ,aceptarEliminar,cancelEliminar;
     private  Usuario receptor;
     private LUsuario lreceptor;
@@ -69,33 +70,30 @@ public class MisLibrosVendidosClickActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mislibros_click);
+        setContentView(R.layout.activity_mislibrosclick_vendidos);
 
         dialog = new Dialog(this);
         dialog.setCanceledOnTouchOutside(false);
 
-        foto_libro=findViewById(R.id.foto_libro_mislibrosclick);
-        nombre=findViewById(R.id.nombre_mislibrosclick);
-        autor=findViewById(R.id.autor_mislibrosclick);
-        categoria=findViewById(R.id.holder_categoria_mislibrosclick);
-        ISBN=findViewById(R.id.holder_Isbn_mislibrosclick);
-        condition=findViewById(R.id.holder_condition_mislibrosclick);
-        precio=findViewById(R.id.holder_precio_mislibrosclick);
-        hora=findViewById(R.id.holder_fechacreacion_mislibrosclick);
-        ratingBar=findViewById(R.id.ratingBar_libro_mislibrosclick);
-        foto_libro_propietario =findViewById(R.id.foto_user_libro_mislibrosclick);
-        nombre_libro_propietario=findViewById(R.id.nombre_user_mislibrosclick);
-        btnVendido=findViewById(R.id.btns_vendido_mislibrosclick);
-        btnVolver=findViewById(R.id.btn_volver_mislibrosclick);
-        btnEliminar=findViewById(R.id.btn_eliminar_mislibrosclick);
-        btnModificar=findViewById(R.id.btn_modificar_mislibrosclick);
-        descripcion=findViewById(R.id.descripcion_mislibrosclick);
+        foto_libro=findViewById(R.id.foto_libro_mislibros_vendidos_click);
+        nombre=findViewById(R.id.nombre_mislibros_vendidos_click);
+        autor=findViewById(R.id.autor_mislibros_vendidos_click);
+        categoria=findViewById(R.id.holder_categoria_mislibros_vendidos_click);
+        ISBN=findViewById(R.id.holder_Isbn_mislibros_vendidos_click);
+        condition=findViewById(R.id.holder_condition_mislibros_vendidos_click);
+        precio=findViewById(R.id.holder_precio_mislibros_vendidos_click);
+        hora=findViewById(R.id.holder_fechacreacion_mislibros_vendidos_click);
+        ratingBar=findViewById(R.id.ratingBar_libro_mislibros_vendidos_click);
+        foto_libro_propietario =findViewById(R.id.foto_user_libro_mislibros_vendidos_click);
+        nombre_libro_propietario=findViewById(R.id.nombre_user_mislibros_vendidos_click);
+        btnVolver=findViewById(R.id.btn_volver_mislibros_vendidos_click);
+        btnEliminar=findViewById(R.id.btn_eliminar_mislibro_vendidos_click);
+        descripcion=findViewById(R.id.descripcion_mislibros_vendidos_click);
         chat=new Chat();
 
         btnVolver.setOnClickListener(new btnVolver());
-        btnVendido.disable();
         btnEliminar.setOnClickListener(new btnEliminar());
-        btnModificar.setOnClickListener(new btnModificar());
+
 
         lLibro = (LLibro) getIntent().getExtras().getSerializable("objectLibro");
 
@@ -194,6 +192,7 @@ public class MisLibrosVendidosClickActivity extends AppCompatActivity {
             finish();
         }
     }
+
     class btnEliminar implements View.OnClickListener {
 
         @Override
@@ -207,40 +206,6 @@ public class MisLibrosVendidosClickActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).removeValue();
-                    dialog.dismiss();
-                    finish();
-                }
-            });
-            cancelEliminar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
-        }
-    }
-    class btnModificar implements View.OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-
-        }
-    }
-    class btnVendido implements View.OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            dialog.setContentView(R.layout.layout_dialog_vender_libro);
-
-            aceptarEliminar=dialog.findViewById(R.id.btn_aceptar_venderlibro);
-            cancelEliminar=dialog.findViewById(R.id.btn_cancelar_venderlibro);
-            aceptarEliminar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Map<String, Object> hopperUpdates = new HashMap<>();
-                    hopperUpdates.put("esVendido", "Si");
-                    database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).updateChildren(hopperUpdates);
                     dialog.dismiss();
                     finish();
                 }

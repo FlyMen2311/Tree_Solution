@@ -7,5 +7,5 @@ import android.widget.TextView;
 public interface MisLibrosClickablesIntefrace {
     void MisLibrosClick(int pos, ImageView imgcontainer, ImageView fotoLibro, TextView nombre,
                     TextView autor, TextView precio, TextView ISBN, TextView categoria,
-                    RatingBar ratingBar, TextView estado, TextView fechacreacion, TextView descripcion);
+                    RatingBar ratingBar, TextView estado, TextView fechacreacion);
 }

@@ -18,12 +18,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tree_solution_proyect.Adaptadores.Adapter_MisLibros;
+import com.example.tree_solution_proyect.Adaptadores.Adapter_MisLibros_Vendidos;
+import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
 import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.perfil.MisLibrosClickablesIntefrace;
+import com.example.tree_solution_proyect.Vistas.ui.perfil.MisLibrosVendidosClickableInterface;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -44,7 +47,7 @@ public class MisLibrosVendidosActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReferenceLibro;
     private FirebaseStorage storage;
-    private Adapter_MisLibros adapter_misLibros;
+    private Adapter_MisLibros_Vendidos adapter_misLibros_vendidoss;
 
     private String currentUserKey;
 
@@ -52,31 +55,31 @@ public class MisLibrosVendidosActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mislibros);
+        setContentView(R.layout.activity_mislibros_vendidos);
 
-        recyclerView= findViewById(R.id.recycler_misLibros);
+        recyclerView= findViewById(R.id.recycler_misLibros_vendidos);
 
         mAuth= FirebaseAuth.getInstance();
 
         currentUserKey = mAuth.getCurrentUser().getUid();
 
         database=FirebaseDatabase.getInstance();
-        databaseReferenceLibro =database.getReference("Libros");
+        databaseReferenceLibro =database.getReference(Constantes.NODO_LIBROS);
 
         storage = FirebaseStorage.getInstance();
 
 
-        adapter_misLibros =new Adapter_MisLibros(MisLibrosVendidosActivity.this,
+        adapter_misLibros_vendidoss =new Adapter_MisLibros_Vendidos(MisLibrosVendidosActivity.this,
                 new LibroOpen(this, MisLibrosVendidosActivity.this));
         LinearLayoutManager l=new LinearLayoutManager(MisLibrosVendidosActivity.this);
         recyclerView.setLayoutManager(l);
-        recyclerView.setAdapter(adapter_misLibros);
+        recyclerView.setAdapter(adapter_misLibros_vendidoss);
         //Funcion para pasar al ultimo mensaje producido
-        adapter_misLibros.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+        adapter_misLibros_vendidoss.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
-                recyclerView.scrollToPosition(adapter_misLibros.getItemCount()-1);
+                recyclerView.scrollToPosition(adapter_misLibros_vendidoss.getItemCount()-1);
             }
         });
 
@@ -88,19 +91,19 @@ public class MisLibrosVendidosActivity extends AppCompatActivity {
                                              String previousChildName) {
                 final Libro m=snapshot.getValue(Libro.class);
                 final LLibro lLibro=new LLibro(m,snapshot.getKey());
-                if (lLibro.getLibro().getUserKey().equals(currentUserKey) && (lLibro.getLibro().getEsVendido().equals("No"))){
-                    final int posicion= adapter_misLibros.addLibro(lLibro);
+                if (lLibro.getLibro().getUserKey().equals(currentUserKey) && (lLibro.getLibro().getEsVendido().equals("Si"))){
+                    final int posicion= adapter_misLibros_vendidoss.addLibro(lLibro);
 
                     if (stringLUsuarioMap.get(m.getUserKey()) != null) {
                         lLibro.setLUsuario(stringLUsuarioMap.get(m.getUserKey()));
-                        adapter_misLibros.actualizarLibro(posicion, lLibro);
+                        adapter_misLibros_vendidoss.actualizarLibro(posicion, lLibro);
                     } else {
                         UsuarioDAO.getInstance().obtenerInformacionKey(m.getUserKey(), new UsuarioDAO.IDevolverUsuario() {
                             @Override
                             public void devolverUsuario(LUsuario lUsuario) {
                                 stringLUsuarioMap.put(m.getUserKey(), lUsuario);
                                 lLibro.setLUsuario(lUsuario);
-                                adapter_misLibros.actualizarLibro(posicion, lLibro);
+                                adapter_misLibros_vendidoss.actualizarLibro(posicion, lLibro);
                             }
 
                             @Override
@@ -122,15 +125,15 @@ public class MisLibrosVendidosActivity extends AppCompatActivity {
                 final Libro m=snapshot.getValue(Libro.class);
                 final LLibro lLibro=new LLibro(m,snapshot.getKey());
                 int posicion = 0;
-                for(int i = 0; i< adapter_misLibros.getListLibros().size(); i++){
-                    if(adapter_misLibros.getListLibros().get(i).getLibro().getReferenceStorage().equals(lLibro.getLibro().getReferenceStorage())){
+                for(int i = 0; i< adapter_misLibros_vendidoss.getListLibros().size(); i++){
+                    if(adapter_misLibros_vendidoss.getListLibros().get(i).getLibro().getReferenceStorage().equals(lLibro.getLibro().getReferenceStorage())){
                         posicion=i;
                     }
                 }
-                adapter_misLibros.getListLibros().remove(posicion);
+                adapter_misLibros_vendidoss.getListLibros().remove(posicion);
 
 
-                adapter_misLibros.notifyItemRemoved(posicion);
+                adapter_misLibros_vendidoss.notifyItemRemoved(posicion);
 
             }
 
@@ -149,7 +152,7 @@ public class MisLibrosVendidosActivity extends AppCompatActivity {
 
     }
 
-    public class LibroOpen  implements MisLibrosClickablesIntefrace {
+    public class LibroOpen  implements MisLibrosVendidosClickableInterface {
         Activity activity;
         Context context;
 
@@ -175,13 +178,13 @@ public class MisLibrosVendidosActivity extends AppCompatActivity {
         }
 
         @Override
-        public void MisLibrosClick(int pos, ImageView imgcontainer, ImageView fotoLibro,
+        public void MisLibrosVendidosClick(int pos, ImageView imgcontainer, ImageView fotoLibro,
                                TextView nombre, TextView autor, TextView precio, TextView ISBN,
                                TextView categoria, RatingBar ratingBar, TextView estado,
-                               TextView fechacreacion, TextView descripcion){
+                               TextView fechacreacion){
             try {
-                Intent intent = new Intent(activity, MisLibrosClickActivity.class);
-                LLibro llibro = adapter_misLibros.getListLibros().get(pos);
+                Intent intent = new Intent(activity, MisLibrosVendidosClickActivity.class);
+                LLibro llibro = adapter_misLibros_vendidoss.getListLibros().get(pos);
                 if (llibro != null) {
                     intent.putExtra("objectLibro", llibro);
                     ActivityOptionsCompat activityOptionsCompat =

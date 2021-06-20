@@ -4,8 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -13,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.tree_solution_proyect.Holders.Holder_MisLibros;
+import com.example.tree_solution_proyect.Holders.Holder_MisLibros_Vendidos;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
 import com.example.tree_solution_proyect.R;
@@ -26,23 +25,20 @@ import java.util.List;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
-public class Adapter_MisLibros extends RecyclerView.Adapter<Holder_MisLibros> {
-    public List<LLibro> listMisLibros =new ArrayList<>();
+public class Adapter_MisLibros_Vendidos  extends RecyclerView.Adapter<Holder_MisLibros_Vendidos>{
+    public List<LLibro> listMisLibrosVendidos =new ArrayList<>();
     private Context x;
-    private  MisLibrosActivity.LibroOpen libroOpen;
+    private  MisLibrosVendidosActivity.LibroOpen libroOpen;
     public boolean isFavorite=false;
 
-    public Adapter_MisLibros(Context x, MisLibrosActivity.LibroOpen libroOpen) {
-        this.x = x;
 
+    public Adapter_MisLibros_Vendidos(Context x, MisLibrosVendidosActivity.LibroOpen libroOpen) {
+        this.x = x;
         this.libroOpen=libroOpen;
     }
 
-
-
-
     public void actualizarLibro(int posicion,LLibro lLibro){
-        listMisLibros.set(posicion,lLibro);
+        listMisLibrosVendidos.set(posicion,lLibro);
         notifyItemChanged(posicion);
     }
 
@@ -50,16 +46,16 @@ public class Adapter_MisLibros extends RecyclerView.Adapter<Holder_MisLibros> {
     @NonNull
     @NotNull
     @Override
-    public Holder_MisLibros onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(x).inflate(R.layout.layout_holder_mislibros,parent,false);
+    public Holder_MisLibros_Vendidos onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+        View v= LayoutInflater.from(x).inflate(R.layout.layout_holder_mislibros_vendidos,parent,false);
 
-        return new Holder_MisLibros(v, libroOpen);
+        return new Holder_MisLibros_Vendidos(v, libroOpen);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull Holder_MisLibros holder, int position) {
+    public void onBindViewHolder(@NonNull @NotNull Holder_MisLibros_Vendidos holder, int position) {
 
-        LLibro lLibro= listMisLibros.get(position);
+        LLibro lLibro= listMisLibrosVendidos.get(position);
         LUsuario lUsuario=lLibro.getLUsuario();
 
         if((lLibro!=null)&&(lUsuario!=null)){
@@ -112,10 +108,10 @@ public class Adapter_MisLibros extends RecyclerView.Adapter<Holder_MisLibros> {
     }
 
     public List<LLibro> getListLibros() {
-        return listMisLibros;
+        return listMisLibrosVendidos;
     }
     public void setListLibros(List<LLibro> listLibros) {
-        this.listMisLibros = listLibros;
+        this.listMisLibrosVendidos = listLibros;
     }
 
     public boolean isFavorite() {
@@ -128,14 +124,14 @@ public class Adapter_MisLibros extends RecyclerView.Adapter<Holder_MisLibros> {
 
     @Override
     public int getItemCount() {
-        return listMisLibros.size();
+        return listMisLibrosVendidos.size();
     }
 
     //En este metodo añdimos el Libro creado a nuestra lista y notificamos a nuestro activity
     public int addLibro(LLibro lLibro){
-        listMisLibros.add(lLibro);
-        int posicion= listMisLibros.size()-1;
-        notifyItemInserted(listMisLibros.size());
+        listMisLibrosVendidos.add(lLibro);
+        int posicion= listMisLibrosVendidos.size()-1;
+        notifyItemInserted(listMisLibrosVendidos.size());
         return posicion;
     }
 }

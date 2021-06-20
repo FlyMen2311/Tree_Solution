@@ -50,7 +50,7 @@ public class Holder_MisLibros extends  RecyclerView.ViewHolder{
                 Foto_libro,nombre,
                 autor,precio,ISBN,
                 categoria,ratingBar,
-                condition,hora, descripcion));
+                condition,hora));
     }
 
     public TextView getHora() {
