@@ -2,27 +2,22 @@ package com.example.tree_solution_proyect.Vistas;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
-import com.example.tree_solution_proyect.Holders.Holder_Chats;
 import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Objetos.Firebase.Chat;
 import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
-import com.example.tree_solution_proyect.Objetos.Logica.LChat;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
-import com.example.tree_solution_proyect.Persistencia.LibroDAO;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,11 +31,10 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.invoke.ConstantCallSite;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MisLibrosClickActivity extends AppCompatActivity {
+public class MisLibrosVendidosClickActivity extends AppCompatActivity {
     private ImageView foto_libro;
     private ImageView favorit;
     private ImageView foto_libro_propietario;
@@ -99,7 +93,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
         chat=new Chat();
 
         btnVolver.setOnClickListener(new btnVolver());
-        btnVendido.setOnClickListener(new btnVendido());
+        btnVendido.disable();
         btnEliminar.setOnClickListener(new btnEliminar());
         btnModificar.setOnClickListener(new btnModificar());
 

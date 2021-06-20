@@ -38,7 +38,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class MisLibrosActivity extends AppCompatActivity {
+public class MisLibrosVendidosActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private FirebaseDatabase database;
     private FirebaseAuth mAuth;
@@ -66,9 +66,9 @@ public class MisLibrosActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
 
 
-        adapter_misLibros =new Adapter_MisLibros(MisLibrosActivity.this,
-                new LibroOpen(this,MisLibrosActivity.this));
-        LinearLayoutManager l=new LinearLayoutManager(MisLibrosActivity.this);
+        adapter_misLibros =new Adapter_MisLibros(MisLibrosVendidosActivity.this,
+                new LibroOpen(this, MisLibrosVendidosActivity.this));
+        LinearLayoutManager l=new LinearLayoutManager(MisLibrosVendidosActivity.this);
         recyclerView.setLayoutManager(l);
         recyclerView.setAdapter(adapter_misLibros);
         //Funcion para pasar al ultimo mensaje producido
@@ -105,7 +105,7 @@ public class MisLibrosActivity extends AppCompatActivity {
 
                             @Override
                             public void devolverError(String mensajeError) {
-                                Toast.makeText(MisLibrosActivity.this, "Error" + mensajeError, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MisLibrosVendidosActivity.this, "Error" + mensajeError, Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
