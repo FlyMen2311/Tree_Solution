@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="379dp"
         android:layout_marginBottom="627dp"
-        android:src="@drawable/atras2"
+        android:src="@drawable/btn_atrs"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -77,9 +77,7 @@ public class MisLibrosActivity extends AppCompatActivity {
         atras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment perfilFragment =new PerfilFragment();
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.navigation_perfil, perfilFragment).commit();
+                finish();
             }
         });
 
