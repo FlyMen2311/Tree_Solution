@@ -121,16 +121,16 @@ public class AplicationActivity extends AppCompatActivity {
                         //asignamos layout a pop up
                         myDialog.setContentView(R.layout.activity_newpost);
                         //vinculamos los componentes
-                        editTextAuthor = myDialog.findViewById(R.id.editTextAuthor);
-                        editTextName = myDialog.findViewById(R.id.editTextName);
-                        editTextPrice = myDialog.findViewById(R.id.editTextPrice);
-                        editTextISBN = myDialog.findViewById(R.id.editTextISBN);
-                        textViewExit = myDialog.findViewById(R.id.textViewExit);
-                        editTextDescripcion = myDialog.findViewById(R.id.editTextTextMultiLineDesc);
-                        imageView = myDialog.findViewById(R.id.imageViewImage);
-                        buttonSubmitBook = myDialog.findViewById(R.id.buttonSubmitBook);
-                        spinnerContidion = myDialog.findViewById(R.id.spinnerCondition);
-                        spinnerCategory = myDialog.findViewById(R.id.spinnerCategory);
+                        editTextAuthor = myDialog.findViewById(R.id.editTextAuthor_newpost);
+                        editTextName = myDialog.findViewById(R.id.editTextName_newpost);
+                        editTextPrice = myDialog.findViewById(R.id.editTextPrice_newpost);
+                        editTextISBN = myDialog.findViewById(R.id.editTextISBN_newpost);
+                        textViewExit = myDialog.findViewById(R.id.textViewExit_newpost);
+                        editTextDescripcion = myDialog.findViewById(R.id.editTextTextMultiLineDesc_newpost);
+                        imageView = myDialog.findViewById(R.id.imageViewImage_newpost);
+                        buttonSubmitBook = myDialog.findViewById(R.id.buttonSubmitBook_newpost);
+                        spinnerContidion = myDialog.findViewById(R.id.spinnerCondition_newpost);
+                        spinnerCategory = myDialog.findViewById(R.id.spinnerCategory_newpost);
 
 
                         adapterCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

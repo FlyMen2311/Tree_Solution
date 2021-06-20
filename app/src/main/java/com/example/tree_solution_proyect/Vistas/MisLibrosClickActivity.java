@@ -65,13 +65,13 @@ public class MisLibrosClickActivity extends AppCompatActivity {
     private Adapter_Libro alibro;
     private FirebaseAuth mAuth;
     private Button btnVolver,btnVendido,btnModificar,btnEliminar
-            ,aceptarEliminar,cancelEliminar;
+            ,aceptarEliminar,cancelEliminar,empezarModificar,cancelModificar,aceptarModificar;
     private  Usuario receptor;
     private LUsuario lreceptor;
     private Usuario emisor;
     private LUsuario lemisor;
     private LLibro lLibro;
-    private Dialog dialog;
+    private Dialog dialog, confirmacionDialog;
     private MisLibrosActivity misLibrosActivity;
 
 
@@ -83,6 +83,12 @@ public class MisLibrosClickActivity extends AppCompatActivity {
 
         dialog = new Dialog(this);
         dialog.setCanceledOnTouchOutside(false);
+
+        confirmacionDialog = new Dialog(this);
+        confirmacionDialog.setCanceledOnTouchOutside(false);
+
+
+
         misLibrosActivity=new MisLibrosActivity();
 
         foto_libro=findViewById(R.id.foto_libro_mislibrosclick);
@@ -235,7 +241,41 @@ public class MisLibrosClickActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
+            dialog.setContentView(R.layout.activity_modificar);
 
+            editTextAuthor = dialog.findViewById(R.id.editTextAuthor_modificar);
+            editTextName = dialog.findViewById(R.id.editTextName_modificar);
+            editTextPrice = dialog.findViewById(R.id.editTextPrice_modificar);
+            textViewExit = dialog.findViewById(R.id.textViewExit_modificar);
+            editTextDescripcion = dialog.findViewById(R.id.editTextTextMultiLineDesc_modificar);
+            imageView = dialog.findViewById(R.id.imageViewImage_modificar);
+            empezarModificar=dialog.findViewById(R.id.buttonModificarLibro_modificar);
+            spinnerContidion = dialog.findViewById(R.id.spinnerCondition_modificar);
+            spinnerCategory = dialog.findViewById(R.id.spinnerCategory_modificar);
+
+
+            empezarModificar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    confirmacionDialog.setContentView(R.layout.layout_dialog_modificar_libro);
+                    aceptarModificar=confirmacionDialog.findViewById(R.id.btn_aceptar_modificarlibro);
+                    cancelModificar=confirmacionDialog.findViewById(R.id.btn_cancelar_modificarlibro);
+                    aceptarModificar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    });
+                    cancelModificar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.show();
+                }
+            });
+            dialog.show();
         }
     }
     class btnVendido implements View.OnClickListener {
