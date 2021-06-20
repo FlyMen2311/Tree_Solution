@@ -61,6 +61,7 @@ public class HomeFragment extends Fragment {
     private DatabaseReference databaseReferenceLibro;
     private DatabaseReference databaseReferenceChatDatos;
 
+
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private Adapter_Libro adapter_libro;
