@@ -7,7 +7,9 @@ import androidx.annotation.NonNull;
 import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,6 +37,7 @@ public class LibroDAO {
     private String key;
     private Libro libro;
     public boolean isExist=false;
+    private boolean b;
 
     public static LibroDAO getInstance() {
         if (libroDAO == null) {
@@ -52,6 +55,10 @@ public class LibroDAO {
 
     public interface IDevolverBooleanExist{
         void devolverExist(boolean isExist);
+        void devolverError(String mensajeError);
+    }
+    public interface IDevolverBooleanBorrar{
+        void devolverSuccesfull(boolean succesfull);
         void devolverError(String mensajeError);
     }
     public static String getKeyUsuario() {
@@ -77,7 +84,25 @@ public class LibroDAO {
         });
 
     }
-  
+    public void borrarStorage(String key, IDevolverBooleanBorrar iDevolverBooleanBorrar){
+
+       StorageReference storageReference=storageReferenceFotoLibro.child(key);
+       storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+           @Override
+           public void onSuccess(Void unused) {
+               b=true;
+               iDevolverBooleanBorrar.devolverSuccesfull(b);
+           }
+       }).addOnFailureListener(new OnFailureListener() {
+           @Override
+           public void onFailure(@NonNull Exception exception) {
+               b=false;
+               iDevolverBooleanBorrar.devolverSuccesfull(b);
+               iDevolverBooleanBorrar.devolverError(exception.getMessage());
+           }
+       });
+
+    }
 
     public boolean isExist() {
         return isExist;

@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
 import com.example.tree_solution_proyect.Objetos.Constantes;
+import com.example.tree_solution_proyect.Persistencia.LibroDAO;
 import com.example.tree_solution_proyect.Vistas.LibroClickActivity;
 import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
@@ -176,7 +177,18 @@ public class HomeFragment extends Fragment {
                 }
 
                 database.getReference(Constantes.NODO_LIB_FAV).child(mAuth.getCurrentUser().getUid()).child(adapter_libro.getListLibros().get(posicion).getKey()).removeValue();
-
+                LibroDAO.getInstance().borrarStorage(adapter_libro.getListLibros().get(posicion).getKey(), new LibroDAO.IDevolverBooleanBorrar() {
+                    @Override
+                    public void devolverSuccesfull(boolean succesfull) {
+                        if(succesfull==false){
+                            Toast.makeText(getActivity().getApplicationContext(),"Error",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    @Override
+                    public void devolverError(String mensajeError) {
+                        Toast.makeText(getActivity().getApplicationContext(),mensajeError,Toast.LENGTH_SHORT).show();
+                    }
+                });
 
                    databaseReferenceChatDatos.addListenerForSingleValueEvent(new ValueEventListener() {
 
