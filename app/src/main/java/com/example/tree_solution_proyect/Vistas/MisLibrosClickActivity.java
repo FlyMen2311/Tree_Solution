@@ -88,7 +88,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
     private EditText editTextAuthor,editTextName,editTextPrice,editTextDescripcion;
     private TextView textViewExit;
     private Spinner spinnerContidion,spinnerCategory;
-    public  ImagePicker imagePicker;
+    public  ImagePicker imagePicker2;
     private Uri imageUri;
     private String urlImage;
     private int posCondition;
@@ -176,9 +176,10 @@ public class MisLibrosClickActivity extends AppCompatActivity {
 
             }
         });
-        imagePicker=new ImagePicker(this);
 
-        imagePicker.setImagePickerCallback(new ImagePickerCallback() {
+        imagePicker2=new ImagePicker(this);
+
+        imagePicker2.setImagePickerCallback(new ImagePickerCallback() {
             @Override
             public void onImagesChosen(List<ChosenImage> list) {
                 if(!list.isEmpty()){
@@ -321,7 +322,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
         imageViewdialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imagePicker.pickImage();
+                imagePicker2.pickImage();
             }
         });
 
@@ -389,7 +390,6 @@ public class MisLibrosClickActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         try {
-
 
                             Map<String, Object> libroUpdate = new HashMap<>();
                             libroUpdate.put("autor", editTextAuthor.getText().toString());

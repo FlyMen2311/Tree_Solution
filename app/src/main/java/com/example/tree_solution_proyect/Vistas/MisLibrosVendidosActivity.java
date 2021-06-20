@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -51,6 +52,7 @@ public class MisLibrosVendidosActivity extends AppCompatActivity {
     private DatabaseReference databaseReferenceLibro;
     private FirebaseStorage storage;
     private Adapter_MisLibros_Vendidos adapter_misLibros_vendidoss;
+    private ImageView atras;
 
     private String currentUserKey;
 
@@ -61,6 +63,7 @@ public class MisLibrosVendidosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mislibros_vendidos);
 
         recyclerView= findViewById(R.id.recycler_misLibros_vendidos);
+        atras=findViewById(R.id.btn_atras_misLibros_vendidos);
 
         mAuth= FirebaseAuth.getInstance();
 
@@ -70,6 +73,12 @@ public class MisLibrosVendidosActivity extends AppCompatActivity {
         databaseReferenceLibro =database.getReference(Constantes.NODO_LIBROS);
 
         storage = FirebaseStorage.getInstance();
+        atras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
         adapter_misLibros_vendidoss =new Adapter_MisLibros_Vendidos(MisLibrosVendidosActivity.this,

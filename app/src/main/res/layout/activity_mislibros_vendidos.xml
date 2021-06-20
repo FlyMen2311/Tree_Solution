@@ -44,10 +44,13 @@
         android:id="@+id/btn_atras_misLibros_vendidos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="363dp"
         android:layout_marginBottom="627dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/atras2" />
+        app:srcCompat="@drawable/btn_atrs" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

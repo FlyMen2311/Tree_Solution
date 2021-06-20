@@ -37,7 +37,7 @@ public class LibroDAO {
     private String key;
     private Libro libro;
     public boolean isExist=false;
-    private boolean b;
+
 
     public static LibroDAO getInstance() {
         if (libroDAO == null) {
@@ -86,22 +86,18 @@ public class LibroDAO {
     }
     public void borrarStorage(String key, IDevolverBooleanBorrar iDevolverBooleanBorrar){
 
-       StorageReference storageReference=storageReferenceFotoLibro.child(key);
-       storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+       storageReferenceFotoLibro.child(key).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
            @Override
            public void onSuccess(Void unused) {
-               b=true;
-               iDevolverBooleanBorrar.devolverSuccesfull(b);
+               iDevolverBooleanBorrar.devolverSuccesfull(true);
            }
        }).addOnFailureListener(new OnFailureListener() {
            @Override
            public void onFailure(@NonNull Exception exception) {
-               b=false;
-               iDevolverBooleanBorrar.devolverSuccesfull(b);
+               iDevolverBooleanBorrar.devolverSuccesfull(false);
                iDevolverBooleanBorrar.devolverError(exception.getMessage());
            }
        });
-
     }
 
     public boolean isExist() {
