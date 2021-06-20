@@ -55,6 +55,7 @@ public class AplicationActivity extends AppCompatActivity {
     private String StrinUrl,mGroupId;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
