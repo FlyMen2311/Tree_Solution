@@ -64,16 +64,15 @@ public class HomeFragment extends Fragment {
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private Adapter_Libro adapter_libro;
-    private Calendar calendario = Calendar.getInstance();
     private FirebaseAuth mAuth;
     private String keyEmisor;
     private String keyreceptor;
     private String keyLibro;
     private int posicion = 0;
     private EditText buscar_librosISBN;
-
+    private boolean isFavorite;
     public View vista;
-    public  boolean isFavorite;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -195,7 +194,7 @@ public class HomeFragment extends Fragment {
                                 for (DataSnapshot snapshot3 : snapshot2.getChildren()) {
                                     this.snapshot3 = snapshot3;
                                     keyLibro = snapshot3.getKey();
-                                    String keyComprar=adapter_libro.getListLibros().get(posicion-1).getKey();
+                                    String keyComprar=adapter_libro.getListLibros().get(posicion).getKey();
                                     if (keyLibro.equals(keyComprar)) {
                                         database.getReference(Constantes.NODO_CHATS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
                                         database.getReference(Constantes.NODO_CHAT_DATOS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
