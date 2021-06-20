@@ -105,8 +105,7 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
                   private DataSnapshot receptorsnapshot;
                   private DataSnapshot librosnapshot;
                   private DataSnapshot emisorsnashot;
-                  private long cont = 0;
-                  private long cont_libros=1;
+
                   @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                       keyreceptor=dataSnapshot.getKey();
@@ -120,7 +119,6 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
                               final LChat lChat = new LChat(m, chatsnapshot.getKey());
                               final int posicion = adapter_chats.addChat(lChat);
 
-                              cont++;
                           }
                       }
                   }

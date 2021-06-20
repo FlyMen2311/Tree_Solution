@@ -3,11 +3,16 @@ package com.example.tree_solution_proyect.Vistas;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,16 +21,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
 import com.example.tree_solution_proyect.Adaptadores.Adapter_MisLibros;
 import com.example.tree_solution_proyect.Holders.Holder_Chats;
 import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Objetos.Firebase.Chat;
+import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
 import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
 import com.example.tree_solution_proyect.Objetos.Logica.LChat;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
 import com.example.tree_solution_proyect.Persistencia.LibroDAO;
+import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
 import com.example.tree_solution_proyect.Vistas.ui.perfil.PerfilFragment;
@@ -36,16 +44,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.kbeanie.multipicker.api.ImagePicker;
+import com.kbeanie.multipicker.api.callbacks.ImagePickerCallback;
+import com.kbeanie.multipicker.api.entity.ChosenImage;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.invoke.ConstantCallSite;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MisLibrosClickActivity extends AppCompatActivity {
-    private ImageView foto_libro;
+    private ImageView foto_libro,imageViewdialog;
     private ImageView favorit;
     private ImageView foto_libro_propietario;
     private TextView  nombre_libro_propietario;
@@ -73,6 +85,14 @@ public class MisLibrosClickActivity extends AppCompatActivity {
     private LLibro lLibro;
     private Dialog dialog, confirmacionDialog;
     private MisLibrosActivity misLibrosActivity;
+    private EditText editTextAuthor,editTextName,editTextPrice,editTextDescripcion;
+    private TextView textViewExit;
+    private Spinner spinnerContidion,spinnerCategory;
+    public  ImagePicker imagePicker;
+    private Uri imageUri;
+    private String urlImage;
+    private int posCondition;
+    private int posCategoria;
 
 
 
@@ -83,6 +103,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
 
         dialog = new Dialog(this);
         dialog.setCanceledOnTouchOutside(false);
+
 
         confirmacionDialog = new Dialog(this);
         confirmacionDialog.setCanceledOnTouchOutside(false);
@@ -155,7 +176,35 @@ public class MisLibrosClickActivity extends AppCompatActivity {
 
             }
         });
+        imagePicker=new ImagePicker(this);
 
+        imagePicker.setImagePickerCallback(new ImagePickerCallback() {
+            @Override
+            public void onImagesChosen(List<ChosenImage> list) {
+                if(!list.isEmpty()){
+                    String path=list.get(0).getOriginalPath();
+                    imageUri= Uri.parse(path);
+                    if(imageUri!=null) {
+                        LibroDAO.getInstance().cambiarFotoUri(imageUri,lLibro.getKey(), new UsuarioDAO.IDevolverUrlFoto() {
+                            @Override
+                            public void DevolverUrlFoto(String uri) {
+                                Glide.with(getApplication().getApplicationContext())
+                                        .load(uri)
+                                        .into(imageViewdialog);
+                                Toast.makeText(getApplicationContext(),"Foto subida para subir otra repite el proceso",Toast.LENGTH_SHORT).show();
+                                urlImage=uri;
+                            }
+                        });
+                    }
+
+                }
+            }
+
+            @Override
+            public void onError(String s) {
+                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void LoadLibros(LLibro libro){
@@ -241,43 +290,157 @@ public class MisLibrosClickActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            dialog.setContentView(R.layout.activity_modificar);
+            asignarDatosDialogModificar();
 
-            editTextAuthor = dialog.findViewById(R.id.editTextAuthor_modificar);
-            editTextName = dialog.findViewById(R.id.editTextName_modificar);
-            editTextPrice = dialog.findViewById(R.id.editTextPrice_modificar);
-            textViewExit = dialog.findViewById(R.id.textViewExit_modificar);
-            editTextDescripcion = dialog.findViewById(R.id.editTextTextMultiLineDesc_modificar);
-            imageView = dialog.findViewById(R.id.imageViewImage_modificar);
-            empezarModificar=dialog.findViewById(R.id.buttonModificarLibro_modificar);
-            spinnerContidion = dialog.findViewById(R.id.spinnerCondition_modificar);
-            spinnerCategory = dialog.findViewById(R.id.spinnerCategory_modificar);
-
-
-            empezarModificar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    confirmacionDialog.setContentView(R.layout.layout_dialog_modificar_libro);
-                    aceptarModificar=confirmacionDialog.findViewById(R.id.btn_aceptar_modificarlibro);
-                    cancelModificar=confirmacionDialog.findViewById(R.id.btn_cancelar_modificarlibro);
-                    aceptarModificar.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                        }
-                    });
-                    cancelModificar.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-                        }
-                    });
-                    dialog.show();
-                }
-            });
-            dialog.show();
         }
     }
+
+    private void asignarDatosDialogModificar() {
+
+        dialog.setContentView(R.layout.activity_modificar);
+
+        ArrayAdapter<CharSequence> adapterCategory = ArrayAdapter.createFromResource(
+                getApplicationContext(),
+                R.array.category,
+                R.layout.support_simple_spinner_dropdown_item
+        );
+        ArrayAdapter<CharSequence> adapterCondition = ArrayAdapter.createFromResource(
+                getApplicationContext(),
+                R.array.conditions,
+                R.layout.support_simple_spinner_dropdown_item
+        );
+
+
+        editTextAuthor = dialog.findViewById(R.id.editTextAuthor_modificar);
+        editTextName = dialog.findViewById(R.id.editTextName_modificar);
+        editTextPrice = dialog.findViewById(R.id.editTextPrice_modificar);
+        textViewExit = dialog.findViewById(R.id.textViewExit_modificar);
+        editTextDescripcion = dialog.findViewById(R.id.editTextTextMultiLineDesc_modificar);
+
+        imageViewdialog = dialog.findViewById(R.id.imageViewImage_modificar);
+        imageViewdialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imagePicker.pickImage();
+            }
+        });
+
+        empezarModificar=dialog.findViewById(R.id.buttonModificarLibro_modificar);
+        spinnerContidion = dialog.findViewById(R.id.spinnerCondition_modificar);
+        spinnerCategory = dialog.findViewById(R.id.spinnerCategory_modificar);
+
+        adapterCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterCondition.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerCategory.setAdapter(adapterCategory);
+        spinnerContidion.setAdapter(adapterCondition);
+
+        spinnerContidion.setOnItemSelectedListener(new conditionCategory());
+        spinnerCategory.setOnItemSelectedListener(new spinnerCategory());
+
+
+
+
+        editTextAuthor.setText(lLibro.getLibro().getAutor());
+        editTextName.setText(lLibro.getLibro().getNombre());
+        editTextPrice.setText(lLibro.getLibro().getPrecio().toString());
+        editTextDescripcion.setText(lLibro.getLibro().getDescripcion());
+        if(lLibro.getLibro().getCondition().equals("Nuevo")){
+            posCondition=0;
+        }else if(lLibro.getLibro().getCondition().equals("Muy buen estado")){
+            posCondition=1;
+        }else if(lLibro.getLibro().getCondition().equals("Buen estado")){
+            posCondition=2;
+        }else if(lLibro.getLibro().getCondition().equals("Defecto estético")){
+            posCondition=3;
+        }else if(lLibro.getLibro().getCondition().equals("Mala condición")){
+            posCondition=4;
+        }
+
+        if(lLibro.getLibro().getCategoria().equals("Primaría")){
+            posCategoria=0;
+        }else if(lLibro.getLibro().getCategoria().equals("Segundaría")){
+            posCategoria=1;
+        }else if(lLibro.getLibro().getCategoria().equals("Bachillerato")){
+            posCategoria=2;
+        }
+        spinnerContidion.setSelection(posCondition);
+        spinnerCategory.setSelection(posCategoria);
+
+        Glide.with(getApplication().getApplicationContext())
+                .load(lLibro.getLibro().getFotoPrincipalUrl())
+                .into(imageViewdialog);
+
+
+        textViewExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        empezarModificar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                confirmacionDialog.setContentView(R.layout.layout_dialog_modificar_libro);
+                aceptarModificar=confirmacionDialog.findViewById(R.id.btn_aceptar_modificarlibro);
+                cancelModificar=confirmacionDialog.findViewById(R.id.btn_cancelar_modificarlibro);
+
+                aceptarModificar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+
+
+                            Map<String, Object> libroUpdate = new HashMap<>();
+                            libroUpdate.put("autor", editTextAuthor.getText().toString());
+                            libroUpdate.put("categoria", spinnerCategory.getSelectedItem().toString());
+                            libroUpdate.put("condition", spinnerContidion.getSelectedItem().toString());
+                            libroUpdate.put("descripcion", editTextDescripcion.getText().toString());
+                            libroUpdate.put("fotoPrincipalUrl", urlImage);
+                            libroUpdate.put("nombre", editTextName.getText().toString());
+                            libroUpdate.put("precio", Double.parseDouble(editTextPrice.getText().toString()));
+                            database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).updateChildren(libroUpdate);
+                            Toast.makeText(getApplicationContext(), "Datosmodificados", Toast.LENGTH_SHORT).show();
+
+                            dialog.dismiss();
+                            confirmacionDialog.dismiss();
+
+                            Libro libro=new Libro();
+                            libro.setAutor(editTextAuthor.getText().toString());
+                            libro.setNombre(editTextName.getText().toString());
+                            libro.setISBN(lLibro.getLibro().getISBN());
+                            libro.setDescripcion(editTextDescripcion.getText().toString());
+                            if(!urlImage.equals("")){
+                                libro.setFotoPrincipalUrl(urlImage);
+                            }else{
+                                libro.setFotoPrincipalUrl(lLibro.getLibro().getFotoPrincipalUrl());
+                            }
+                            libro.setCategoria(spinnerCategory.getSelectedItem().toString());
+                            libro.setCondition(spinnerContidion.getSelectedItem().toString());
+
+                            LLibro lLibro2=new LLibro(libro,lLibro.getKey());
+                            Intent intent= new Intent(getApplicationContext(),MisLibrosClickActivity.class);
+                            intent.putExtra("objectLibro",lLibro2);
+                            startActivity(intent);
+
+                        }catch(Exception e){
+                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+                cancelModificar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        confirmacionDialog.dismiss();
+                    }
+                });
+               confirmacionDialog.show();
+            }
+        });
+        dialog.show();
+    }
+
     class btnVendido implements View.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -302,6 +465,31 @@ public class MisLibrosClickActivity extends AppCompatActivity {
                 }
             });
             dialog.show();
+        }
+    }
+    class spinnerCategory implements AdapterView.OnItemSelectedListener {
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    }
+
+    class conditionCategory implements AdapterView.OnItemSelectedListener {
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
         }
     }
 

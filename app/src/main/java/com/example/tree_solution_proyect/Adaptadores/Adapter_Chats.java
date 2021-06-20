@@ -16,11 +16,13 @@ import com.example.tree_solution_proyect.Holders.Holder_Chats;
 import com.example.tree_solution_proyect.Holders.Holder_Libro;
 import com.example.tree_solution_proyect.Objetos.Logica.LChat;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
+import com.example.tree_solution_proyect.Objetos.Logica.LMensaje;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
 import com.example.tree_solution_proyect.Persistencia.ChatDao;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.comunicacion.ComunicacionFragment;
 import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -35,6 +37,7 @@ public class Adapter_Chats extends RecyclerView.Adapter<Holder_Chats>implements 
     private Context x;
     private List<LChat> listChats=new ArrayList<>();
     private ComunicacionFragment.ChatOpen chatOpen;
+
 
     public Adapter_Chats(Context x, ComunicacionFragment.ChatOpen chatOpen) {
         this.x = x;
@@ -58,20 +61,27 @@ public class Adapter_Chats extends RecyclerView.Adapter<Holder_Chats>implements 
     @Override
     public void onBindViewHolder(@NonNull @NotNull Holder_Chats holder, int position) {
         LChat lChat=listChats.get(position);
-
+        String keyenviar;
         Glide.with(x.getApplicationContext()).load(lChat.getChat().getFotoPrincipalUrl()).
                 transforms(new RoundedCornersTransformation(26,5)).into(holder.getFoto_libro_chat());
         holder.getFoto_libro_chat().setVisibility(View.VISIBLE);
         holder.getName_libro_chat().setText(lChat.getChat().getNombrelibro());
         holder.getName_propietario().setText(lChat.getChat().getNombrePropietario());
 
-        ChatDao.getInstance().getUltimoMensaje(lChat.getChat().getKeyreceptor(), lChat.getChat().getKeylibro(), new ChatDao.IDevolverUltimoMensaje() {
+        if(lChat.getChat().getKeyreceptor().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+            keyenviar=lChat.getChat().getKeyemisor();
+        }else{
+            keyenviar=lChat.getChat().getKeyreceptor();
+        }
+        ChatDao.getInstance().getUltimoMensaje(keyenviar, lChat.getChat().getKeylibro(), new ChatDao.IDevolverUltimoMensaje() {
                     @Override
-                    public void DevolverUltimoMensaje(String mensaje) {
-                        if(!mensaje.equals("")){
-                            holder.getUltimo_mensaje().setText(mensaje);
+                    public void DevolverUltimoMensaje(ArrayList<LMensaje> lMensajes) {
+                        if(lMensajes!=null){
+                            holder.getUltimo_mensaje().setText(lMensajes.get(lMensajes.size() - 1).getMensaje().getMensaje());
+                            holder.getHora().setText(lMensajes.get(lMensajes.size() - 1).obtenerFechaDeCreacionMensaje());
                         }else{
                             holder.getUltimo_mensaje().setText("Puedes empezar a chatear");
+                            holder.getHora().setText(lChat.obtenerFechaDeCreacionChat());
                         }
                     }
 

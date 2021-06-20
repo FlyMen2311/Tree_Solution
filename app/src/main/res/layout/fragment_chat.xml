@@ -30,10 +30,10 @@
 
         <ImageView
             android:id="@+id/foto_libro_chat"
-            android:layout_width="126dp"
-            android:layout_height="151dp"
+            android:layout_width="112dp"
+            android:layout_height="104dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="48dp"
             android:transitionName="fotolibro_chat_TR"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

@@ -125,18 +125,7 @@ public class MisLibrosVendidosActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(@NonNull @NotNull DataSnapshot snapshot) {
-                final Libro m=snapshot.getValue(Libro.class);
-                final LLibro lLibro=new LLibro(m,snapshot.getKey());
-                int posicion = 0;
-                for(int i = 0; i< adapter_misLibros_vendidoss.getListLibros().size(); i++){
-                    if(adapter_misLibros_vendidoss.getListLibros().get(i).getLibro().getReferenceStorage().equals(lLibro.getLibro().getReferenceStorage())){
-                        posicion=i;
-                    }
-                }
-                adapter_misLibros_vendidoss.getListLibros().remove(posicion);
 
-
-                adapter_misLibros_vendidoss.notifyItemRemoved(posicion);
 
             }
 
@@ -211,14 +200,12 @@ public class MisLibrosVendidosActivity extends AppCompatActivity {
             } catch (Exception exception) {
                 Toast.makeText(activity, exception.getMessage(), Toast.LENGTH_LONG).show();
             }
-
-
-
         }
-
+    }
+    @Override
+    public void onBackPressed() {
 
     }
-
 }
 
 

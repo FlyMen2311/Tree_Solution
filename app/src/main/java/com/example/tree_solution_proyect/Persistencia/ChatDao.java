@@ -45,7 +45,7 @@ public class ChatDao {
         mAuth = FirebaseAuth.getInstance();
     }
     public interface IDevolverUltimoMensaje{
-        void DevolverUltimoMensaje(String  mensaje);
+        void DevolverUltimoMensaje(ArrayList<LMensaje> mensaje);
         void devolverError(String mensajeError);
     }
 
@@ -61,11 +61,13 @@ public class ChatDao {
                     LMensaje lMensaje = new LMensaje(mensaje, snapshot.getKey());
                     lMensajes.add(lMensaje);
                 }
+
                 if(lMensajes.size()!=0) {
-                    iDevolverBooDevolverUltimoMensaje.DevolverUltimoMensaje(lMensajes.get(lMensajes.size() - 1).getMensaje().getMensaje());
+                    iDevolverBooDevolverUltimoMensaje.DevolverUltimoMensaje(lMensajes);
                 }else{
-                    iDevolverBooDevolverUltimoMensaje.DevolverUltimoMensaje("");
+                    iDevolverBooDevolverUltimoMensaje.DevolverUltimoMensaje(null);
                 }
+                lMensajes.clear();
             }
 
             @Override

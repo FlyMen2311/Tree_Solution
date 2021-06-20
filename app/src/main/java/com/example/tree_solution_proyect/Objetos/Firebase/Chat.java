@@ -2,6 +2,7 @@ package com.example.tree_solution_proyect.Objetos.Firebase;
 
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
+import com.google.firebase.database.ServerValue;
 
 import java.io.Serializable;
 
@@ -14,10 +15,19 @@ public class Chat implements Serializable {
     private String nombrelibro;
     private String nombrePropietario;
     private String nombreUser;
+    private Object createTimestamp;
 
 
     public Chat() {
+        createTimestamp = ServerValue.TIMESTAMP;
+    }
 
+    public Object getCreateTimestamp() {
+        return createTimestamp;
+    }
+
+    public void setCreateTimestamp(Object createTimestamp) {
+        this.createTimestamp = createTimestamp;
     }
 
     public String getNombreUser() {

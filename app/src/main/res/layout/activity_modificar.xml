@@ -147,11 +147,11 @@
 
                     <Spinner
                         android:id="@+id/spinnerCondition_modificar"
-                        android:layout_width="212dp"
-                        android:layout_height="34dp"
+                        android:layout_width="208dp"
+                        android:layout_height="36dp"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="22dp"
+                        android:layout_marginEnd="26dp"
                         android:layout_marginBottom="197dp" />
 
                     <TextView

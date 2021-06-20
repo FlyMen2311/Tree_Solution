@@ -51,7 +51,6 @@ public class Holder_Libro extends  RecyclerView.ViewHolder{
         containerLibro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 librosClickablesIntefrace1.LibroClick(getAdapterPosition(),containerLibro,
                         Foto_libro,nombre,
                         autor,precio,ISBN,

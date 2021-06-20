@@ -1,9 +1,12 @@
 package com.example.tree_solution_proyect.Vistas;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -14,6 +17,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +30,7 @@ import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
 import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.perfil.MisLibrosClickablesIntefrace;
+import com.example.tree_solution_proyect.Vistas.ui.perfil.PerfilFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -36,6 +42,7 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,7 +54,7 @@ public class MisLibrosActivity extends AppCompatActivity {
     private DatabaseReference databaseReferenceLibro;
     private FirebaseStorage storage;
     private Adapter_MisLibros adapter_misLibros;
-
+    private ImageView atras;
     private String currentUserKey;
 
 
@@ -66,6 +73,15 @@ public class MisLibrosActivity extends AppCompatActivity {
         databaseReferenceLibro =database.getReference(Constantes.NODO_LIBROS);
 
         storage = FirebaseStorage.getInstance();
+        atras=findViewById(R.id.btn_atras_mislibros);
+        atras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment perfilFragment =new PerfilFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.navigation_perfil, perfilFragment).commit();
+            }
+        });
 
 
         adapter_misLibros =new Adapter_MisLibros(MisLibrosActivity.this,
@@ -121,18 +137,7 @@ public class MisLibrosActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(@NonNull @NotNull DataSnapshot snapshot) {
-                final Libro m=snapshot.getValue(Libro.class);
-                final LLibro lLibro=new LLibro(m,snapshot.getKey());
-                int posicion = 0;
-                for(int i = 0; i< adapter_misLibros.getListLibros().size(); i++){
-                    if(adapter_misLibros.getListLibros().get(i).getLibro().getReferenceStorage().equals(lLibro.getLibro().getReferenceStorage())){
-                        posicion=i;
-                    }
-                }
-                adapter_misLibros.getListLibros().remove(posicion);
 
-
-                adapter_misLibros.notifyItemRemoved(posicion);
 
             }
 
@@ -220,6 +225,11 @@ public class MisLibrosActivity extends AppCompatActivity {
 
     public void setAdapter_misLibros(Adapter_MisLibros adapter_misLibros) {
         this.adapter_misLibros = adapter_misLibros;
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }
 
