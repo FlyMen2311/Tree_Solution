@@ -57,10 +57,6 @@ public class LibroDAO {
         void devolverExist(boolean isExist);
         void devolverError(String mensajeError);
     }
-    public interface IDevolverBooleanBorrar{
-        void devolverSuccesfull(boolean succesfull);
-        void devolverError(String mensajeError);
-    }
     public static String getKeyUsuario() {
         return FirebaseAuth.getInstance().getUid();
     }
@@ -82,25 +78,6 @@ public class LibroDAO {
                 }
             });
         });
-
-    }
-    public void borrarStorage(String key, IDevolverBooleanBorrar iDevolverBooleanBorrar){
-
-       StorageReference storageReference=storageReferenceFotoLibro.child(key);
-       storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-           @Override
-           public void onSuccess(Void unused) {
-               b=true;
-               iDevolverBooleanBorrar.devolverSuccesfull(b);
-           }
-       }).addOnFailureListener(new OnFailureListener() {
-           @Override
-           public void onFailure(@NonNull Exception exception) {
-               b=false;
-               iDevolverBooleanBorrar.devolverSuccesfull(b);
-               iDevolverBooleanBorrar.devolverError(exception.getMessage());
-           }
-       });
 
     }
 

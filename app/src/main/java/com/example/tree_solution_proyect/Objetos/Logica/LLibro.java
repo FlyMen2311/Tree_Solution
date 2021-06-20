@@ -16,6 +16,7 @@ public class LLibro implements Serializable  {
     private LLibro lLibro;
     private String key;
     private LUsuario LUsuario;
+    private String fecha;
 
     public LLibro(Libro libro, String key) {
         this.libro = libro;
@@ -24,6 +25,7 @@ public class LLibro implements Serializable  {
 
     public String obtenerFechaDeCreacionLibro() throws ClassCastException{
         Date date=new Date(getCreateTimeLong());
+
         PrettyTime prettyTime=new PrettyTime(new Date(),Locale.getDefault());
         return prettyTime.format(date);
     }
@@ -64,6 +66,10 @@ public class LLibro implements Serializable  {
     public void setLUsuario(LUsuario LUsuario) {
         this.LUsuario = LUsuario;
     }
+
+    public String getFecha() { return fecha; }
+
+    public void setFecha(String fecha) { this.fecha = fecha; }
 
 
 
