@@ -17,10 +17,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.tree_solution_proyect.Adaptadores.Adapter_Chats;
 import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
 import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
 import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
+import com.example.tree_solution_proyect.Objetos.Logica.LChat;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
@@ -28,6 +30,7 @@ import com.example.tree_solution_proyect.Vistas.Login;
 import com.example.tree_solution_proyect.Vistas.MainActivity;
 import com.example.tree_solution_proyect.Vistas.MisLibrosActivity;
 import com.example.tree_solution_proyect.Vistas.MisLibrosVendidosActivity;
+import com.example.tree_solution_proyect.Vistas.ui.comunicacion.ComunicacionFragment;
 import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -71,6 +74,7 @@ public class PerfilFragment extends Fragment {
     private StorageReference storageReference;
     private Dialog myDialog, myDialogResetPass;
     private Adapter_Libro alibro;
+    private Adapter_Chats achats;
     private ImagePicker imagePicker;
     private Uri fotoUriPerfil;
     private Button btndarBajaAceptar,btndarBajaCancelar;
@@ -378,20 +382,30 @@ public class PerfilFragment extends Fragment {
                                                 @Override
                                                 public void onSuccess(Void unused) {
                                                     key=FirebaseAuth.getInstance().getCurrentUser().getUid();
-
+                                                    alibro = HomeFragment.adapter_libro;
+                                                    achats = ComunicacionFragment.adapter_chats;
+                                                    LLibro lLibro = null;
+                                                    LChat lChat = null;
+                                                    for (int i = 0; i < alibro.getListLibros().size(); i ++ ) {
+                                                        lLibro = alibro.getListLibros().get(i);
+                                                        if(lLibro.getLibro().getUserKey().equals(key)) {
+                                                            database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).removeValue();
+                                                        }
+                                                    }
+                                                    for(int i = 0; i < achats.getListChats().size(); i ++) {
+                                                        lChat = achats.getListChats().get(i);
+                                                        if(lChat.getChat().getKeyemisor().equals(key)) {
+                                                            database.getReference(Constantes.NODO_CHAT_DATOS).child(lChat.getChat().getKeyemisor()).removeValue();
+                                                        }
+                                                        if(lChat.getChat().getKeyreceptor().equals(key)) {
+                                                            database.getReference(Constantes.NODO_CHAT_DATOS).child(lChat.getChat().getKeyemisor()).child(lChat.getChat().getKeyreceptor()).removeValue();
+                                                        }
+                                                    }
                                                     FirebaseAuth.getInstance().signOut();
                                                     user.delete()
                                                             .addOnCompleteListener(task -> {
                                                                 if (task.isSuccessful()) {
                                                                     startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
-                                                                    alibro = HomeFragment.adapter_libro;
-                                                                    LLibro lLibro = null;
-                                                                    for (int i = 0; i < alibro.getListLibrosAll().size(); i ++ ) {
-                                                                        lLibro = alibro.getListLibros().get(i);
-                                                                        if(lLibro.getLibro().getUserKey().equals(user.getUid())) {
-                                                                            database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).removeValue();
-                                                                        }
-                                                                    }
                                                                 }
                                                                 else{
                                                                     Toast.makeText(getActivity().getApplicationContext(), "Usuario no se ha borrado correctamente", Toast.LENGTH_SHORT).show();
