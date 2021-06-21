@@ -52,13 +52,14 @@ import java.util.List;
 
 public class ComunicacionFragment extends Fragment implements RecyclerChatRemoveListener.IRecyclerChatRemoveListener {
 
+    public static Adapter_Chats adapter_chats;
+
     private RecyclerView recyclerView;
     private FirebaseDatabase database;
     private DatabaseReference databaseReferenceChats;
     private DatabaseReference databaseReferenceChatsUsuario;
     private FirebaseStorage storage;
     private StorageReference storageReference;
-    private Adapter_Chats adapter_chats;
     private Calendar calendario = Calendar.getInstance();
     private FirebaseAuth mAuth;
     public String keyreceptor;
