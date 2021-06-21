@@ -505,16 +505,8 @@ public class PerfilFragment extends Fragment {
                             }
                         });
                         myDialog.dismiss();
-
                     }
-
-
-
-
-
                 }
-
-
             });
 
 
@@ -562,7 +554,7 @@ public class PerfilFragment extends Fragment {
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
             }
-        }).notifyAll();
+        });
     }
     public void borrarDatosFavoritos(LLibro lLibro){
         DatabaseReference reference= database.getReference(Constantes.NODO_LIB_FAV);
