@@ -29,6 +29,8 @@ import com.example.tree_solution_proyect.Vistas.ui.favorite.FavoriteFragment;
 import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
 import com.example.tree_solution_proyect.Vistas.ui.perfil.PerfilFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.kbeanie.multipicker.api.ImagePicker;
@@ -271,6 +273,22 @@ public class AplicationActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == Picker.PICK_IMAGE_DEVICE && resultCode == RESULT_OK){
             imagePicker.submit(data);
+        }
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentuser= FirebaseAuth.getInstance().getCurrentUser();
+
+        if(currentuser!=null){
+
+        }else{
+            startActivity(new Intent(getApplicationContext(), Login.class));
+            try {
+                finalize();
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+            }
         }
     }
 }

@@ -176,7 +176,7 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
-                database.getReference(Constantes.NODO_LIB_FAV).child(mAuth.getCurrentUser().getUid()).child(adapter_libro.getListLibros().get(posicion).getKey()).removeValue();
+                   database.getReference(Constantes.NODO_LIB_FAV).child(mAuth.getCurrentUser().getUid()).child(adapter_libro.getListLibros().get(posicion).getKey()).removeValue();
                    databaseReferenceChatDatos.addListenerForSingleValueEvent(new ValueEventListener() {
 
                        DataSnapshot snapshot1;

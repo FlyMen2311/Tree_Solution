@@ -33,6 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class Login extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123 ;
+    private static String tokenID;
     private EditText txtEmail, txtContracena;
     private FirebaseAuth mAuth;
     private ImageButton googleAut;
@@ -44,6 +45,7 @@ public class Login extends AppCompatActivity {
     private boolean isNew=false;
     private Button btn_atras,btnEntrar;
     private String contracena,email;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,8 +156,10 @@ public class Login extends AppCompatActivity {
                                 usuario.setUserName(account.getDisplayName());
                                 usuario.setFechaDeNacimiento(10-10-1022);
                                 usuario.setFotoPerfilUrl(Constantes.URL_FOTO_PERFIL);
+                                tokenID=account.getIdToken();
                                 firebaseAuthWithGoogle(account.getIdToken());
                             } else {
+                                tokenID=account.getIdToken();
                                 firebaseAuthWithGoogle(account.getIdToken());
                             }
                         });
@@ -228,5 +232,16 @@ public class Login extends AppCompatActivity {
         btnCancelar.setOnClickListener(v -> dialog.dismiss());
     }
 
+    @Override
+    public void onBackPressed() {
 
+    }
+
+    public static String getTokenID() {
+        return tokenID;
+    }
+
+    public void setTokenID(String tokenID) {
+        this.tokenID = tokenID;
+    }
 }

@@ -124,4 +124,9 @@ public class Registro extends AppCompatActivity {
     public boolean validarNombreUsuario(String nombre){
         return !nombre.isEmpty();
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }
