@@ -37,7 +37,7 @@ public class LibroDAO {
     private String key;
     private Libro libro;
     public boolean isExist=false;
-    private boolean b;
+
 
     public static LibroDAO getInstance() {
         if (libroDAO == null) {
@@ -80,6 +80,7 @@ public class LibroDAO {
         });
 
     }
+
 
     public boolean isExist() {
         return isExist;

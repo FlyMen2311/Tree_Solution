@@ -86,7 +86,6 @@ public class MisLibrosClickActivity extends AppCompatActivity {
     private EditText editTextAuthor,editTextName,editTextPrice,editTextDescripcion;
     private TextView textViewExit;
     private Spinner spinnerContidion,spinnerCategory;
-    public  ImagePicker imagePicker;
     private int posCondition;
     private int posCategoria;
 
@@ -172,6 +171,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
 
             }
         });
+
 
     }
 
@@ -288,6 +288,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
         textViewExit = dialog.findViewById(R.id.textViewExit_modificar);
         editTextDescripcion = dialog.findViewById(R.id.editTextTextMultiLineDesc_modificar);
 
+
         empezarModificar=dialog.findViewById(R.id.buttonModificarLibro_modificar);
         spinnerContidion = dialog.findViewById(R.id.spinnerCondition_modificar);
         spinnerCategory = dialog.findViewById(R.id.spinnerCategory_modificar);
@@ -370,6 +371,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
                                 libro.setNombre(editTextName.getText().toString());
                                 libro.setISBN(lLibro.getLibro().getISBN());
                                 libro.setDescripcion(editTextDescripcion.getText().toString());
+
                                 libro.setFotoPrincipalUrl(lLibro.getLibro().getFotoPrincipalUrl());
                                 libro.setCategoria(spinnerCategory.getSelectedItem().toString());
                                 libro.setCondition(spinnerContidion.getSelectedItem().toString());

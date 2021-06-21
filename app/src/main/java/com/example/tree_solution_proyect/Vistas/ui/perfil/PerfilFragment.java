@@ -25,9 +25,12 @@ import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.Login;
 import com.example.tree_solution_proyect.Vistas.MisLibrosActivity;
 import com.example.tree_solution_proyect.Vistas.MisLibrosVendidosActivity;
-import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -59,14 +62,13 @@ public class PerfilFragment extends Fragment {
     private DatabaseReference databaseReferenceUsuario;
     private FirebaseStorage storage;
     private StorageReference storageReference;
-    private Dialog myDialog;
+    private Dialog myDialog, myDialogResetPass;
     private Adapter_Libro alibro;
     private ImagePicker imagePicker;
     private Uri fotoUriPerfil;
-    private Button btndarBajaAceptar, btndarBajaCancelar, btnDarBaja;
-    private TextView editTextTextPassword,editTextTextPassword2,textViewAccept,textViewMisLibros
-            ,textViewLibrosVendidos, textViewBaja;
-
+    private Button btndarBajaAceptar,btndarBajaCancelar;
+    private TextView editTextTextPassword,editTextTextPassword2,editTextContraseñaActual,textViewAccept,textViewMisLibros
+            ,textViewLibrosVendidos,textViewExit,textViewBaja;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -180,25 +182,92 @@ public class PerfilFragment extends Fragment {
         public void onClick(View v) {
             myDialog.setContentView(R.layout.activity_resetpass);
 
-            textViewMisLibros = myDialog.findViewById(R.id.textViewExitPass);
-            editTextTextPassword = myDialog.findViewById(R.id.editTextTextPassword);
-            editTextTextPassword2 = myDialog.findViewById(R.id.editTextTextPassword2);
-            textViewAccept = myDialog.findViewById(R.id.textViewAccept);
+            textViewExit = myDialogResetPass.findViewById(R.id.textViewExitPass);
+            editTextTextPassword = myDialogResetPass.findViewById(R.id.editTextTextPassword);
+            editTextTextPassword2 = myDialogResetPass.findViewById(R.id.editTextTextPassword2);
+            editTextContraseñaActual=myDialogResetPass.findViewById(R.id.editTextContraseñaActual);
+            textViewAccept = myDialogResetPass.findViewById(R.id.textViewAccept);
 
             myDialog.show();
 
-            textViewMisLibros.setOnClickListener(new resetPassExit());
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+            textViewExit.setOnClickListener(new resetPassExit());
+            textViewAccept.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    if((!editTextTextPassword.getText().toString().isEmpty())&&(!editTextTextPassword2.getText().toString().isEmpty())&&(!editTextContraseñaActual.getText().toString().isEmpty())){
+                        if(editTextTextPassword.getText().toString().equals(editTextTextPassword2.getText().toString())){
+                            if(validContracena()) {
+
+                                AuthCredential credential = EmailAuthProvider
+                                        .getCredential(user.getEmail(), editTextContraseñaActual.getText().toString());
+                                user.reauthenticate(credential).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        user.updatePassword(editTextTextPassword.getText().toString())
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            Toast.makeText(getActivity().getApplicationContext(), "Contraseña cambiada con exito", Toast.LENGTH_SHORT).show();
+                                                            myDialogResetPass.dismiss();
+                                                        }
+                                                    }
+                                                }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull @NotNull Exception e) {
+                                                Toast.makeText(getActivity().getApplicationContext(), "Ups Algo ha ido mal " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull @NotNull Exception e) {
+                                        Toast.makeText(getActivity().getApplicationContext(), "Сontraseña actual incorrecta", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }else{
+                                Toast.makeText(getActivity().getApplicationContext(),"Contraseña tiene que tener minimo 6 y maximo 16 caracteres",Toast.LENGTH_SHORT).show();
+                            }
+                        }else{
+                            Toast.makeText(getActivity().getApplicationContext(),"Las contraseñas no coinciden",Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        Toast.makeText(getActivity().getApplicationContext(),"Los campos no pueden estar vacios",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
 
         }
+        public boolean validContracena(){
+            String contrasena,contrasenarepetida;
+            contrasena=editTextTextPassword.getText().toString();
+            contrasenarepetida=editTextTextPassword.getText().toString();
 
-        class resetPassExit implements View.OnClickListener {
+            if(contrasena.equals(contrasenarepetida)){
+                if(contrasena.length()>=6 && contrasena.length()<=16){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }else{
 
-            @Override
-            public void onClick(View v) {
-                myDialog.dismiss();
+                return  false;
             }
         }
     }
+
+    class resetPassExit implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            myDialogResetPass.dismiss();
+        }
+    }
+
 
     class textViewLibrosVendidos implements View.OnClickListener {
 
