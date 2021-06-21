@@ -392,6 +392,9 @@ public class PerfilFragment extends Fragment {
                                                                             database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).removeValue();
                                                                         }
                                                                     }
+                                                                    database.getReference(Constantes.NODO_USUARIOS).child(key).removeValue();
+                                                                    Toast.makeText(getActivity().getApplicationContext(), "Usuario se ha borrado correctamente", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(getActivity().getApplicationContext(), "Muchas gracias", Toast.LENGTH_LONG).show();
                                                                 }
                                                                 else{
                                                                     Toast.makeText(getActivity().getApplicationContext(), "Usuario no se ha borrado correctamente", Toast.LENGTH_SHORT).show();
@@ -424,8 +427,8 @@ public class PerfilFragment extends Fragment {
                             }
                         });
                     }else{
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                         credential = GoogleAuthProvider.getCredential(Login.getTokenID(), null);
                         user.reauthenticate(credential).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -438,27 +441,14 @@ public class PerfilFragment extends Fragment {
                                             if (task.isSuccessful()) {
                                                 startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
                                                 try {
-
-
-                                                    DatabaseReference databaseReference = database.getReference(Constantes.NODO_LIBROS);
-                                                    databaseReference.addValueEventListener(new ValueEventListener() {
-                                                        @Override
-                                                        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                                                            for(DataSnapshot snapshot1 : snapshot.getChildren()) {
-                                                                final Libro m = snapshot1.getValue(Libro.class);
-                                                                final LLibro lLibro = new LLibro(m, snapshot1.getKey());
-
-                                                                if (lLibro.getLibro().getUserKey().equals(key)) {
-                                                                    database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).removeValue();
-                                                                }
-                                                            }
+                                                    alibro = HomeFragment.adapter_libro;
+                                                    LLibro lLibro = null;
+                                                    for (int i = 0; i < alibro.getListLibrosAll().size(); i ++ ) {
+                                                        lLibro = alibro.getListLibros().get(i);
+                                                        if(lLibro.getLibro().getUserKey().equals(user.getUid())) {
+                                                            database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).removeValue();
                                                         }
-
-                                                        @Override
-                                                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
-                                                            Toast.makeText(getActivity().getApplicationContext(), "Operacion cancelada", Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    });
+                                                    }
                                                     database.getReference(Constantes.NODO_USUARIOS).child(key).removeValue();
                                                     Toast.makeText(getActivity().getApplicationContext(), "Usuario se ha borrado correctamente", Toast.LENGTH_SHORT).show();
 
