@@ -65,7 +65,7 @@ public class HomeFragment extends Fragment {
 
     private FirebaseStorage storage;
     private StorageReference storageReference;
-    private Adapter_Libro adapter_libro;
+    public static Adapter_Libro adapter_libro;
     private FirebaseAuth mAuth;
     private String keyEmisor;
     private String keyreceptor;

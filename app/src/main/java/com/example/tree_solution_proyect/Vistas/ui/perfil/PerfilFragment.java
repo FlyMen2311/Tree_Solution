@@ -28,6 +28,7 @@ import com.example.tree_solution_proyect.Vistas.Login;
 import com.example.tree_solution_proyect.Vistas.MainActivity;
 import com.example.tree_solution_proyect.Vistas.MisLibrosActivity;
 import com.example.tree_solution_proyect.Vistas.MisLibrosVendidosActivity;
+import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -383,36 +384,13 @@ public class PerfilFragment extends Fragment {
                                                             .addOnCompleteListener(task -> {
                                                                 if (task.isSuccessful()) {
                                                                     startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
-                                                                    try {
-                                                                        DatabaseReference databaseReference = database.getReference(Constantes.NODO_LIBROS);
-                                                                        databaseReference.addValueEventListener(new ValueEventListener() {
-                                                                            @Override
-                                                                            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                                                                                for(DataSnapshot snapshot1 : snapshot.getChildren()) {
-                                                                                    final Libro m = snapshot1.getValue(Libro.class);
-                                                                                    final LLibro lLibro = new LLibro(m, snapshot1.getKey());
-                                                                                    lLibros.add(lLibro);
-
-                                                                                    if (lLibro.getLibro().getUserKey().equals(key)) {
-                                                                                        database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).removeValue();
-                                                                                        borrarDatosFavoritos(lLibro);
-                                                                                    }
-                                                                                }
-
-                                                                            }
-                                                                            @Override
-                                                                            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-                                                                                Toast.makeText(getActivity().getApplicationContext(), "Operacion cancelada", Toast.LENGTH_SHORT).show();
-                                                                            }
-                                                                        });
-
-                                                                        database.getReference(Constantes.NODO_USUARIOS).child(key).removeValue();
-                                                                        borrarDatosChats();
-                                                                        Toast.makeText(getActivity().getApplicationContext(), "Usuario se ha borrado correctamente", Toast.LENGTH_SHORT).show();
-
-                                                                        Toast.makeText(getActivity().getApplicationContext(), "Muchas gracias", Toast.LENGTH_LONG).show();
-                                                                    } catch (Exception e) {
-                                                                        Toast.makeText(getActivity().getApplicationContext(), e.getMessage() + "", Toast.LENGTH_SHORT).show();
+                                                                    alibro = HomeFragment.adapter_libro;
+                                                                    LLibro lLibro = null;
+                                                                    for (int i = 0; i < alibro.getListLibrosAll().size(); i ++ ) {
+                                                                        lLibro = alibro.getListLibros().get(i);
+                                                                        if(lLibro.getLibro().getUserKey().equals(user.getUid())) {
+                                                                            database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).removeValue();
+                                                                        }
                                                                     }
                                                                 }
                                                                 else{
@@ -521,43 +499,7 @@ public class PerfilFragment extends Fragment {
             myDialog.show();
         }
     }
-    public void borrarDatosChats() {
-        DatabaseReference databaseReferenceChatDatos=database.getReference(Constantes.NODO_CHAT_DATOS);
-        databaseReferenceChatDatos.addValueEventListener(new ValueEventListener() {
-            String keyEmisor;
-            String keyreceptor;
-            String keyLibro;
-            DataSnapshot snapshot1;
-            DataSnapshot snapshot2;
-            DataSnapshot snapshot3;
 
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                for(DataSnapshot snapshot1:snapshot.getChildren()){
-                    this.snapshot1=snapshot1;
-                    keyEmisor=snapshot1.getKey();
-                    for(DataSnapshot snapshot2:this.snapshot1.getChildren()) {
-                        this.snapshot2 = snapshot2;
-                        keyreceptor = snapshot2.getKey();
-                        for (DataSnapshot snapshot3 : snapshot2.getChildren()) {
-                            this.snapshot3 = snapshot3;
-                            keyLibro = snapshot3.getKey();
-
-                            if((keyreceptor.equals(key))||((keyEmisor.equals(key)))) {
-                                database.getReference(Constantes.NODO_CHATS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
-                                database.getReference(Constantes.NODO_CHAT_DATOS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
-                            }
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-            }
-        });
-    }
     public void borrarDatosFavoritos(LLibro lLibro){
         DatabaseReference reference= database.getReference(Constantes.NODO_LIB_FAV);
         reference.addValueEventListener(new ValueEventListener() {
