@@ -86,13 +86,6 @@ public class MisLibrosClickActivity extends AppCompatActivity {
     private EditText editTextAuthor,editTextName,editTextPrice,editTextDescripcion;
     private TextView textViewExit;
     private Spinner spinnerContidion,spinnerCategory;
-<<<<<<< HEAD
-    public  ImagePicker imagePicker2;
-    private Uri imageUri;
-    private String urlImage;
-=======
-    public  ImagePicker imagePicker;
->>>>>>> denys
     private int posCondition;
     private int posCategoria;
 
@@ -179,38 +172,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
             }
         });
 
-<<<<<<< HEAD
-        imagePicker2=new ImagePicker(this);
 
-        imagePicker2.setImagePickerCallback(new ImagePickerCallback() {
-            @Override
-            public void onImagesChosen(List<ChosenImage> list) {
-                if(!list.isEmpty()){
-                    String path=list.get(0).getOriginalPath();
-                    imageUri= Uri.parse(path);
-                    if(imageUri!=null) {
-                        LibroDAO.getInstance().cambiarFotoUri(imageUri,lLibro.getKey(), new UsuarioDAO.IDevolverUrlFoto() {
-                            @Override
-                            public void DevolverUrlFoto(String uri) {
-                                Glide.with(getApplication().getApplicationContext())
-                                        .load(uri)
-                                        .into(imageViewdialog);
-                                Toast.makeText(getApplicationContext(),"Foto subida para subir otra repite el proceso",Toast.LENGTH_SHORT).show();
-                                urlImage=uri;
-                            }
-                        });
-                    }
-
-                }
-            }
-
-            @Override
-            public void onError(String s) {
-                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
-            }
-        });
-=======
->>>>>>> denys
     }
 
     public void LoadLibros(LLibro libro){
@@ -326,17 +288,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
         textViewExit = dialog.findViewById(R.id.textViewExit_modificar);
         editTextDescripcion = dialog.findViewById(R.id.editTextTextMultiLineDesc_modificar);
 
-<<<<<<< HEAD
-        imageViewdialog = dialog.findViewById(R.id.imageViewImage_modificar);
-        imageViewdialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imagePicker2.pickImage();
-            }
-        });
 
-=======
->>>>>>> denys
         empezarModificar=dialog.findViewById(R.id.buttonModificarLibro_modificar);
         spinnerContidion = dialog.findViewById(R.id.spinnerCondition_modificar);
         spinnerCategory = dialog.findViewById(R.id.spinnerCategory_modificar);
@@ -399,30 +351,6 @@ public class MisLibrosClickActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         try {
 
-<<<<<<< HEAD
-                            Map<String, Object> libroUpdate = new HashMap<>();
-                            libroUpdate.put("autor", editTextAuthor.getText().toString());
-                            libroUpdate.put("categoria", spinnerCategory.getSelectedItem().toString());
-                            libroUpdate.put("condition", spinnerContidion.getSelectedItem().toString());
-                            libroUpdate.put("descripcion", editTextDescripcion.getText().toString());
-                            libroUpdate.put("fotoPrincipalUrl", urlImage);
-                            libroUpdate.put("nombre", editTextName.getText().toString());
-                            libroUpdate.put("precio", Double.parseDouble(editTextPrice.getText().toString()));
-                            database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).updateChildren(libroUpdate);
-                            Toast.makeText(getApplicationContext(), "Datosmodificados", Toast.LENGTH_SHORT).show();
-
-                            dialog.dismiss();
-                            confirmacionDialog.dismiss();
-
-                            Libro libro=new Libro();
-                            libro.setAutor(editTextAuthor.getText().toString());
-                            libro.setNombre(editTextName.getText().toString());
-                            libro.setISBN(lLibro.getLibro().getISBN());
-                            libro.setDescripcion(editTextDescripcion.getText().toString());
-                            if(!urlImage.equals("")){
-                                libro.setFotoPrincipalUrl(urlImage);
-                            }else{
-=======
                             if ((!editTextAuthor.getText().toString().isEmpty()) && (!editTextName.getText().toString().isEmpty())
                                     && (!editTextPrice.getText().toString().isEmpty())) {
                                 Map<String, Object> libroUpdate = new HashMap<>();
@@ -443,7 +371,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
                                 libro.setNombre(editTextName.getText().toString());
                                 libro.setISBN(lLibro.getLibro().getISBN());
                                 libro.setDescripcion(editTextDescripcion.getText().toString());
->>>>>>> denys
+
                                 libro.setFotoPrincipalUrl(lLibro.getLibro().getFotoPrincipalUrl());
                                 libro.setCategoria(spinnerCategory.getSelectedItem().toString());
                                 libro.setCondition(spinnerContidion.getSelectedItem().toString());

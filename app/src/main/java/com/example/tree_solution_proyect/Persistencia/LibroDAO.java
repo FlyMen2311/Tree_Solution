@@ -80,24 +80,7 @@ public class LibroDAO {
         });
 
     }
-<<<<<<< HEAD
-    public void borrarStorage(String key, IDevolverBooleanBorrar iDevolverBooleanBorrar){
 
-       storageReferenceFotoLibro.child(key).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-           @Override
-           public void onSuccess(Void unused) {
-               iDevolverBooleanBorrar.devolverSuccesfull(true);
-           }
-       }).addOnFailureListener(new OnFailureListener() {
-           @Override
-           public void onFailure(@NonNull Exception exception) {
-               iDevolverBooleanBorrar.devolverSuccesfull(false);
-               iDevolverBooleanBorrar.devolverError(exception.getMessage());
-           }
-       });
-    }
-=======
->>>>>>> denys
 
     public boolean isExist() {
         return isExist;
