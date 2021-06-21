@@ -19,7 +19,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
 import com.example.tree_solution_proyect.Objetos.Constantes;
+import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
 import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
+import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.Login;
@@ -84,6 +86,7 @@ public class PerfilFragment extends Fragment {
         textViewBaja.setOnClickListener(new textViewBaja());
 
         myDialog = new Dialog(getActivity());
+        myDialogResetPass = new Dialog(getActivity());
 
         //reset pass action
         textViewResetPass.setOnClickListener(new textViewResetPass());
@@ -180,7 +183,7 @@ public class PerfilFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            myDialog.setContentView(R.layout.activity_resetpass);
+            myDialogResetPass.setContentView(R.layout.activity_resetpass);
 
             textViewExit = myDialogResetPass.findViewById(R.id.textViewExitPass);
             editTextTextPassword = myDialogResetPass.findViewById(R.id.editTextTextPassword);
@@ -188,25 +191,25 @@ public class PerfilFragment extends Fragment {
             editTextContraseñaActual=myDialogResetPass.findViewById(R.id.editTextContraseñaActual);
             textViewAccept = myDialogResetPass.findViewById(R.id.textViewAccept);
 
-            myDialog.show();
+            myDialogResetPass.show();
 
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
             textViewExit.setOnClickListener(new resetPassExit());
-            textViewAccept.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    if((!editTextTextPassword.getText().toString().isEmpty())&&(!editTextTextPassword2.getText().toString().isEmpty())&&(!editTextContraseñaActual.getText().toString().isEmpty())){
-                        if(editTextTextPassword.getText().toString().equals(editTextTextPassword2.getText().toString())){
-                            if(validContracena()) {
+            textViewAccept.setOnClickListener(v1 -> {
+                FirebaseUser user1 = FirebaseAuth.getInstance().getCurrentUser();
+                if((!editTextTextPassword.getText().toString().isEmpty())&&(!editTextTextPassword2.getText().toString().isEmpty())&&(!editTextContraseñaActual.getText().toString().isEmpty())){
+                    if(editTextTextPassword.getText().toString().equals(editTextTextPassword2.getText().toString())){
+                        if(validContracena()) {
 
-                                AuthCredential credential = EmailAuthProvider
-                                        .getCredential(user.getEmail(), editTextContraseñaActual.getText().toString());
-                                user.reauthenticate(credential).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        user.updatePassword(editTextTextPassword.getText().toString())
+
+                            AuthCredential credential = EmailAuthProvider
+                                    .getCredential(user1.getEmail(), editTextContraseñaActual.getText().toString());
+                            user1.reauthenticate(credential).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    if(editTextTextPassword.getText().toString().equals(editTextContraseñaActual.getText().toString())) {
+                                        user1.updatePassword(editTextTextPassword.getText().toString())
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull @NotNull Task<Void> task) {
@@ -218,45 +221,48 @@ public class PerfilFragment extends Fragment {
                                                 }).addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull @NotNull Exception e) {
-                                                Toast.makeText(getActivity().getApplicationContext(), "Ups Algo ha ido mal " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getActivity().getApplicationContext(), "Ups, algo ha ido mal " + e.getMessage(), Toast.LENGTH_SHORT).show();
                                             }
                                         });
+                                    } else {
+                                        Toast.makeText(getActivity().getApplicationContext(), "Contraseña nueva no debe coincidir con la antigua", Toast.LENGTH_SHORT).show();
                                     }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull @NotNull Exception e) {
-                                        Toast.makeText(getActivity().getApplicationContext(), "Сontraseña actual incorrecta", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }else{
-                                Toast.makeText(getActivity().getApplicationContext(),"Contraseña tiene que tener minimo 6 y maximo 16 caracteres",Toast.LENGTH_SHORT).show();
-                            }
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull @NotNull Exception e) {
+                                    Toast.makeText(getActivity().getApplicationContext(), "Сontraseña actual incorrecta", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }else{
-                            Toast.makeText(getActivity().getApplicationContext(),"Las contraseñas no coinciden",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity().getApplicationContext(),"Contraseña tiene que tener minimo 6 y maximo 16 caracteres",Toast.LENGTH_SHORT).show();
                         }
                     }else{
-                        Toast.makeText(getActivity().getApplicationContext(),"Los campos no pueden estar vacios",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getApplicationContext(),"Las contraseñas no coinciden",Toast.LENGTH_SHORT).show();
                     }
+                }else{
+                    Toast.makeText(getActivity().getApplicationContext(),"Los campos no pueden estar vacios",Toast.LENGTH_SHORT).show();
                 }
             });
 
         }
-        public boolean validContracena(){
-            String contrasena,contrasenarepetida;
-            contrasena=editTextTextPassword.getText().toString();
-            contrasenarepetida=editTextTextPassword.getText().toString();
+    }
 
-            if(contrasena.equals(contrasenarepetida)){
-                if(contrasena.length()>=6 && contrasena.length()<=16){
-                    return true;
-                }
-                else{
-                    return false;
-                }
-            }else{
+    public boolean validContracena(){
+        String contrasena,contrasenarepetida;
+        contrasena=editTextTextPassword.getText().toString();
+        contrasenarepetida=editTextTextPassword.getText().toString();
 
-                return  false;
+        if(contrasena.equals(contrasenarepetida)){
+            if(contrasena.length()>=6 && contrasena.length()<=16){
+                return true;
             }
+            else{
+                return false;
+            }
+        }else{
+
+            return  false;
         }
     }
 
@@ -308,27 +314,96 @@ public class PerfilFragment extends Fragment {
             btndarBajaAceptar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    if (!alibro.getListLibrosAll().isEmpty()) {
-                        for (int i = 0; i < alibro.getListLibrosAll().size(); i++) {
-                            if (user.getUid().equals(database.getReference(Constantes.NODO_LIBROS).child(alibro.getListLibrosAll().get(i).getLUsuario().getKey()))) {
-                                database.getReference(Constantes.NODO_LIBROS).child(alibro.getListLibrosAll().get(i).getKey()).removeValue();
+                    myDialogResetPass.setContentView(R.layout.activity_darbaja);
+                    textViewExit = myDialogResetPass.findViewById(R.id.textViewExitPass_darbaja);
+                    textViewAccept = myDialogResetPass.findViewById(R.id.textViewAccept_darbaja);
+
+                    editTextTextPassword = myDialogResetPass.findViewById(R.id.editTextContraseñaActual_darbaja);
+                    editTextTextPassword2 = myDialogResetPass.findViewById(R.id.editTextContraseñaActual2_darbaja);
+
+                    myDialogResetPass.show();
+
+                    textViewExit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            myDialogResetPass.dismiss();
+                        }
+                    });
+
+                    textViewAccept.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if((!editTextTextPassword.getText().toString().isEmpty())&&(!editTextTextPassword2.getText().toString().isEmpty())){
+                                if(editTextTextPassword.getText().toString().equals(editTextTextPassword2.getText().toString())) {
+                                    if (validContracena()) {
+                                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                        AuthCredential credential = EmailAuthProvider
+                                                .getCredential(mAuth.getCurrentUser().getEmail(), editTextTextPassword.getText().toString());
+                                        user.reauthenticate(credential).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                DatabaseReference databaseReference = database.getReference(Constantes.NODO_LIBROS);
+                                                databaseReference.addValueEventListener(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                                                        for(DataSnapshot snapshot1 : snapshot.getChildren()) {
+                                                            final Libro m = snapshot1.getValue(Libro.class);
+                                                            final LLibro lLibro = new LLibro(m, snapshot1.getKey());
+
+                                                            if (lLibro.getLibro().getUserKey().equals(mAuth.getCurrentUser().getUid())) {
+                                                                Toast.makeText(getActivity().getApplicationContext(), mAuth.getCurrentUser().getUid() + "", Toast.LENGTH_SHORT).show();
+                                                                database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).removeValue();
+                                                            }
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                                                    }
+                                                });
+                                                user.delete()
+                                                        .addOnCompleteListener(task -> {
+                                                            if (task.isSuccessful()) {
+                                                                try {
+                                                                    database.getReference(Constantes.NODO_USUARIOS).child(mAuth.getCurrentUser().getUid()).removeValue();
+                                                                    Toast.makeText(getActivity().getApplicationContext(), "Usuario se ha borrado correctamente", Toast.LENGTH_SHORT).show();
+                                                                } catch (Exception e) {
+                                                                    Toast.makeText(getActivity().getApplicationContext(), e.getMessage() + "", Toast.LENGTH_SHORT).show();
+                                                                }
+                                                            }
+                                                        }).addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull @NotNull Exception e) {
+                                                        Toast.makeText(getActivity().getApplicationContext(), "Usuario no se ha borrado correctamente", Toast.LENGTH_SHORT).show();
+                                                    }
+
+                                                });
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull @NotNull Exception e) {
+                                                Toast.makeText(getActivity().getApplicationContext(), "Contraseña no es válida", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                        myDialog.dismiss();
+                                    }else{
+                                        Toast.makeText(getActivity().getApplicationContext(),"Contraseña tiene que tener minimo 6 y maximo 16 caracteres",Toast.LENGTH_SHORT).show();
+                                    }
+                                }else{
+                                    Toast.makeText(getActivity().getApplicationContext(),"Las contraseñas no coinciden",Toast.LENGTH_SHORT).show();
+                                }
+                            }else{
+                                Toast.makeText(getActivity().getApplicationContext(),"Los campos no pueden estar vacios",Toast.LENGTH_SHORT).show();
                             }
                         }
-                    }
-                    user.delete()
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Log.d(getTag(), "User account deleted.");
-                                    }
-                                }
-                            });
+                    });
 
-                    myDialog.dismiss();
                 }
+
+
             });
+
             btndarBajaCancelar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
