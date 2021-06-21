@@ -460,6 +460,8 @@ public class PerfilFragment extends Fragment {
                                             if (task.isSuccessful()) {
                                                 startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
                                                 try {
+
+
                                                     DatabaseReference databaseReference = database.getReference(Constantes.NODO_LIBROS);
                                                     databaseReference.addValueEventListener(new ValueEventListener() {
                                                         @Override
