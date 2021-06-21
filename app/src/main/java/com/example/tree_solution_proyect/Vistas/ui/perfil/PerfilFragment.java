@@ -192,35 +192,38 @@ public class PerfilFragment extends Fragment {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     if((!editTextTextPassword.getText().toString().isEmpty())&&(!editTextTextPassword2.getText().toString().isEmpty())&&(!editTextContraseñaActual.getText().toString().isEmpty())){
                         if(editTextTextPassword.getText().toString().equals(editTextTextPassword2.getText().toString())){
+                            if(validContracena()) {
 
-                            AuthCredential credential = EmailAuthProvider
-                                    .getCredential(user.getEmail(), editTextContraseñaActual.getText().toString());
-                            user.reauthenticate(credential).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    user.updatePassword(editTextTextPassword.getText().toString())
-                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull @NotNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
-                                                        Toast.makeText(getActivity().getApplicationContext(),"Contraseña cambiada con exito",Toast.LENGTH_SHORT).show();
-                                                        myDialogResetPass.dismiss();
+                                AuthCredential credential = EmailAuthProvider
+                                        .getCredential(user.getEmail(), editTextContraseñaActual.getText().toString());
+                                user.reauthenticate(credential).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        user.updatePassword(editTextTextPassword.getText().toString())
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            Toast.makeText(getActivity().getApplicationContext(), "Contraseña cambiada con exito", Toast.LENGTH_SHORT).show();
+                                                            myDialogResetPass.dismiss();
+                                                        }
                                                     }
-                                                }
-                                            }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull @NotNull Exception e) {
-                                            Toast.makeText(getActivity().getApplicationContext(),"Ups Algo ha ido mal "+e.getMessage(),Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull @NotNull Exception e) {
-                                    Toast.makeText(getActivity().getApplicationContext(),"Сontraseña actual incorrecta",Toast.LENGTH_SHORT).show();
-                                }
-                            });
-
+                                                }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull @NotNull Exception e) {
+                                                Toast.makeText(getActivity().getApplicationContext(), "Ups Algo ha ido mal " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull @NotNull Exception e) {
+                                        Toast.makeText(getActivity().getApplicationContext(), "Сontraseña actual incorrecta", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }else{
+                                Toast.makeText(getActivity().getApplicationContext(),"Contraseña tiene que tener minimo 6 y maximo 16 caracteres",Toast.LENGTH_SHORT).show();
+                            }
                         }else{
                             Toast.makeText(getActivity().getApplicationContext(),"Las contraseñas no coinciden",Toast.LENGTH_SHORT).show();
                         }
@@ -231,7 +234,25 @@ public class PerfilFragment extends Fragment {
             });
 
         }
+        public boolean validContracena(){
+            String contrasena,contrasenarepetida;
+            contrasena=editTextTextPassword.getText().toString();
+            contrasenarepetida=editTextTextPassword.getText().toString();
+
+            if(contrasena.equals(contrasenarepetida)){
+                if(contrasena.length()>=6 && contrasena.length()<=16){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }else{
+
+                return  false;
+            }
+        }
     }
+
     class resetPassExit implements View.OnClickListener {
 
         @Override
