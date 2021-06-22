@@ -110,11 +110,11 @@ public class MisLibrosClickActivity extends AppCompatActivity {
         foto_libro=findViewById(R.id.foto_libro_mislibrosclick);
         nombre=findViewById(R.id.nombre_mislibrosclick);
         autor=findViewById(R.id.autor_mislibrosclick);
-        categoria=findViewById(R.id.holder_categoria_mislibrosclick);
-        ISBN=findViewById(R.id.holder_Isbn_mislibrosclick);
-        condition=findViewById(R.id.holder_condition_mislibrosclick);
-        precio=findViewById(R.id.holder_precio_mislibrosclick);
-        hora=findViewById(R.id.holder_fechacreacion_mislibrosclick);
+        categoria=findViewById(R.id.categoria_mislibrosclick);
+        ISBN=findViewById(R.id.Isbn_mislibrosclick);
+        condition=findViewById(R.id.condition_mislibrosclick);
+        precio=findViewById(R.id.precio_mislibrosclick);
+        hora=findViewById(R.id.fechacreacion_mislibrosclick);
         ratingBar=findViewById(R.id.ratingBar_libro_mislibrosclick);
         foto_libro_propietario =findViewById(R.id.foto_user_libro_mislibrosclick);
         nombre_libro_propietario=findViewById(R.id.nombre_user_mislibrosclick);
@@ -230,6 +230,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             startActivity(new Intent(getApplicationContext(),MisLibrosActivity.class));
+            finish();
         }
     }
     class btnEliminar implements View.OnClickListener {
@@ -247,6 +248,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
                     database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).removeValue();
                     dialog.dismiss();
                     startActivity(new Intent(getApplicationContext(),MisLibrosActivity.class));
+                    finish();
                 }
             });
             cancelEliminar.setOnClickListener(new View.OnClickListener() {
@@ -383,6 +385,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
                                 Intent intent = new Intent(getApplicationContext(), MisLibrosClickActivity.class);
                                 intent.putExtra("objectLibro", lLibro2);
                                 startActivity(intent);
+                                finish();
                             } else {
                                 Toast.makeText(MisLibrosClickActivity.this, "Todos los datos tienen que esta rellenados", Toast.LENGTH_SHORT).show();
                             }
@@ -413,6 +416,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
                     database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).updateChildren(hopperUpdates);
                     dialog.dismiss();
                     startActivity(new Intent(getApplicationContext(),MisLibrosVendidosActivity.class));
+                    finish();
                 }
             });
             cancelEliminar.setOnClickListener(new View.OnClickListener() {
@@ -448,6 +452,10 @@ public class MisLibrosClickActivity extends AppCompatActivity {
         public void onNothingSelected(AdapterView<?> parent) {
 
         }
+    }
+    @Override
+    public void onBackPressed() {
+
     }
 
 }

@@ -166,10 +166,12 @@ public class FavoriteFragment extends Fragment {
 
             @Override
             public void onChildMoved(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
+                adapter_favoritos.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                adapter_favoritos.notifyDataSetChanged();
             }
         });
         return vista;

@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
 import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Persistencia.LibroDAO;
+import com.example.tree_solution_proyect.Vistas.AplicationActivity;
 import com.example.tree_solution_proyect.Vistas.LibroClickActivity;
 import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
@@ -93,7 +94,7 @@ public class HomeFragment extends Fragment {
         databaseReferenceLibro = database.getReference(Constantes.NODO_LIBROS);
         databaseReferenceChatDatos= database.getReference(Constantes.NODO_CHAT_DATOS);
 
-        storage= FirebaseStorage.getInstance();;
+        storage= FirebaseStorage.getInstance();
 
         adapter_libro=new Adapter_Libro(getActivity().getApplicationContext(),new LibroOpen(getActivity(),getContext()));
 
@@ -101,14 +102,7 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(l);
         recyclerView.setAdapter(adapter_libro);
 
-        //Funcion para pasar al ultimo mensaje producido
-        adapter_libro.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                super.onItemRangeInserted(positionStart, itemCount);
-                recyclerView.scrollToPosition(adapter_libro.getItemCount()-1);
-            }
-        });
+
 
         buscar_librosISBN.addTextChangedListener(new TextWatcher() {
             @Override
@@ -162,11 +156,12 @@ public class HomeFragment extends Fragment {
                     });
                 }
                 }
+                adapter_libro.notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
-
+                adapter_libro.notifyDataSetChanged();
             }
 
             @Override
@@ -179,61 +174,63 @@ public class HomeFragment extends Fragment {
                         posicion=i;
                     }
                 }
+try {
+    database.getReference(Constantes.NODO_LIB_FAV).child(mAuth.getCurrentUser().getUid()).child(adapter_libro.getListLibros().get(posicion).getKey()).removeValue();
+    databaseReferenceChatDatos.addListenerForSingleValueEvent(new ValueEventListener() {
 
-                   database.getReference(Constantes.NODO_LIB_FAV).child(currentUser).child(adapter_libro.getListLibros().get(posicion).getKey()).removeValue();
-                   databaseReferenceChatDatos.addListenerForSingleValueEvent(new ValueEventListener() {
+        DataSnapshot snapshot1;
+        DataSnapshot snapshot2;
+        DataSnapshot snapshot3;
+        boolean keyExiste = false;
 
-                       DataSnapshot snapshot1;
-                       DataSnapshot snapshot2;
-                       DataSnapshot snapshot3;
-                       boolean keyExiste = false;
+        @Override
+        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+            for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                this.snapshot1 = snapshot1;
+                keyEmisor = snapshot1.getKey();
+                for (DataSnapshot snapshot2 : this.snapshot1.getChildren()) {
+                    this.snapshot2 = snapshot2;
+                    keyreceptor = snapshot2.getKey();
+                    for (DataSnapshot snapshot3 : snapshot2.getChildren()) {
+                        keyExiste = false;
+                        this.snapshot3 = snapshot3;
+                        keyLibro = snapshot3.getKey();
 
-                    @Override
-                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                        for(DataSnapshot snapshot1:snapshot.getChildren()){
-                            this.snapshot1=snapshot1;
-                            keyEmisor=snapshot1.getKey();
-                            for(DataSnapshot snapshot2:this.snapshot1.getChildren()) {
-                                this.snapshot2 = snapshot2;
-                                keyreceptor = snapshot2.getKey();
-                                for (DataSnapshot snapshot3 : snapshot2.getChildren()) {
-                                    keyExiste = false;
-                                    this.snapshot3 = snapshot3;
-                                    keyLibro = snapshot3.getKey();
-
-                                    if (adapter_libro.getListLibrosAll().size() != 0) {
-                                        for (int i = 0; i < adapter_libro.getListLibrosAll().size(); i ++) {
-                                            if (keyLibro.equals(adapter_libro.getListLibrosAll().get(i).getKey())) {
-                                                keyExiste = true;
-                                            }
-                                        }
-                                            if (!keyExiste) {
-                                                database.getReference(Constantes.NODO_CHATS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
-                                                database.getReference(Constantes.NODO_CHAT_DATOS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
-                                                keyExiste = false;
-                                            }
-
-                                    } else {
-
-                                        database.getReference(Constantes.NODO_CHATS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
-                                        database.getReference(Constantes.NODO_CHAT_DATOS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
-                                    }
+                        if (adapter_libro.getListLibrosAll().size() != 0) {
+                            int a = adapter_libro.getListLibrosAll().size();
+                            for (int i = 0; i < adapter_libro.getListLibrosAll().size(); i++) {
+                                if (keyLibro.equals(adapter_libro.getListLibrosAll().get(i).getKey())) {
+                                    keyExiste = true;
                                 }
                             }
+                            if (!keyExiste) {
+                                database.getReference(Constantes.NODO_CHATS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
+                                database.getReference(Constantes.NODO_CHAT_DATOS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
+                                keyExiste = false;
+                            }
+
+                        } else {
+
+                            database.getReference(Constantes.NODO_CHATS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
+                            database.getReference(Constantes.NODO_CHAT_DATOS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
                         }
                     }
+                }
+            }
+        }
 
-                    @Override
-                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+        @Override
+        public void onCancelled(@NonNull @NotNull DatabaseError error) {
+            adapter_libro.notifyDataSetChanged();
+        }
+    });
 
-                    }
-                });
                 adapter_libro.getListLibros().remove(posicion);
 
                 adapter_libro.getListLibrosAll().remove(posicion);
 
                 adapter_libro.notifyItemRemoved(posicion);
-
+}catch (Exception e){}
             }
 
             @Override
@@ -261,9 +258,10 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         FirebaseUser currentuser=mAuth.getCurrentUser();
-
+        adapter_libro.notifyDataSetChanged();
         if(currentuser!=null){
             adapter_libro.notifyDataSetChanged();
+
         }else{
             startActivity(new Intent(getActivity().getApplicationContext(), Login.class));
             try {
@@ -321,18 +319,19 @@ public class HomeFragment extends Fragment {
                     intent.putExtra("objectLibro", llibro);
 
                     ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, Pair.create((View) imgcontainer, " container_holder_libro")
-                            ,Pair.create((View) fotoLibro, "fotolibro_TR")
-                            ,Pair.create((View) nombre, "nombre_TR")
-                            ,Pair.create((View) autor, "autor_TR")
-                            ,Pair.create((View) precio, "precio_TR")
-                            ,Pair.create((View) ISBN, "ISBN_TR")
-                            ,Pair.create((View) categoria, "categoria_TN")
-                            ,Pair.create((View) ratingBar, "ratingbar_TR")
-                            ,Pair.create((View) estado, "condition_TR")
-                            ,Pair.create((View) fechacreacion, "fechacreacion_TR")
-                            ,Pair.create((View) favorite, "favorite_TR"));
+                            ,Pair.create((View) fotoLibro, "fotolibro_libro_click_T_TR")
+                            ,Pair.create((View) nombre, "nombre_libro_click_T_TR")
+                            ,Pair.create((View) autor, "autor_libro_click_T_TR")
+                            ,Pair.create((View) precio, "precio_libro_click_T_TR")
+                            ,Pair.create((View) ISBN, "ISBN_libro_click_T_TR")
+                            ,Pair.create((View) categoria, "categoria_libro_click_T_TN")
+                            ,Pair.create((View) ratingBar, "ratingbar_libro_click_T_TR")
+                            ,Pair.create((View) estado, "condition_libro_click_T_TR")
+                            ,Pair.create((View) fechacreacion, "fechacreacion_libro_click_T_TR")
+                            ,Pair.create((View) favorite, "favorite_libro_click_T_TR"));
 
                     startActivity(intent, activityOptionsCompat.toBundle());
+
 
                 } else {
                     Toast.makeText(activity, "Error", Toast.LENGTH_LONG).show();
@@ -354,4 +353,5 @@ public class HomeFragment extends Fragment {
             throwable.printStackTrace();
         }
     }
+
 }

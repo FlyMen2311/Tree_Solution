@@ -36,152 +36,164 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RatingBar
-        android:id="@+id/ratingBar_libro_mislibrosclick"
-        style="?android:attr/ratingBarStyleSmall"
-        android:layout_width="81dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="152dp"
-        android:layout_marginTop="65dp"
-        android:layout_marginEnd="178dp"
-        android:layout_marginBottom="575dp"
-        android:isIndicator="true"
-        android:numStars="5"
-        android:transitionName="ratingbar_TR"
+    <TableLayout
+        android:id="@+id/tableLayout2"
+        android:layout_width="260dp"
+        android:layout_height="105dp"
+        android:layout_marginStart="166dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="560dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <TextView
-        android:id="@+id/nombre_mislibrosclick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="152dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="208dp"
-        android:layout_marginBottom="624dp"
-        android:text="Nombre"
-        android:textColor="#000000"
-        android:transitionName="nombre_TR"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/autor_mislibrosclick"
+            <TextView
+                android:id="@+id/nombre_mislibrosclick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre"
+                android:textColor="#000000"
+                android:transitionName="nombre_libro_click_TR" />
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="152dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="225dp"
-        android:layout_marginBottom="596dp"
-        android:text="Autor"
-        android:textColor="#101010"
-        android:transitionName="autor_TR"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/fechacreacion_mislibrosclick"
+                android:layout_width="124dp"
+                android:layout_height="wrap_content"
+                android:text="fechaCreacion"
+                android:textAlignment="textEnd"
+                android:textColor="#131313"
+                android:transitionName="fechacreacion_libro_click_TR" />
 
-    <TextView
-        android:id="@+id/holder_categoria_mislibrosclick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="152dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="198dp"
-        android:layout_marginBottom="544dp"
-        android:text="Categoria"
-        android:textColor="#000000"
-        android:transitionName="categoria_TN"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        </TableRow>
 
-    <TextView
-        android:id="@+id/holder_condition_mislibrosclick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="292dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="57dp"
-        android:layout_marginBottom="576dp"
-        android:text="Condicion"
-        android:textColor="#131313"
-        android:transitionName="condition_TR"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/holder_precio_mislibrosclick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="292dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="79dp"
-        android:layout_marginBottom="544dp"
-        android:text="Precio"
-        android:textColor="#000000"
-        android:transitionName="precio_TR"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/autor_mislibrosclick"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="Autor"
+                android:textColor="#101010"
+                android:transitionName="autor_libro_click_TR" />
 
-    <TextView
-        android:id="@+id/holder_fechacreacion_mislibrosclick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="292dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="624dp"
-        android:text="fechaCreacion"
-        android:textColor="#131313"
-        android:transitionName="fechacreacion_TR"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/Isbn_mislibrosclick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ISBN"
+                android:textAlignment="textEnd"
+                android:textColor="#000000"
+                android:transitionName="ISBN_libro_click_TR" />
+        </TableRow>
 
-    <TextView
-        android:id="@+id/holder_Isbn_mislibrosclick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="292dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="88dp"
-        android:layout_marginBottom="596dp"
-        android:text="ISBN"
-        android:textColor="#000000"
-        android:transitionName="ISBN_TR"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RatingBar
+                android:id="@+id/ratingBar_libro_mislibrosclick"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="81dp"
+                android:layout_height="19dp"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:transitionName="ratingbar_libro_click_TR" />
+
+            <TextView
+                android:id="@+id/condition_mislibrosclick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Condicion"
+                android:textAlignment="textEnd"
+                android:textColor="#131313"
+                android:transitionName="condition_libro_click_TR" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/categoria_mislibrosclick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Categoria"
+                android:textColor="#000000"
+                android:transitionName="categoria_libro_click_T_TN" />
+
+            <TextView
+                android:id="@+id/precio_mislibrosclick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Precio"
+                android:textAlignment="textEnd"
+                android:textColor="#000000"
+                android:transitionName="precio_libro_click_TR" />
+
+        </TableRow>
+    </TableLayout>
 
     <ImageView
         android:id="@+id/foto_libro_mislibrosclick"
         android:layout_width="126dp"
         android:layout_height="151dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="47dp"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="265dp"
-        android:layout_marginBottom="533dp"
+        android:layout_marginBottom="52dp"
         android:transitionName="fotolibro_TR"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout9"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/libro_ejemplo" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="308dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/foto_user_libro_mislibrosclick"
+            android:layout_width="71dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="455dp"
+            android:layout_marginEnd="324dp"
+            android:layout_marginBottom="159dp"
+            android:transitionName="fotouser"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/nombre_user_mislibrosclick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="464dp"
+            android:layout_marginEnd="256dp"
+            android:layout_marginBottom="176dp"
+            android:text="TextView"
+            android:textColor="#000000"
+            android:transitionName="nombreuser"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/foto_user_libro_mislibrosclick"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout10"
@@ -203,8 +215,8 @@
 
             <TextView
                 android:id="@+id/descripcion_mislibrosclick"
-                android:layout_width="387dp"
-                android:layout_height="36dp"
+                android:layout_width="303dp"
+                android:layout_height="47dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="20dp"
@@ -218,42 +230,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/foto_user_libro_mislibrosclick"
-        android:layout_width="71dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="458dp"
-        android:layout_marginEnd="324dp"
-        android:layout_marginBottom="228dp"
-        android:transitionName="fotouser"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <TextView
-        android:id="@+id/nombre_user_mislibrosclick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="468dp"
-        android:layout_marginEnd="245dp"
-        android:layout_marginBottom="172dp"
-        android:text="TextView"
-        android:textColor="#000000"
-        android:transitionName="nombreuser"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout12"

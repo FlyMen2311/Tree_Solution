@@ -32,14 +32,14 @@ public class Holder_MisLibros extends  RecyclerView.ViewHolder{
         super(itemView);
         context=itemView.getContext();
         Foto_libro=itemView.findViewById(R.id.foto_libro_mislibros);
-        nombre=itemView.findViewById(R.id.nombre_mislibros);
-        autor=itemView.findViewById(R.id.autor_mislibros);
+        nombre=itemView.findViewById(R.id.holder_nombre_mislibros);
+        autor=itemView.findViewById(R.id.holder_autor_mislibros);
         categoria=itemView.findViewById(R.id.holder_categoria_mislibros);
         ISBN=itemView.findViewById(R.id.holder_Isbn_mislibros);
 
         condition=itemView.findViewById(R.id.holder_condition_mislibros);
         precio=itemView.findViewById(R.id.holder_precio_mislibros);
-        ratingBar=itemView.findViewById(R.id.ratingBar_libro_mislibros);
+        ratingBar=itemView.findViewById(R.id.holder_ratingBar_libro_mislibros);
         hora=itemView.findViewById(R.id.holder_fechacreacion_mislibros);
         containerLibro= itemView.findViewById(R.id.container_holder_libro_mislibros);
         this.librosClickablesIntefrace1=librosClickablesIntefrace;
