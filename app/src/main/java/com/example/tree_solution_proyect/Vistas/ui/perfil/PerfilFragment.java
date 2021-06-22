@@ -66,17 +66,21 @@ import static android.app.Activity.RESULT_OK;
 
 public class PerfilFragment extends Fragment {
 
+    public static boolean usuarioEsBorrado;
+
     private TextView salir,userName,textViewResetPass;
     private ImageView FotoCambioPerfil;
     private FirebaseDatabase database;
     private FirebaseAuth mAuth;
-    private DatabaseReference databaseReferenceUsuario;
+    private DatabaseReference databaseReferenceUsuario,databaseReferenceChat,
+            databaseReferenceDatosChat;
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private Dialog myDialog, myDialogResetPass;
     private Adapter_Libro alibro;
     private ImagePicker imagePicker;
     private Uri fotoUriPerfil;
+    private String current_user;
     private Button btndarBajaAceptar,btndarBajaCancelar;
     private TextView editTextTextPassword,editTextTextPassword2,editTextContraseñaActual,textViewAccept,textViewMisLibros
             ,textViewLibrosVendidos,textViewExit,textViewBaja;
@@ -143,6 +147,8 @@ public class PerfilFragment extends Fragment {
 
         databaseReferenceUsuario = database.getReference("Usuarios/"+mAuth
                 .getCurrentUser().getUid());
+        databaseReferenceChat = database.getReference(Constantes.NODO_CHATS+"/"+mAuth.getCurrentUser().getUid());
+        databaseReferenceDatosChat = database.getReference(Constantes.NODO_CHAT_DATOS+"/"+mAuth.getCurrentUser().getUid());
         databaseReferenceUsuario.addValueEventListener(new ValueEventListener() {
 
             @Override
@@ -386,10 +392,10 @@ public class PerfilFragment extends Fragment {
                                                     user.delete()
                                                             .addOnCompleteListener(task -> {
                                                                 if (task.isSuccessful()) {
+                                                                    usuarioEsBorrado = true;
                                                                     startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
                                                                     alibro = HomeFragment.adapter_libro;
                                                                     LLibro lLibro = null;
-                                                                    LChat lChat = null;
                                                                     for (int i = 0; i < alibro.getListLibros().size(); i ++ ) {
                                                                         lLibro = alibro.getListLibros().get(i);
                                                                         if(lLibro.getLibro().getUserKey().equals(key)) {
@@ -397,6 +403,8 @@ public class PerfilFragment extends Fragment {
                                                                         }
                                                                     }
                                                                     databaseReferenceUsuario.removeValue();
+                                                                    databaseReferenceChat.removeValue();
+                                                                    databaseReferenceDatosChat.removeValue();
                                                                 }
                                                                 else{
                                                                     Toast.makeText(getActivity().getApplicationContext(), "Usuario no se ha borrado correctamente", Toast.LENGTH_SHORT).show();
@@ -463,6 +471,7 @@ public class PerfilFragment extends Fragment {
                                                         }
                                                     });
                                                     database.getReference(Constantes.NODO_USUARIOS).child(key).removeValue();
+
                                                     Toast.makeText(getActivity().getApplicationContext(), "Usuario se ha borrado correctamente", Toast.LENGTH_SHORT).show();
 
                                                     Toast.makeText(getActivity().getApplicationContext(), "Muchas gracias", Toast.LENGTH_LONG).show();

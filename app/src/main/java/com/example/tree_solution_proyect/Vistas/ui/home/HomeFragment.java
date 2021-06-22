@@ -87,7 +87,7 @@ public class HomeFragment extends Fragment {
         buscar_librosISBN=vista.findViewById(R.id.buscar_libro_isbn);
         mAuth=FirebaseAuth.getInstance();
 
-        currentUser = mAuth.getCurrentUser().getUid();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         database=FirebaseDatabase.getInstance();
         databaseReferenceLibro = database.getReference(Constantes.NODO_LIBROS);
