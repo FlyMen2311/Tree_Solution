@@ -124,7 +124,7 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
 
                           }
                       }
-                      adapter_chats.notifyDataSetChanged();
+                     AplicationActivity.addFragment(new ComunicacionFragment());
                   }
                 @Override
                 public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {

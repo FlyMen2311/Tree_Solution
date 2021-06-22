@@ -478,6 +478,7 @@ public class PerfilFragment extends Fragment {
                                                             }
                                                         }
                                                     }
+
                                                     if (achats.getListChats().size() != 0) {
                                                         for (int i = 0; i < achats.getListChats().size(); i++) {
                                                             lChat = achats.getListChats().get(i);
@@ -489,6 +490,7 @@ public class PerfilFragment extends Fragment {
                                                             }
                                                         }
                                                     }
+
                                                     FirebaseAuth.getInstance().signOut();
                                                     user.delete()
                                                             .addOnCompleteListener(task -> {

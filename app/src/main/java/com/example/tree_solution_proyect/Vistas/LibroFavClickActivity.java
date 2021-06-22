@@ -60,6 +60,7 @@ public class LibroFavClickActivity extends AppCompatActivity {
     private LLibro Llibro;
     private Chat chat ;
     private Boolean isExist=false;
+    private Boolean exist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,33 +150,74 @@ public class LibroFavClickActivity extends AppCompatActivity {
         btnchat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                exist=false;
+                DatabaseReference reference1=database.getReference(Constantes.NODO_LIBROS);
+                reference1.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            if (Llibro.getKey().equals(dataSnapshot.getKey())) {
+                                exist = true;
                 Boolean apto=comprobarDatos();
                 if(apto){
                     cargarDatosChat();
                 }else{
                     Toast.makeText(getApplicationContext(),"No se puede escribir mensajes a si mismo",Toast.LENGTH_SHORT).show();
                 }
+                            }
+                        }
+                        if(!exist){
+                            Toast.makeText(getApplicationContext(), "No se ha podido añadir a favoritos porque libro ha sido borrado", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                    }
+                });
             }
         });
         favorit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(favorit.getBackground().getConstantState().equals(favorit.getContext().getDrawable(R.drawable.favorite).getConstantState())){
-                    favorit.setBackgroundResource(R.drawable.favorite_libro);
-                    LibroDAO.getInstance().crearLibroFavorito(Llibro);
-                }else if(favorit.getBackground().getConstantState().equals(favorit.getContext().getDrawable(R.drawable.favorite_libro).getConstantState())){
-                    LibroDAO.getInstance().eliminarLibroFavorito(Llibro);
-                    favorit.setBackgroundResource(R.drawable.favorite);
+                exist=false;
+                DatabaseReference reference1=database.getReference(Constantes.NODO_LIBROS);
+                reference1.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
 
-                }
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            if (Llibro.getKey().equals(dataSnapshot.getKey())) {
+                                exist = true;
+                                if (favorit.getBackground().getConstantState().equals(favorit.getContext().getDrawable(R.drawable.favorite).getConstantState())) {
+                                    favorit.setBackgroundResource(R.drawable.favorite_libro);
+                                    LibroDAO.getInstance().crearLibroFavorito(Llibro);
+                                } else if (favorit.getBackground().getConstantState().equals(favorit.getContext().getDrawable(R.drawable.favorite_libro).getConstantState())) {
+                                    LibroDAO.getInstance().eliminarLibroFavorito(Llibro);
+                                    favorit.setBackgroundResource(R.drawable.favorite);
+
+                                }
+                            }
+                        }
+                        if(!exist){
+                            Toast.makeText(getApplicationContext(), "No se ha podido añadir a favoritos porque libro ha sido borrado", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                    }
+                });
             }
         });
 
         btnVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AplicationActivity.addFragment(new FavoriteFragment());
                 finish();
+                AplicationActivity.addFragment(new FavoriteFragment());
             }
         });
     }
