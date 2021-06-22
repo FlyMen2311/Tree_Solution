@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
+import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Persistencia.LibroDAO;
 import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
@@ -165,15 +166,12 @@ public class AplicationActivity extends AppCompatActivity {
                         return true;
                     case R.id.navigation_favorite:
                         addFragment(new FavoriteFragment());
-
                         return true;
                     case R.id.navigation_comunicacion:
                         addFragment(new ComunicacionFragment());
-
                         return true;
                     case R.id.navigation_perfil:
                         addFragment(new PerfilFragment());
-
                         return true;
 
                 }
@@ -235,6 +233,7 @@ public class AplicationActivity extends AppCompatActivity {
                         databaseReferenceLibro.child(mGroupId).setValue(libro);
                         Toast.makeText(getApplicationContext(), "Libro se subío correcto", Toast.LENGTH_SHORT).show();
                         myDialog.dismiss();
+
                     } else {
                         Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                     }

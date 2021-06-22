@@ -13,7 +13,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
 import com.example.tree_solution_proyect.Adaptadores.Adapter_MisLibros_Vendidos;
 import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Objetos.Firebase.Chat;

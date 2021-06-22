@@ -27,7 +27,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tree_solution_proyect.Adaptadores.Adapter_Favoritos;
-import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
 import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;

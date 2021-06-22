@@ -12,7 +12,7 @@ public class Libro implements Serializable {
             referenceStorage,ISBN,condition,autor,nombre, esVendido;
     private Double precio;
     private Object createTimestamp;
-    private boolean isFavoritos;
+
 
 
     public Libro() {
@@ -28,14 +28,6 @@ public class Libro implements Serializable {
 
     public void setReferenceStorage(String referenceStorage) {
         this.referenceStorage = referenceStorage;
-    }
-
-    public boolean isFavoritos() {
-        return isFavoritos;
-    }
-
-    public void setFavoritos(boolean favoritos) {
-        isFavoritos = favoritos;
     }
 
     public String getDescripcion() {

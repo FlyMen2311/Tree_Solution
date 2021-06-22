@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import androidx.core.util.Pair;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -22,13 +24,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
 import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Persistencia.LibroDAO;
-import com.example.tree_solution_proyect.Vistas.AplicationActivity;
 import com.example.tree_solution_proyect.Vistas.LibroClickActivity;
 import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
@@ -75,6 +77,7 @@ public class HomeFragment extends Fragment {
     private EditText buscar_librosISBN;
     private boolean isFavorite;
     public View vista;
+    private  LinearLayoutManager l;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -92,9 +95,11 @@ public class HomeFragment extends Fragment {
 
         storage= FirebaseStorage.getInstance();;
 
-        adapter_libro=new Adapter_Libro(getActivity().getApplicationContext(),new LibroOpen(getActivity(),getContext()));
+        adapter_libro=new Adapter_Libro(getContext(),new LibroOpen(getActivity(),getContext()));
+        adapter_libro.setHasStableIds(true);
 
-        LinearLayoutManager l=new LinearLayoutManager(getActivity().getApplicationContext());
+        recyclerView.setHasTransientState(true);
+        l=new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(l);
         recyclerView.setAdapter(adapter_libro);
 
@@ -117,7 +122,14 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
+        //Funcion para pasar al ultimo mensaje producido
+        adapter_libro.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                recyclerView.scrollToPosition(adapter_libro.getItemCount()-1);
+            }
+        });
 
         databaseReferenceLibro.addChildEventListener(new ChildEventListener() {
             Map<String, LUsuario> stringLUsuarioMap=new HashMap<>();
@@ -129,30 +141,33 @@ public class HomeFragment extends Fragment {
                 final Libro m = snapshot.getValue(Libro.class);
                 final LLibro lLibro = new LLibro(m, snapshot.getKey());
 
-                if(lLibro.getLibro().getEsVendido().equals("No")){
-                final int posicion = adapter_libro.addLibro(lLibro);//listFilter
-                adapter_libro.addLibroAll(lLibro);//listAll
+                if(lLibro.getLibro().getEsVendido().equals("No")) {
+                        final int posicion = adapter_libro.addLibro(lLibro);//listFilter
+                        adapter_libro.addLibroAll(lLibro);//listAll
 
-                if (stringLUsuarioMap.get(m.getUserKey()) != null) {
-                    lLibro.setLUsuario(stringLUsuarioMap.get(m.getUserKey()));
-                    adapter_libro.actualizarLibro(posicion, lLibro);
-                } else {
-                    UsuarioDAO.getInstance().obtenerInformacionKey(m.getUserKey(), new UsuarioDAO.IDevolverUsuario() {
-                        @Override
-                        public void devolverUsuario(LUsuario lUsuario) {
-                            stringLUsuarioMap.put(m.getUserKey(), lUsuario);
-                            lLibro.setLUsuario(lUsuario);
+                        if (stringLUsuarioMap.get(m.getUserKey()) != null) {
+                            lLibro.setLUsuario(stringLUsuarioMap.get(m.getUserKey()));
                             adapter_libro.actualizarLibro(posicion, lLibro);
+                        } else {
+                            UsuarioDAO.getInstance().obtenerInformacionKey(m.getUserKey(), new UsuarioDAO.IDevolverUsuario() {
+                                @Override
+                                public void devolverUsuario(LUsuario lUsuario) {
+                                    stringLUsuarioMap.put(m.getUserKey(), lUsuario);
+                                    lLibro.setLUsuario(lUsuario);
+                                    adapter_libro.actualizarLibro(posicion, lLibro);
+                                }
+
+                                @Override
+                                public void devolverError(String mensajeError) {
+                                    Toast.makeText(getActivity().getApplicationContext(), "Error" + mensajeError, Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
 
-                        @Override
-                        public void devolverError(String mensajeError) {
-                            Toast.makeText(getActivity().getApplicationContext(), "Error" + mensajeError, Toast.LENGTH_SHORT).show();
-                        }
-                    });
                 }
-                }
-                adapter_libro.notifyDataSetChanged();
+
+                       adapter_libro.notifyDataSetChanged();
+                  
             }
 
             @Override
@@ -170,7 +185,7 @@ public class HomeFragment extends Fragment {
                         posicion=i;
                     }
                 }
-try {
+
     database.getReference(Constantes.NODO_LIB_FAV).child(mAuth.getCurrentUser().getUid()).child(adapter_libro.getListLibros().get(posicion).getKey()).removeValue();
     databaseReferenceChatDatos.addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -220,13 +235,10 @@ try {
             adapter_libro.notifyDataSetChanged();
         }
     });
-
                 adapter_libro.getListLibros().remove(posicion);
-
                 adapter_libro.getListLibrosAll().remove(posicion);
-
                 adapter_libro.notifyItemRemoved(posicion);
-}catch (Exception e){}
+
             }
 
             @Override
@@ -349,5 +361,6 @@ try {
             throwable.printStackTrace();
         }
     }
+
 
 }

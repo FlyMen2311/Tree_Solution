@@ -496,20 +496,12 @@ public class PerfilFragment extends Fragment {
                                                             .addOnCompleteListener(task -> {
                                                                 if (task.isSuccessful()) {
                                                                     startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
-<<<<<<< HEAD
-                                                                    alibro = HomeFragment.adapter_libro;
-                                                                    LLibro lLibro = null;
-                                                                    for (int i = 0; i < alibro.getListLibrosAll().size(); i ++ ) {
-                                                                        lLibro = alibro.getListLibros().get(i);
-                                                                        if(lLibro.getLibro().getUserKey().equals(user.getUid())) {
-                                                                            database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).removeValue();
-                                                                        }
-                                                                    }
+
                                                                     database.getReference(Constantes.NODO_USUARIOS).child(key).removeValue();
                                                                     Toast.makeText(getActivity().getApplicationContext(), "Usuario se ha borrado correctamente", Toast.LENGTH_SHORT).show();
                                                                     Toast.makeText(getActivity().getApplicationContext(), "Muchas gracias", Toast.LENGTH_LONG).show();
-=======
->>>>>>> denys
+
+
                                                                 }
                                                                 else{
                                                                     Toast.makeText(getActivity().getApplicationContext(), "Usuario no se ha borrado correctamente", Toast.LENGTH_SHORT).show();
@@ -541,33 +533,6 @@ public class PerfilFragment extends Fragment {
 
                             }
                         });
-<<<<<<< HEAD
-                    }else{
-
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        credential = GoogleAuthProvider.getCredential(Login.getTokenID(), null);
-                        user.reauthenticate(credential).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                key=FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-                                FirebaseAuth.getInstance().signOut();
-                                user.delete()
-                                        .addOnCompleteListener(task -> {
-                                            if (task.isSuccessful()) {
-                                                startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
-                                                try {
-                                                    alibro = HomeFragment.adapter_libro;
-                                                    LLibro lLibro = null;
-                                                    for (int i = 0; i < alibro.getListLibrosAll().size(); i ++ ) {
-                                                        lLibro = alibro.getListLibros().get(i);
-                                                        if(lLibro.getLibro().getUserKey().equals(user.getUid())) {
-                                                            database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).removeValue();
-                                                        }
-                                                    }
-                                                    database.getReference(Constantes.NODO_USUARIOS).child(key).removeValue();
-                                                    Toast.makeText(getActivity().getApplicationContext(), "Usuario se ha borrado correctamente", Toast.LENGTH_SHORT).show();
-=======
                     }else {
 
                         if (Login.getTokenID()!=null) {
@@ -604,7 +569,7 @@ public class PerfilFragment extends Fragment {
                                                         });
                                                         database.getReference(Constantes.NODO_USUARIOS).child(key).removeValue();
                                                         Toast.makeText(getActivity().getApplicationContext(), "Usuario se ha borrado correctamente", Toast.LENGTH_SHORT).show();
->>>>>>> denys
+
 
                                                         Toast.makeText(getActivity().getApplicationContext(), "Muchas gracias", Toast.LENGTH_LONG).show();
                                                     } catch (Exception e) {

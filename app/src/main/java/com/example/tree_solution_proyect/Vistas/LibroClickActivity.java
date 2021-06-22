@@ -367,6 +367,5 @@ public class LibroClickActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         AplicationActivity.addFragment(new HomeFragment());
-        finish();
     }
 }

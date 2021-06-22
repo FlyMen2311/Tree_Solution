@@ -45,19 +45,18 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
         notifyItemChanged(posicion);
     }
 
-
     @NonNull
     @NotNull
     @Override
     public Holder_Libro onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(x).inflate(R.layout.layout_holder_libro,parent,false);
 
+        View v= LayoutInflater.from(x).inflate(R.layout.layout_holder_libro,parent,false);
         return new Holder_Libro(v, libroOpen);
     }
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull Holder_Libro holder, int position) {
-
+        try {
         LLibro lLibro=listLibrosFilter.get(position);
         LUsuario lUsuario=lLibro.getLUsuario();
 
@@ -134,9 +133,8 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
             }
         }
         holder.getHora().setText(lLibro.obtenerFechaDeCreacionLibro());
+        holder.setIsRecyclable(true);
 
-
-            try {
 
             }catch (Exception exception){
                 Toast.makeText(x.getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
@@ -169,9 +167,13 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
 
     //En este metodo añdimos el Libro creado a nuestra lista y notificamos a nuestro activity
     public int addLibro(LLibro lLibro){
-        listLibrosFilter.add(lLibro);
-        int posicion=listLibrosFilter.size()-1;
-        notifyItemInserted(listLibrosFilter.size());
+        int posicion=0;
+        if(posicion==0) {
+            listLibrosFilter.add(lLibro);
+            posicion = listLibrosFilter.size() - 1;
+            notifyItemInserted(listLibrosFilter.size());
+        }
+
         return posicion;
     }
     public void addLibroAll(LLibro Libro){
@@ -219,5 +221,17 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
         }
     }
 
+    @Override
+    public void setHasStableIds(boolean hasStableIds) {
+        super.setHasStableIds(hasStableIds);
+    }
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
 }

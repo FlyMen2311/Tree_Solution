@@ -33,7 +33,7 @@ import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
 import com.example.tree_solution_proyect.Objetos.Logica.LChat;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.R;
-import com.example.tree_solution_proyect.Vistas.AplicationActivity;
+
 import com.example.tree_solution_proyect.Vistas.ChatsClick;
 import com.example.tree_solution_proyect.Vistas.Login;
 import com.example.tree_solution_proyect.Vistas.ui.perfil.PerfilFragment;
@@ -46,7 +46,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -111,6 +110,7 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
 
                   @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                      adapter_chats.notifyDataSetChanged();
                       keyreceptor=dataSnapshot.getKey();
                       for (DataSnapshot librosnapshot : dataSnapshot.getChildren()) {
                           this.librosnapshot = librosnapshot;
@@ -124,7 +124,7 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
 
                           }
                       }
-                     AplicationActivity.addFragment(new ComunicacionFragment());
+
                   }
                 @Override
                 public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {

@@ -22,7 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
-import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
+
 import com.example.tree_solution_proyect.Adaptadores.Adapter_MisLibros;
 import com.example.tree_solution_proyect.Holders.Holder_Chats;
 import com.example.tree_solution_proyect.Objetos.Constantes;

@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.tree_solution_proyect.Holders.Holder_Chats;
-import com.example.tree_solution_proyect.Holders.Holder_Libro;
 import com.example.tree_solution_proyect.Objetos.Logica.LChat;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Objetos.Logica.LMensaje;

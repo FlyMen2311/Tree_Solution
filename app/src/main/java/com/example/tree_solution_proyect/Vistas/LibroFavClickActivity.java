@@ -65,7 +65,7 @@ public class LibroFavClickActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_libro_click);
+        setContentView(R.layout.activity_libro_fav_click);
 
         foto_libro=findViewById(R.id.foto_libro_favotirosclick);
         favorit=findViewById(R.id.favoritos_favotirosclick);
