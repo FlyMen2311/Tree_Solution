@@ -65,6 +65,7 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class PerfilFragment extends Fragment {
+
     private TextView salir,userName,textViewResetPass;
     private ImageView FotoCambioPerfil;
     private FirebaseDatabase database;
@@ -74,7 +75,6 @@ public class PerfilFragment extends Fragment {
     private StorageReference storageReference;
     private Dialog myDialog, myDialogResetPass;
     private Adapter_Libro alibro;
-    private Adapter_Chats achats;
     private ImagePicker imagePicker;
     private Uri fotoUriPerfil;
     private Button btndarBajaAceptar,btndarBajaCancelar;
@@ -382,30 +382,21 @@ public class PerfilFragment extends Fragment {
                                                 @Override
                                                 public void onSuccess(Void unused) {
                                                     key=FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                                    alibro = HomeFragment.adapter_libro;
-                                                    achats = ComunicacionFragment.adapter_chats;
-                                                    LLibro lLibro = null;
-                                                    LChat lChat = null;
-                                                    for (int i = 0; i < alibro.getListLibros().size(); i ++ ) {
-                                                        lLibro = alibro.getListLibros().get(i);
-                                                        if(lLibro.getLibro().getUserKey().equals(key)) {
-                                                            database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).removeValue();
-                                                        }
-                                                    }
-                                                    for(int i = 0; i < achats.getListChats().size(); i ++) {
-                                                        lChat = achats.getListChats().get(i);
-                                                        if(lChat.getChat().getKeyemisor().equals(key)) {
-                                                            database.getReference(Constantes.NODO_CHAT_DATOS).child(lChat.getChat().getKeyemisor()).removeValue();
-                                                        }
-                                                        if(lChat.getChat().getKeyreceptor().equals(key)) {
-                                                            database.getReference(Constantes.NODO_CHAT_DATOS).child(lChat.getChat().getKeyemisor()).child(lChat.getChat().getKeyreceptor()).removeValue();
-                                                        }
-                                                    }
                                                     FirebaseAuth.getInstance().signOut();
                                                     user.delete()
                                                             .addOnCompleteListener(task -> {
                                                                 if (task.isSuccessful()) {
                                                                     startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
+                                                                    alibro = HomeFragment.adapter_libro;
+                                                                    LLibro lLibro = null;
+                                                                    LChat lChat = null;
+                                                                    for (int i = 0; i < alibro.getListLibros().size(); i ++ ) {
+                                                                        lLibro = alibro.getListLibros().get(i);
+                                                                        if(lLibro.getLibro().getUserKey().equals(key)) {
+                                                                            database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).removeValue();
+                                                                        }
+                                                                    }
+                                                                    databaseReferenceUsuario.removeValue();
                                                                 }
                                                                 else{
                                                                     Toast.makeText(getActivity().getApplicationContext(), "Usuario no se ha borrado correctamente", Toast.LENGTH_SHORT).show();

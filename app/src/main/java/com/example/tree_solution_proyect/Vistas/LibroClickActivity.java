@@ -216,7 +216,11 @@ public class LibroClickActivity extends AppCompatActivity {
                 //leeremos un objeto de tipo Usuario
                 GenericTypeIndicator<Usuario> u = new GenericTypeIndicator<Usuario>() {};
                 Usuario usuario = snapshot.getValue(u);
-                Picasso.with(getApplicationContext()).load(usuario.getFotoPerfilUrl()).into(foto_libro_propietario);
+                try {
+                    Picasso.with(getApplicationContext()).load(usuario.getFotoPerfilUrl()).into(foto_libro_propietario);
+                }catch (Exception e) {
+
+                }
                 nombre_libro_propietario.setText(usuario.getUserName());
             }
 

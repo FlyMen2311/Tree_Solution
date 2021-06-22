@@ -35,6 +35,7 @@ import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
 import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.Login;
+import com.example.tree_solution_proyect.Vistas.ui.perfil.PerfilFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -68,6 +69,7 @@ public class HomeFragment extends Fragment {
     public static Adapter_Libro adapter_libro;
     private FirebaseAuth mAuth;
     private String keyEmisor;
+    private String currentUser;
     private String keyreceptor;
     private String keyLibro;
     private int posicion = 0;
@@ -85,9 +87,11 @@ public class HomeFragment extends Fragment {
         buscar_librosISBN=vista.findViewById(R.id.buscar_libro_isbn);
         mAuth=FirebaseAuth.getInstance();
 
+        currentUser = mAuth.getCurrentUser().getUid();
+
         database=FirebaseDatabase.getInstance();
         databaseReferenceLibro = database.getReference(Constantes.NODO_LIBROS);
-        databaseReferenceChatDatos=database.getReference(Constantes.NODO_CHAT_DATOS);
+        databaseReferenceChatDatos= database.getReference(Constantes.NODO_CHAT_DATOS);
 
         storage= FirebaseStorage.getInstance();;
 
@@ -176,7 +180,7 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
-                   database.getReference(Constantes.NODO_LIB_FAV).child(mAuth.getCurrentUser().getUid()).child(adapter_libro.getListLibros().get(posicion).getKey()).removeValue();
+                   database.getReference(Constantes.NODO_LIB_FAV).child(currentUser).child(adapter_libro.getListLibros().get(posicion).getKey()).removeValue();
                    databaseReferenceChatDatos.addListenerForSingleValueEvent(new ValueEventListener() {
 
                        DataSnapshot snapshot1;
@@ -198,7 +202,6 @@ public class HomeFragment extends Fragment {
                                     keyLibro = snapshot3.getKey();
 
                                     if (adapter_libro.getListLibrosAll().size() != 0) {
-                                        int a = adapter_libro.getListLibrosAll().size();
                                         for (int i = 0; i < adapter_libro.getListLibrosAll().size(); i ++) {
                                             if (keyLibro.equals(adapter_libro.getListLibrosAll().get(i).getKey())) {
                                                 keyExiste = true;
