@@ -237,9 +237,11 @@ public class ChatsClick extends AppCompatActivity {
                                     //leeremos un objeto de tipo Estudiante
                                     GenericTypeIndicator<Usuario> u = new GenericTypeIndicator<Usuario>() {
                                     };
-                                    Usuario usuario = snapshot.getValue(u);
-                                    Picasso.with(getApplicationContext()).load(usuario.getFotoPerfilUrl()).into(foto_libro_propietario);
-                                    nombre_libro_propietario.setText(usuario.getUserName());
+                                    try {
+                                        Usuario usuario = snapshot.getValue(u);
+                                        Picasso.with(getApplicationContext()).load(usuario.getFotoPerfilUrl()).into(foto_libro_propietario);
+                                        nombre_libro_propietario.setText(usuario.getUserName());
+                                    }catch (Exception e){}
                                 }
 
                                 @Override
@@ -284,7 +286,6 @@ public class ChatsClick extends AppCompatActivity {
                     referenceReceptor.push().setValue(mensaje);
                     texto_mensaje.setText("");
                 }
-
             }
         });
 
@@ -398,9 +399,11 @@ public class ChatsClick extends AppCompatActivity {
                                 //leeremos un objeto de tipo Usuario
                                 GenericTypeIndicator<Usuario> u = new GenericTypeIndicator<Usuario>() {
                                 };
-                                Usuario usuario = snapshot.getValue(u);
-                                Picasso.with(getApplicationContext()).load(usuario.getFotoPerfilUrl()).into(foto_libro_propietario);
-                                nombre_libro_propietario.setText(usuario.getUserName());
+                                try {
+                                    Usuario usuario = snapshot.getValue(u);
+                                    Picasso.with(getApplicationContext()).load(usuario.getFotoPerfilUrl()).into(foto_libro_propietario);
+                                    nombre_libro_propietario.setText(usuario.getUserName());
+                                }catch(Exception e){}
                             }
 
                             @Override

@@ -29,6 +29,7 @@ import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
 import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
+import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
 import com.example.tree_solution_proyect.Vistas.ui.perfil.MisLibrosClickablesIntefrace;
 import com.example.tree_solution_proyect.Vistas.ui.perfil.PerfilFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -77,6 +78,7 @@ public class MisLibrosActivity extends AppCompatActivity {
         atras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AplicationActivity.addFragment(new PerfilFragment());
                 finish();
             }
         });
@@ -201,6 +203,7 @@ public class MisLibrosActivity extends AppCompatActivity {
                                     ,Pair.create(estado, "condition_TR")
                                     ,Pair.create(fechacreacion, "fechacreacion_TR"));
                     startActivity(intent, activityOptionsCompat.toBundle());
+                    finish();
 
                 } else {
                     Toast.makeText(activity, "Error", Toast.LENGTH_LONG).show();
@@ -225,10 +228,13 @@ public class MisLibrosActivity extends AppCompatActivity {
         this.adapter_misLibros = adapter_misLibros;
     }
 
+
     @Override
     public void onBackPressed() {
 
     }
+
+
 }
 
 

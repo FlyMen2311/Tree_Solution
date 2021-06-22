@@ -33,8 +33,10 @@ import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
 import com.example.tree_solution_proyect.Objetos.Logica.LChat;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.R;
+import com.example.tree_solution_proyect.Vistas.AplicationActivity;
 import com.example.tree_solution_proyect.Vistas.ChatsClick;
 import com.example.tree_solution_proyect.Vistas.Login;
+import com.example.tree_solution_proyect.Vistas.ui.perfil.PerfilFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -122,10 +124,11 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
 
                           }
                       }
+                     AplicationActivity.addFragment(new ComunicacionFragment());
                   }
                 @Override
                 public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                    adapter_chats.notifyDataSetChanged();
                 }
 
                 @Override
@@ -149,12 +152,12 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
 
                 @Override
                 public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                    adapter_chats.notifyDataSetChanged();
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                    adapter_chats.notifyDataSetChanged();
                 }
             });
             //Funcion para pasar al ultimo mensaje producido
