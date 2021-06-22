@@ -191,6 +191,7 @@ public class MisLibrosVendidosClickActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             startActivity(new Intent(getApplicationContext(),MisLibrosVendidosActivity.class));
+            finish();
         }
     }
 
@@ -209,6 +210,7 @@ public class MisLibrosVendidosClickActivity extends AppCompatActivity {
                     database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).removeValue();
                     dialog.dismiss();
                     startActivity(new Intent(getApplicationContext(),MisLibrosVendidosActivity.class));
+                    finish();
                 }
             });
             cancelEliminar.setOnClickListener(new View.OnClickListener() {
@@ -219,5 +221,9 @@ public class MisLibrosVendidosClickActivity extends AppCompatActivity {
             });
             dialog.show();
         }
+    }
+    @Override
+    public void onBackPressed() {
+
     }
 }

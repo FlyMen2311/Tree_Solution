@@ -20,6 +20,7 @@ import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
 import com.example.tree_solution_proyect.Persistencia.LibroDAO;
 import com.example.tree_solution_proyect.R;
+import com.example.tree_solution_proyect.Vistas.ui.favorite.FavoriteFragment;
 import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -173,6 +174,7 @@ public class LibroFavClickActivity extends AppCompatActivity {
         btnVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AplicationActivity.addFragment(new FavoriteFragment());
                 finish();
             }
         });

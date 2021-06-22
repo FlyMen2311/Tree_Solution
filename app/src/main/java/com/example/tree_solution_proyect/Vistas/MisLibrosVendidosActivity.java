@@ -76,6 +76,7 @@ public class MisLibrosVendidosActivity extends AppCompatActivity {
         atras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AplicationActivity.addFragment(new PerfilFragment());
                 finish();
             }
         });
@@ -201,6 +202,7 @@ public class MisLibrosVendidosActivity extends AppCompatActivity {
                                     ,Pair.create(estado, "condition_TR")
                                     ,Pair.create(fechacreacion, "fechacreacion_TR"));
                     startActivity(intent, activityOptionsCompat.toBundle());
+                    finish();
 
                 } else {
                     Toast.makeText(activity, "Error", Toast.LENGTH_LONG).show();

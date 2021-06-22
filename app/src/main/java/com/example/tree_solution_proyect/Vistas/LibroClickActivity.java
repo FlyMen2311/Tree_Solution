@@ -2,6 +2,9 @@ package com.example.tree_solution_proyect.Vistas;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,12 +18,14 @@ import android.widget.Toast;
 
 import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Objetos.Firebase.Chat;
+import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
 import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
 import com.example.tree_solution_proyect.Persistencia.LibroDAO;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
+import com.example.tree_solution_proyect.Vistas.ui.perfil.PerfilFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -60,6 +65,7 @@ public class LibroClickActivity extends AppCompatActivity {
     private LLibro Llibro;
     private  Chat chat ;
     private Boolean isExist=false;
+    private Boolean exist;
 
 
     @Override
@@ -101,18 +107,7 @@ public class LibroClickActivity extends AppCompatActivity {
         mAuth=FirebaseAuth.getInstance();
         LoadLibros(Llibro);
 
-        favorit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(favorit.getBackground().getConstantState().equals(favorit.getContext().getDrawable(R.drawable.favorite).getConstantState())){
-                    favorit.setBackgroundResource(R.drawable.favorite_libro);
-                    LibroDAO.getInstance().crearLibroFavorito(Llibro);
-                }else if(favorit.getBackground().getConstantState().equals(favorit.getContext().getDrawable(R.drawable.favorite_libro).getConstantState())){
-                    LibroDAO.getInstance().eliminarLibroFavorito(Llibro);
-                    favorit.setBackgroundResource(R.drawable.favorite);
-                }
-            }
-        });
+
 
 
 
@@ -152,35 +147,85 @@ public class LibroClickActivity extends AppCompatActivity {
         btnchat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            Boolean apto=comprobarDatos();
-            if(apto){
-                cargarDatosChat();
-            }else{
-                Toast.makeText(getApplicationContext(),"No se puede escribir mensajes a si mismo",Toast.LENGTH_SHORT).show();
-            }
+                exist=false;
+                DatabaseReference reference1=database.getReference(Constantes.NODO_LIBROS);
+                reference1.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            if (Llibro.getKey().equals(dataSnapshot.getKey())) {
+                                exist=true;
+                                Boolean apto = comprobarDatos();
+                                if (apto) {
+                                    cargarDatosChat();
+
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "No se puede escribir mensajes a si mismo", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+                        if(!exist){
+                            Toast.makeText(getApplicationContext(), "No se ha podido iniciar el chat porque libro ha sido borrado", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                    }
+                });
+
             }
         });
         favorit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(favorit.getBackground().getConstantState().equals(favorit.getContext().getDrawable(R.drawable.favorite).getConstantState())){
-                    favorit.setBackgroundResource(R.drawable.favorite_libro);
-                    LibroDAO.getInstance().crearLibroFavorito(Llibro);
-                }else if(favorit.getBackground().getConstantState().equals(favorit.getContext().getDrawable(R.drawable.favorite_libro).getConstantState())){
-                    LibroDAO.getInstance().eliminarLibroFavorito(Llibro);
-                    favorit.setBackgroundResource(R.drawable.favorite);
+                exist=false;
+                DatabaseReference reference1=database.getReference(Constantes.NODO_LIBROS);
+                reference1.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
 
-                }
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            if (Llibro.getKey().equals(dataSnapshot.getKey())) {
+                                exist=true;
+                                if(favorit.getBackground().getConstantState().equals(favorit.getContext().getDrawable(R.drawable.favorite).getConstantState())){
+                                    favorit.setBackgroundResource(R.drawable.favorite_libro);
+                                    LibroDAO.getInstance().crearLibroFavorito(Llibro);
+
+                                }else if(favorit.getBackground().getConstantState().equals(favorit.getContext().getDrawable(R.drawable.favorite_libro).getConstantState())){
+                                    LibroDAO.getInstance().eliminarLibroFavorito(Llibro);
+                                    favorit.setBackgroundResource(R.drawable.favorite);
+                                }
+                            }
+                        }
+                        if(!exist){
+                            Toast.makeText(getApplicationContext(), "No se ha podido añadir a favoritos porque libro ha sido borrado", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                    }
+                });
             }
         });
 
         btnVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+               AplicationActivity.addFragment(new HomeFragment());
+               finish();
             }
         });
+
     }
+
+
     public void LoadLibros(LLibro libro){
         Picasso.with(getApplicationContext()).load(libro.getLibro().getFotoPrincipalUrl()).into(foto_libro);
         nombre.setText(libro.getLibro().getNombre());
@@ -213,11 +258,14 @@ public class LibroClickActivity extends AppCompatActivity {
         databaseReferenceUsuario.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                //leeremos un objeto de tipo Usuario
-                GenericTypeIndicator<Usuario> u = new GenericTypeIndicator<Usuario>() {};
-                Usuario usuario = snapshot.getValue(u);
-                Picasso.with(getApplicationContext()).load(usuario.getFotoPerfilUrl()).into(foto_libro_propietario);
-                nombre_libro_propietario.setText(usuario.getUserName());
+                try {
+                    //leeremos un objeto de tipo Usuario
+                    GenericTypeIndicator<Usuario> u = new GenericTypeIndicator<Usuario>() {
+                    };
+                    Usuario usuario = snapshot.getValue(u);
+                    Picasso.with(getApplicationContext()).load(usuario.getFotoPerfilUrl()).into(foto_libro_propietario);
+                    nombre_libro_propietario.setText(usuario.getUserName());
+                }catch (Exception e){}
             }
 
             @Override
@@ -313,5 +361,12 @@ public class LibroClickActivity extends AppCompatActivity {
 
         }
         return isigual;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        AplicationActivity.addFragment(new HomeFragment());
+        finish();
     }
 }

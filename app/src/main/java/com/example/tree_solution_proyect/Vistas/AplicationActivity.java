@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
@@ -55,6 +56,7 @@ public class AplicationActivity extends AppCompatActivity {
     private ImageView imageView;
     protected Uri imageUri;
     private String StrinUrl,mGroupId;
+    public static FragmentManager fragmentManager;
 
 
 
@@ -67,6 +69,9 @@ public class AplicationActivity extends AppCompatActivity {
 
         database=FirebaseDatabase.getInstance();
         databaseReferenceLibro=database.getReference("Libros");
+
+        fragmentManager=getSupportFragmentManager();
+
 
 
        imagePicker=new ImagePicker(this);
@@ -178,12 +183,17 @@ public class AplicationActivity extends AppCompatActivity {
 
     }
 
-    private void addFragment(Fragment fragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.nav_host_fragment_activity_aplication2, fragment)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .commit();
+
+
+    public static void addFragment(Fragment fragment) {
+        try {
+            FragmentTransaction transaction=fragmentManager.beginTransaction();
+            transaction.replace(R.id.nav_host_fragment_activity_aplication2, fragment)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).addToBackStack(null)
+                    .commitAllowingStateLoss();
+        }catch (Exception e){
+            Toast.makeText(fragment.getContext(), e.getMessage(),Toast.LENGTH_LONG).show();
+        }
     }
 
 
