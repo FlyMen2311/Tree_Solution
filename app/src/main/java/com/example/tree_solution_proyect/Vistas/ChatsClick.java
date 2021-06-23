@@ -105,7 +105,7 @@ public class ChatsClick extends AppCompatActivity {
 
         nombre = findViewById(R.id.nombre_chat);
         autor = findViewById(R.id.autor_chat);
-        categoria = findViewById(R.id.catergoria_chat);
+        categoria = findViewById(R.id.categoria_chat);
         ISBN = findViewById(R.id.Isbn_chat);
         condition = findViewById(R.id.condition_chat);
         precio = findViewById(R.id.precio_chat);

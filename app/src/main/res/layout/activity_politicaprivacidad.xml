@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constrait_home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context=".Vistas.ui.home.HomeFragment">
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="163dp"
+        android:layout_marginBottom="619dp"
+        android:fontFamily="monospace"
+        android:text="Politica de privacidad"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.413"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:background="@drawable/white_texture"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="66dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="378dp"
+                android:layout_height="53dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Tree tratará la Ip de su dispositivo para las siguientes finalidades:"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="375dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="– Conocer el origen de la descarga de nuestra Aplicación, llevando a cabo dicho tratamiento en atención a nuestro interés legítimo para la mejora de la oferta comercial."
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="376dp"
+                android:layout_height="109dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="– Acceder a su ubicación mientras navega por nuestra página web o utiliza nuestra Aplicación para mostrarle los productos que tienes más cerca. Dicho tratamiento lo llevaremos a cabo únicamente si nos da su consentimiento para ello, mediante la aceptación de nuestra política de cookies o los ajustes de su dispositivo. "
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="387dp"
+                android:layout_height="107dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="– Gestionar su alta y sus preferencias de usuario dentro del área de usuario registrado, así como para prestarle los servicios de nuestra página Web y/o de nuestra Aplicación que Usted haya solicitado. La base de legitimación que habilita a Wallapop a tratar sus datos para la presente finalidad es su solicitud de registro."
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="371dp"
+                android:layout_height="116dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="– Para velar por el buen uso de nuestros servicios y productos, impidiendo que se lleven a cabo usos ilícitos o contrarios a nuestra política y valores, pudiendo incluso darle de baja como usuario registrado. La base legitimadora de dicho tratamiento es el cumplimiento por parte de Tree de determinadas obligaciones legales, así como el interés legítimo de proteger nuestros servicios y productos."
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/textView25"
+                android:layout_width="384dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="– Mostrarle publicidad ajustada a sus hábitos de consumo y navegación obtenidos del uso de nuestra aplicación o página web, en atención a nuestro interés legítimo para la mejora de la oferta comercial."
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="382dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="– Remitirle, por cualquier medio, incluidos por medios electrónicos, comunicaciones comerciales en relación a los productos y servicios ofrecidos por Tree, comunicaciones que podrán dirigirse en atención a sus hábitos de consumo, navegación o utilización de nuestra Página Web y/o nuestra Aplicación. Tree realizará dicho tratamiento en atención a la relación mantenida con usted, teniendo en cuenta que las citadas comunicaciones siempre versarán sobre nuestros productos y servicios. "
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="– Gestionar su participación en los concursos que organizamos, legitimando dicho tratamiento la aceptación por su parte de las bases legales del correspondiente concurso en el que usted participe libremente."
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="– Analizar el contenido de los chats en los que interactúe con otros usuarios, al objeto de verificar que se hace un uso lícito de nuestros servicios. Tratamiento que realizaremos al amparo de nuestro interés legítimo para para evitar fraude o actos ilícitos."
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="– Realizar un seguimiento de la entrega de los productos y/o servicios adquiridos a través de nuestra Página Web y/o de nuestra Aplicación. Tree realiza dicho tratamiento como consecuencia de la aceptación por su parte de las condiciones generales de contratación realizada en el momento de solicitar dicho servicio de entrega de producto o servicios solicitados."
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="– Gestionar y controlar las ventas de BUMPS o pago por posicionamiento o visibilidad (visibility). La base legitimadora para la realización de dicho tratamiento es la aceptación por su parte de nuestras condiciones generales de contratación realizada en el momento de contratar dicho servicio."
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="– Gestionar las quejas y consultas sobre los productos y/o servicios adquiridos a través de nuestra Página Web y/o de nuestra Aplicación, siendo la base legitimadora de este tratamiento la obligación legal de Tree de acuerdo con la normativa de defensa de los consumidores y usuarios. "
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="match_parent"
+                android:layout_height="222dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="– Si usted nos ha proporcionado su consentimiento expreso a tal efecto, comunicaremos sus datos a terceras empresas ajenas a Tree, con la finalidad mostrarle publicidad adaptada a sus preferencias de consumo y navegación tanto de productos y servicios propios, como de terceros. Dicho tratamiento únicamente se llevará a cabo si nos da su consentimiento para ello."
+                android:textColor="#000000" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

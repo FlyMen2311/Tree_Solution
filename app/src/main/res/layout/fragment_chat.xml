@@ -31,162 +31,28 @@
 
         <ImageView
             android:id="@+id/foto_libro_chat"
-            android:layout_width="112dp"
+            android:layout_width="89dp"
             android:layout_height="104dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="9dp"
             android:layout_marginTop="50dp"
-            android:layout_marginEnd="282dp"
+            android:layout_marginEnd="312dp"
             android:layout_marginBottom="2dp"
             android:transitionName="fotolibro_chat_TR"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@drawable/libro_ejemplo" />
-
-        <TextView
-            android:id="@+id/nombre_chat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="149dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="217dp"
-            android:layout_marginBottom="89dp"
-            android:text="Nombre"
-            android:textColor="#000000"
-            android:textSize="12sp"
-            android:transitionName="nombre_chat_TR"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <RatingBar
-            android:id="@+id/ratingBar_libro_chat"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="83dp"
-            android:layout_height="14dp"
-            android:layout_marginStart="149dp"
-            android:layout_marginTop="108dp"
-            android:layout_marginEnd="178dp"
-            android:layout_marginBottom="33dp"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:transitionName="ratingbar_TR"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/condition_chat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="259dp"
-            android:layout_marginTop="108dp"
-            android:layout_marginEnd="96dp"
-            android:layout_marginBottom="30dp"
-            android:text="Condicion"
-            android:textColor="#131313"
-            android:textSize="12sp"
-            android:transitionName="condition_chat_TR"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/catergoria_chat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="149dp"
-            android:layout_marginTop="84dp"
-            android:layout_marginEnd="209dp"
-            android:layout_marginBottom="55dp"
-            android:text="Categoria"
-            android:textColor="#000000"
-            android:textSize="12sp"
-            android:transitionName="categoria_chat_TN"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/precio_chat"
-            android:layout_width="41dp"
-            android:layout_height="17dp"
-            android:layout_marginStart="259dp"
-            android:layout_marginTop="122dp"
-            android:layout_marginEnd="110dp"
-            android:layout_marginBottom="16dp"
-            android:text="Precio"
-            android:textColor="#000000"
-            android:textSize="12sp"
-            android:transitionName="precio_chat_TR"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/autor_chat"
-            android:layout_width="57dp"
-            android:layout_height="17dp"
-            android:layout_marginStart="259dp"
-            android:layout_marginTop="138dp"
-            android:layout_marginEnd="94dp"
-            android:text="autor"
-            android:textColor="#000000"
-            android:textSize="12sp"
-            android:transitionName="autor_chat_TR"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/fechacreacion_chat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="149dp"
-            android:layout_marginTop="124dp"
-            android:layout_marginEnd="182dp"
-            android:layout_marginBottom="15dp"
-            android:text="fechaCreacion"
-            android:textColor="#131313"
-            android:textSize="12sp"
-            android:transitionName="fechacreacion_chat_TR"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/Isbn_chat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="149dp"
-            android:layout_marginTop="66dp"
-            android:layout_marginEnd="234dp"
-            android:layout_marginBottom="73dp"
-            android:text="ISBN"
-            android:textColor="#000000"
-            android:textSize="12sp"
-            android:transitionName="ISBN__chat_TR"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/foto_propietario_libro_chat"
             android:layout_width="52dp"
             android:layout_height="55dp"
-            android:layout_marginStart="258dp"
-            android:layout_marginTop="48dp"
-            android:layout_marginEnd="100dp"
-            android:layout_marginBottom="52dp"
+            android:layout_marginStart="342dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="41dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -197,10 +63,10 @@
             android:id="@+id/nombre_usuario_propietario_chat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="321dp"
-            android:layout_marginTop="74dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="71dp"
+            android:layout_marginStart="324dp"
+            android:layout_marginTop="120dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="25dp"
             android:fontFamily="monospace"
             android:text="Andriy Litvinchuk"
             android:textColor="#090909"
@@ -208,7 +74,115 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TableLayout
+            android:id="@+id/tableLayout2"
+            android:layout_width="213dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="63dp"
+            android:layout_marginEnd="96dp"
+            android:layout_marginBottom="13dp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/foto_libro_chat"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/nombre_chat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre"
+                    android:textColor="#000000"
+                    android:transitionName="nombre_libro_click_TR" />
+
+                <TextView
+                    android:id="@+id/fechacreacion_chat"
+                    android:layout_width="124dp"
+                    android:layout_height="wrap_content"
+                    android:text="fechaCreacion"
+                    android:textAlignment="textEnd"
+                    android:textColor="#131313"
+                    android:transitionName="fechacreacion_libro_click_TR" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/autor_chat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="Autor"
+                    android:textColor="#101010"
+                    android:transitionName="autor_libro_click_TR" />
+
+                <TextView
+                    android:id="@+id/Isbn_chat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ISBN"
+                    android:textAlignment="textEnd"
+                    android:textColor="#000000"
+                    android:transitionName="ISBN_libro_click_TR" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RatingBar
+                    android:id="@+id/ratingBar_libro_chat"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="81dp"
+                    android:layout_height="19dp"
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:transitionName="ratingbar_libro_click_TR" />
+
+                <TextView
+                    android:id="@+id/condition_chat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Condicion"
+                    android:textAlignment="textEnd"
+                    android:textColor="#131313"
+                    android:transitionName="condition_libro_click_TR" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/categoria_chat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Categoria"
+                    android:textColor="#000000"
+                    android:transitionName="categoria_libro_click_T_TN" />
+
+                <TextView
+                    android:id="@+id/precio_chat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Precio"
+                    android:textAlignment="textEnd"
+                    android:textColor="#000000"
+                    android:transitionName="precio_libro_click_TR" />
+
+            </TableRow>
+        </TableLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -228,7 +202,8 @@
             android:id="@+id/recycler_chat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"></androidx.recyclerview.widget.RecyclerView>
+            android:background="@color/white">
+        </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
 
