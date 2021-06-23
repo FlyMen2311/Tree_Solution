@@ -196,6 +196,11 @@ public class HomeFragment extends Fragment {
                         posicion=i;
                     }
                 }
+                adapter_libro.getListLibros().remove(posicion);
+                adapter_libro.getListLibrosAll().remove(posicion);
+                cont--;
+                adapter_libro.setNumItems(cont);
+                adapter_libro.notifyItemRemoved(posicion);
 
     database.getReference(Constantes.NODO_LIB_FAV).child(mAuth.getCurrentUser().getUid()).child(adapter_libro.getListLibros().get(posicion).getKey()).removeValue();
     databaseReferenceChatDatos.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -251,11 +256,7 @@ public class HomeFragment extends Fragment {
         }
     });
 
-                adapter_libro.getListLibros().remove(posicion);
-                adapter_libro.getListLibrosAll().remove(posicion);
-                cont--;
-                adapter_libro.setNumItems(cont);
-                adapter_libro.notifyItemRemoved(posicion);
+
 
             }
 
