@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class LMensaje implements Serializable {
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     private Mensaje mensaje;
     private String key;
     private LUsuario lUsuario;

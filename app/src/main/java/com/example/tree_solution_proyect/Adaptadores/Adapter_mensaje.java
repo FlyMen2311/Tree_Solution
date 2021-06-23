@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class Adapter_mensaje extends RecyclerView.Adapter<HolderMensaje> {
-    //Inicializamos los atributos
+    //Instanciamos los atributos
    private List<LMensaje> listMensaje=new ArrayList<>();
    private Context x;
    private ChatsClick chatsClick=new ChatsClick();;

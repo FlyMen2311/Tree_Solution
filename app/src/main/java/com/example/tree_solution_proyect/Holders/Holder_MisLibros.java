@@ -13,7 +13,7 @@ import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.perfil.MisLibrosClickablesIntefrace;
 
 public class Holder_MisLibros extends  RecyclerView.ViewHolder{
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     private ImageView Foto_libro;
     private TextView nombre;
     private TextView hora;

@@ -59,7 +59,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChatsClick extends AppCompatActivity {
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     private ImageButton enviar;
     private EditText texto_mensaje;
     private RecyclerView recyclerView;
@@ -88,9 +88,10 @@ public class ChatsClick extends AppCompatActivity {
     private TextView hora;
     private RatingBar ratingBar;
     private  LLibro Llibro;
-
+    //Metodo Constructor vacio
     public ChatsClick() { }
 
+    //Metodo que se llama al crear dicha activity aqui es donde se inicializan todos los variables
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -345,7 +346,7 @@ public class ChatsClick extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Libro no existe,hubo un error", Toast.LENGTH_SHORT).show();
         }
     }
-
+    //Llama a este metodo cuando se resumea dicho activiti
     @Override
     public void onResume() {
         super.onResume();

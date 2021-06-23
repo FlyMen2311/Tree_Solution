@@ -25,7 +25,7 @@ import java.util.List;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class Adapter_Chats extends RecyclerView.Adapter<Holder_Chats> {
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     private Context x;
     private List<LChat> listChats=new ArrayList<>();
     private ComunicacionFragment.ChatOpen chatOpen;

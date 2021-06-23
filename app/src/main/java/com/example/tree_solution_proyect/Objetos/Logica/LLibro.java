@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class LLibro implements Serializable  {
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     private Libro libro;
     private LLibro lLibro;
     private String key;

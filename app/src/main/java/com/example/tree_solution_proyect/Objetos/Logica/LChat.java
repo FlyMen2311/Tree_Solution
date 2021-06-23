@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class LChat implements Serializable {
-    //Inicializamos los atributos
+    //Instanciamos los atributos
   private String key;
   private Chat chat;
 

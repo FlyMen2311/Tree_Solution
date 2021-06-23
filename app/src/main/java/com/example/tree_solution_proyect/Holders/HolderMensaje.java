@@ -12,7 +12,7 @@ import com.example.tree_solution_proyect.R;
 
 public class HolderMensaje extends RecyclerView.ViewHolder  {
 
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     private TextView nombre,hora;
     public TextView mensaje;
     private ImageView fotoPerfilMensaje;

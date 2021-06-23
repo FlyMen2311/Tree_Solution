@@ -45,7 +45,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class AplicationActivity extends AppCompatActivity {
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     private FirebaseDatabase database;
     private DatabaseReference databaseReferenceLibro;
     private Dialog myDialog;
@@ -60,7 +60,7 @@ public class AplicationActivity extends AppCompatActivity {
     public static FragmentManager fragmentManager;
 
 
-
+    //Metodo que se llama al crear dicha activity aqui es donde se inicializan todos los variables
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,9 +74,9 @@ public class AplicationActivity extends AppCompatActivity {
         fragmentManager=getSupportFragmentManager();
 
 
-
+        //Atributo que se utiliza para selecionar foto desde galería
        imagePicker=new ImagePicker(this);
-
+        //Callback que se produce al selecionar una foto desde galería Android
         imagePicker.setImagePickerCallback(new ImagePickerCallback() {
             @Override
             public void onImagesChosen(List<ChosenImage> list) {
@@ -90,7 +90,7 @@ public class AplicationActivity extends AppCompatActivity {
                                 Glide.with(getApplication().getApplicationContext())
                                         .load(uri)
                                         .into(imageView);
-                                Toast.makeText(getApplicationContext(),"Foto subida para subir otra repite el proceso",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),"Foto subida con exito para cambiar foto repite el proceso",Toast.LENGTH_SHORT).show();
                                StrinUrl=uri;
                             }
                         });
@@ -104,8 +104,10 @@ public class AplicationActivity extends AppCompatActivity {
 
             }
         });
+        //Instancia que hace refecencia al nuestro Bottom Nav Menu
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
+        //Array Adaptes para Spiners sirver para establecer un Array de String al objeto Spinner
         ArrayAdapter<CharSequence> adapterCategory = ArrayAdapter.createFromResource(
                 this,
                 R.array.category,
@@ -117,7 +119,7 @@ public class AplicationActivity extends AppCompatActivity {
                 R.layout.support_simple_spinner_dropdown_item
         );
 
-
+        //Gestion de Eventos producidos al hacer click en cualquier Fragment del menu
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
@@ -182,7 +184,7 @@ public class AplicationActivity extends AppCompatActivity {
     }
 
 
-
+    //Metodo que sirve para abrir un fragmento
     public static void addFragment(Fragment fragment) {
         try {
             FragmentTransaction transaction=fragmentManager.beginTransaction();
@@ -194,7 +196,7 @@ public class AplicationActivity extends AppCompatActivity {
         }
     }
 
-
+    //Clase para gestion de button exit
     class exit implements View.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -202,7 +204,7 @@ public class AplicationActivity extends AppCompatActivity {
         }
     }
 
-
+    //Clase para gestion de button añadir libro
     class submitBook implements View.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -283,6 +285,7 @@ public class AplicationActivity extends AppCompatActivity {
             imagePicker.submit(data);
         }
     }
+    //Metodo que se llama cuando el activity se inicia
     @Override
     public void onStart() {
         super.onStart();

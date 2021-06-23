@@ -3,7 +3,7 @@ package com.example.tree_solution_proyect.Objetos.Firebase;
 import java.io.Serializable;
 
 public class Usuario implements Serializable {
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     private String userName,email,fotoPerfilUrl;
     private long fechaDeNacimiento;
 

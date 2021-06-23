@@ -13,7 +13,7 @@ import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.home.LibrosClickablesIntefrace;
 
 public class Holder_Libro extends  RecyclerView.ViewHolder{
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     private ImageView Foto_libro,Favorit;
     private TextView nombre;
     private TextView hora;

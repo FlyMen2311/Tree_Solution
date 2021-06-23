@@ -26,36 +26,39 @@ import java.util.List;
 import java.util.Locale;
 
 public class UsuarioDAO {
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     private static UsuarioDAO usuarioDAO;
     private FirebaseDatabase database;
     private FirebaseStorage storage;
     private StorageReference storageReferenceFotoPerfil;
     private DatabaseReference referenceUsuarios;
 
-
+    //Interface devolver usuario
     public interface IDevolverUsuario{
         void devolverUsuario(LUsuario lUsuario);
         void devolverError(String mensajeError);
     }
+    //Interface devolver url foto
     public interface IDevolverUrlFoto{
         public void DevolverUrlFoto(String uri);
     }
 
-
+    //Singelton
     public static UsuarioDAO getInstance(){
         if(usuarioDAO==null){
             usuarioDAO=new UsuarioDAO();
         }
         return usuarioDAO;
     }
-
+    //Metodo Constructor
     public UsuarioDAO(){
         database=FirebaseDatabase.getInstance();
         referenceUsuarios= database.getReference(Constantes.NODO_USUARIOS);
         storage=FirebaseStorage.getInstance();
         storageReferenceFotoPerfil=storage.getReference("Fotos/FotoPerfil/"+getKeyUsuario());
     }
+
+    //Funcion que sirve para devolver key Usuario
     public void obtenerInformacionKey(final String key,final IDevolverUsuario iDevolverUsuario){
         referenceUsuarios.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -71,16 +74,19 @@ public class UsuarioDAO {
             }
         });
     }
-
+    //Funcion para devolver id current user
     public static String getKeyUsuario(){
         return FirebaseAuth.getInstance().getUid();
     }
+    //Funcion para devolver fecha de cracion de usuario
     public long fechaDeCreacion(){
      return  FirebaseAuth.getInstance().getCurrentUser().getMetadata().getCreationTimestamp();
     }
+    //Funcion para devolver hora de ultimo login producido
     public long fechaUltimoLogIn(){
         return  FirebaseAuth.getInstance().getCurrentUser().getMetadata().getLastSignInTimestamp();
     }
+    //Funcion para estblecer para todos los usuarios sin foto una foto por defecto
     public void DefaulFotoPerfil(){
         referenceUsuarios.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -107,6 +113,7 @@ public class UsuarioDAO {
         });
     }
 
+    //Funcion para cambiar foto Usuario
     public void cambiarFotoUri(Uri uri1,IDevolverUrlFoto iDevolverUrlFoto){
         String nombreFoto="";
         Date date=new Date();

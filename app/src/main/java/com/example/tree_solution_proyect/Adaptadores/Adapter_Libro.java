@@ -27,7 +27,7 @@ import java.util.List;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements Filterable {
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     public List<LLibro> listLibros=new ArrayList<>();
     public List<LLibro> listLibrosFilter=new ArrayList<>();
     private Context x;

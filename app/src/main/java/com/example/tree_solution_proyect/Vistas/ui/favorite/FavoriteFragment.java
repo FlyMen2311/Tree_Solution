@@ -47,7 +47,7 @@ import java.util.Map;
 
 
 public class FavoriteFragment extends Fragment {
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     private View vista;
     private RecyclerView recyclerView;
     private FirebaseDatabase database;
@@ -60,24 +60,16 @@ public class FavoriteFragment extends Fragment {
     private FirebaseAuth mAuth;
     public  boolean isFavorite;
 
-
+    //Llama a este metodo al crear View aqui es donde se inician todos los atributos(Metodo Constructor que returna la vista creada)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         vista =inflater.inflate(R.layout.fragment_favorite, container, false);
-
         recyclerView=vista.findViewById(R.id.recycler_favoritos);
-
         mAuth=FirebaseAuth.getInstance();
-
         database=FirebaseDatabase.getInstance();
         databaseReferenceLibrosFavoritos =database.getReference(Constantes.NODO_LIB_FAV).child(mAuth.getCurrentUser().getUid());
-
-
         storage= FirebaseStorage.getInstance();;
-
-
-
         adapter_favoritos=new Adapter_Favoritos(getActivity().getApplicationContext(), new LibroOpenFav(getActivity(),getContext()));
         LinearLayoutManager l=new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(l);
@@ -90,10 +82,7 @@ public class FavoriteFragment extends Fragment {
                 recyclerView.scrollToPosition(adapter_favoritos.getItemCount()-1);
             }
         });
-
-
-
-
+        //Gestion de Eventos producidos en Firebase sobre la tabla Favoritos
         databaseReferenceLibrosFavoritos.addChildEventListener(new ChildEventListener() {
             Map<String, LUsuario> stringLUsuarioMap=new HashMap<>();
 
@@ -163,7 +152,7 @@ public class FavoriteFragment extends Fragment {
 
 
     }
-
+    //Get y Set Adapter
     public Adapter_Favoritos getAdapter_libro() {
         return adapter_favoritos;
     }
@@ -171,7 +160,7 @@ public class FavoriteFragment extends Fragment {
     public void setAdapter_libro(Adapter_Favoritos adapter_favoritos) {
         this.adapter_favoritos = adapter_favoritos;
     }
-
+    //Llama al este metodo cuando se restablece nuestro View
     @Override
     public void onResume() {
         super.onResume();
@@ -188,6 +177,7 @@ public class FavoriteFragment extends Fragment {
             }
         }
     }
+    //Clase que gestiona evento producido al hacer click en el Libro Favorito
     public class LibroOpenFav  implements LibrosFavClickableInteface {
         Activity activity;
         Context context;
@@ -258,7 +248,7 @@ public class FavoriteFragment extends Fragment {
         }
     }
 
-
+    //Llama a este metodo cuando se finaliza un Fragmento
     @Override
     public void onDestroyView() {
         super.onDestroyView();

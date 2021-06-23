@@ -13,6 +13,7 @@ import com.example.tree_solution_proyect.Holders.Holder_Chats;
 import org.jetbrains.annotations.NotNull;
 
 public class RecyclerChatRemoveListener extends ItemTouchHelper.SimpleCallback {
+    //Instanciamos los atributos
     private IRecyclerChatRemoveListener iRecyclerChatRemoveListener;
 
 
