@@ -12,11 +12,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     private FirebaseAuth mAuth;
     Button entrar,registro;
 
-
+    //Metodo que se llama al crear dicha activity aqui es donde se inicializan todos los variables
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         registro=findViewById(R.id.btnregistro);
         registro.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,Registro.class)));
     }
+
+    //Metodo que se llama cuando el activity se reinicia
     @Override
     protected void onResume() {
         super.onResume();

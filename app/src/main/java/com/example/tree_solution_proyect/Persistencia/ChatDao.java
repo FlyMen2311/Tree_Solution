@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 public class ChatDao {
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     private static ChatDao chatDao;
     private FirebaseDatabase database;
     private DatabaseReference referenceChats;
@@ -32,24 +32,25 @@ public class ChatDao {
     private Libro chat;
     public ArrayList<LMensaje> lMensajes = new ArrayList<>();
     String res;
-
+    //Singelton
     public static ChatDao getInstance() {
         if (chatDao == null) {
             chatDao = new ChatDao();
         }
         return chatDao;
     }
-
+    //Metodo contructor
     public ChatDao() {
         database = FirebaseDatabase.getInstance();
         referenceChats = database.getReference(Constantes.NODO_CHATS);
         mAuth = FirebaseAuth.getInstance();
     }
+    //Interface Devolver Ultimo Mensaje
     public interface IDevolverUltimoMensaje{
         void DevolverUltimoMensaje(ArrayList<LMensaje> mensaje);
         void devolverError(String mensajeError);
     }
-
+    //Funcion para devolver ultimo mensaje producido en los chats
     public String getUltimoMensaje(String keyReceptor, String keyLibro, IDevolverUltimoMensaje iDevolverBooDevolverUltimoMensaje) {
 
         DatabaseReference reference = database.getReference(Constantes.NODO_CHATS).child(mAuth.getCurrentUser().getUid()).child(keyReceptor).child(keyLibro);

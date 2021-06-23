@@ -16,7 +16,7 @@ import com.example.tree_solution_proyect.Vistas.ui.perfil.MisLibrosVendidosClick
 import org.jetbrains.annotations.NotNull;
 
 public class Holder_MisLibros_Vendidos extends RecyclerView.ViewHolder {
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     private ImageView Foto_libro;
     private TextView nombre;
     private TextView hora;

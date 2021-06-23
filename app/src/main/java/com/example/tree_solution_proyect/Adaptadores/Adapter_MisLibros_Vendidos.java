@@ -26,7 +26,7 @@ import java.util.List;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class Adapter_MisLibros_Vendidos  extends RecyclerView.Adapter<Holder_MisLibros_Vendidos>{
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     public List<LLibro> listMisLibrosVendidos =new ArrayList<>();
     private Context x;
     private  MisLibrosVendidosActivity.LibroOpen libroOpen;

@@ -553,29 +553,18 @@ public class PerfilFragment extends Fragment {
                                                 if (task.isSuccessful()) {
                                                     startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
                                                     try {
-                                                        DatabaseReference databaseReference = database.getReference(Constantes.NODO_LIBROS);
-                                                        databaseReference.addValueEventListener(new ValueEventListener() {
-                                                            @Override
-                                                            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                                                                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                                                                    alibro = HomeFragment.adapter_libro;
-                                                                    LLibro lLibro = null;
-                                                                    for (int i = 0; i < alibro.getListLibros().size(); i ++ ) {
-                                                                        lLibro = alibro.getListLibros().get(i);
-                                                                        if(lLibro.getLibro().getUserKey().equals(key)) {
-                                                                            database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).removeValue();
-                                                                        }
-                                                                    }
-                                                                    databaseReferenceUsuario.removeValue();
-                                                                    databaseReferenceFavoritos.removeValue();
-                                                                }
+                                                        alibro = HomeFragment.adapter_libro;
+                                                        LLibro lLibro = null;
+                                                        for (int i = 0; i < alibro.getListLibros().size(); i ++ ) {
+                                                            lLibro = alibro.getListLibros().get(i);
+                                                            if(lLibro.getLibro().getUserKey().equals(key)) {
+                                                                database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).removeValue();
                                                             }
-
-                                                            @Override
-                                                            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-                                                                Toast.makeText(getActivity().getApplicationContext(), "Operacion cancelada", Toast.LENGTH_SHORT).show();
-                                                            }
-                                                        });
+                                                        }
+                                                        databaseReferenceUsuario.removeValue();
+                                                        databaseReferenceChat.removeValue();
+                                                        databaseReferenceDatosChat.removeValue();
+                                                        databaseReferenceFavoritos.removeValue();
 
                                                         database.getReference(Constantes.NODO_USUARIOS).child(key).removeValue();
                                                         Toast.makeText(getActivity().getApplicationContext(), "Usuario se ha borrado correctamente", Toast.LENGTH_SHORT).show();

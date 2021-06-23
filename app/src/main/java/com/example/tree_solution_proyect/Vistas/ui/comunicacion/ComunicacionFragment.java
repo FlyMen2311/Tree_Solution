@@ -56,7 +56,7 @@ import java.util.List;
 
 
 public class ComunicacionFragment extends Fragment implements RecyclerChatRemoveListener.IRecyclerChatRemoveListener {
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     public static Adapter_Chats adapter_chats;
     private RecyclerView recyclerView;
     private FirebaseDatabase database;
@@ -78,13 +78,11 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
 
 
 
-
+    //Llama a este metodo al crear View aqui es donde se inician todos los atributos(Metodo Constructor que returna la vista creada)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         vista =inflater.inflate(R.layout.layout_chats, container, false);
         recyclerView=vista.findViewById(R.id.recycler_chats);
-
-
        mAuth=FirebaseAuth.getInstance();
        dialog = new Dialog(getContext());
        dialog.setCanceledOnTouchOutside(false);
@@ -103,14 +101,16 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
 
             recyclerView.setAdapter(adapter_chats);
 
+            //Callback que se produce al desplazar a la izquierda un holder de RecyclerView
             ItemTouchHelper.SimpleCallback simpleCallback=new RecyclerChatRemoveListener(0,ItemTouchHelper.LEFT, this);
             new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
 
-              //Gestion de eventos producidos en FIREBASE
+              //Gestion de eventos producidos en Nodo datos chat usuario
                 databaseReferenceChatsUsuario.addChildEventListener(new ChildEventListener() {
                   private DataSnapshot receptorsnapshot;
                   private DataSnapshot librosnapshot;
                   private DataSnapshot emisorsnashot;
+
 
                   @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -137,6 +137,9 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
                 public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                    adapter_chats.notifyItemInserted(adapter_chats.getListChats().size());
                     adapter_chats.notifyItemChanged(adapter_chats.getListChats().size());
+                    adapter_chats.notifyDataSetChanged();
+                    recyclerView.refreshDrawableState();
+                    onResume();
                 }
 
                 @Override
@@ -171,7 +174,7 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
                     adapter_chats.notifyDataSetChanged();
                 }
             });
-
+             //Gestion de eventos producidos en Nodo chats que contiene todos los mensajes
              database.getReference(Constantes.NODO_CHATS).addChildEventListener(new ChildEventListener() {
                   @Override
                   public void onChildAdded(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
@@ -213,6 +216,7 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
         return vista;
         }
 
+//Llama al este metodo cuando se restablece nuestro View
     @Override
     public void onResume() {
         super.onResume();
@@ -229,7 +233,7 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
             }
         }
     }
-
+    //LLama al este metodo al producir evento en el holder al desplazar a la izquierda
     @Override
     public void onSwipe(RecyclerView.ViewHolder viewHolder, int dirrection, int position) {
 
@@ -264,6 +268,7 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
         dialog.show();
     }
 
+    //Clase que gestiona evento producido al hacer click en el chat
     public class ChatOpen  implements ChatClickableInterface {
         Activity activity;
         Context context;
@@ -318,7 +323,7 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
 
 
 
-
+//Llama a este metodo cuando se finaliza un Fragmento
     @Override
     public void onDestroyView() {
         super.onDestroyView();

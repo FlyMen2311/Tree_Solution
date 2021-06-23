@@ -28,7 +28,7 @@ import java.util.Locale;
 import javax.security.auth.callback.Callback;
 
 public class LibroDAO {
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     private static LibroDAO libroDAO;
     private FirebaseDatabase database;
     private FirebaseAuth mAuth;
@@ -39,13 +39,14 @@ public class LibroDAO {
     private Libro libro;
     public boolean isExist=false;
 
-
+    //Singelton
     public static LibroDAO getInstance() {
         if (libroDAO == null) {
             libroDAO = new LibroDAO();
         }
         return libroDAO;
     }
+    //Metodo Constructor
     public LibroDAO() {
         database = FirebaseDatabase.getInstance();
         mAuth=FirebaseAuth.getInstance();
@@ -53,15 +54,17 @@ public class LibroDAO {
         storage = FirebaseStorage.getInstance();
         storageReferenceFotoLibro = storage.getReference("Fotos/FotoLibros");
     }
-
+    //Interface para devolver boolean si existe un libro
     public interface IDevolverBooleanExist{
         void devolverExist(boolean isExist);
         void devolverError(String mensajeError);
     }
+    //Funcion para devolver key usuario
     public static String getKeyUsuario() {
         return FirebaseAuth.getInstance().getUid();
     }
 
+    //Funcion para cambiar foto de perfil
     public void cambiarFotoUri(Uri uri1, String key, UsuarioDAO.IDevolverUrlFoto iDevolverUrlFoto) {
         String nombreFoto = "";
         Date date = new Date();
@@ -91,13 +94,16 @@ public class LibroDAO {
         isExist = exist;
     }
 
+    //Funcion para crear librofavorito
     public void crearLibroFavorito(LLibro lLibro){
         database.getReference(Constantes.NODO_LIB_FAV).child(mAuth.getCurrentUser().getUid()).child(lLibro.getKey()).setValue(lLibro.getLibro());
     }
+    //Funcion para eliminar un libro
     public void eliminarLibroFavorito(LLibro lLibro){
         database.getReference(Constantes.NODO_LIB_FAV).child(mAuth.getCurrentUser().getUid()).child(lLibro.getKey()).removeValue();
     }
 
+    //Funcion para comprobar si existe un libro en favoritos
     public void libroExistFavoritos(LLibro lLibro, IDevolverBooleanExist iDevolverBooleanExist){
      DatabaseReference reference=database.getReference(Constantes.NODO_LIB_FAV).child(mAuth.getCurrentUser().getUid()).child(lLibro.getKey());
 

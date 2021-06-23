@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class LUsuario implements Serializable {
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     private Usuario usuario;
     private String key;
 

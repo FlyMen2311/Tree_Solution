@@ -28,7 +28,7 @@ import java.util.List;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class Adapter_Favoritos extends RecyclerView.Adapter<Holder_Favoritos>{
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     public List<LLibro> listLibros=new ArrayList<>();
     private Context x;
     private  FavoriteFragment.LibroOpenFav libroOpen;

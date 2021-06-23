@@ -32,7 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Login extends AppCompatActivity {
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     private static final int RC_SIGN_IN = 123 ;
     private static String tokenID;
     private EditText txtEmail, txtContracena;
@@ -47,7 +47,7 @@ public class Login extends AppCompatActivity {
     private Button btn_atras,btnEntrar;
     private String contracena,email;
 
-
+    //Metodo que se llama al crear dicha activity aqui es donde se inicializan todos los variables
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,8 +64,10 @@ public class Login extends AppCompatActivity {
         googleAut=findViewById(R.id.entrar_google);
         googleAut.setOnClickListener(v -> signIn());
         btn_atras = findViewById(R.id.btn_atrs);
+        //Gestion evento producido sobre button de atras
         btn_atras.setOnClickListener(v -> startActivity(new Intent(Login.this, MainActivity.class)));
         btnEntrar = findViewById(R.id.btnEntrar);
+        //Gestion evento producido sobre button de entrar
         btnEntrar.setOnClickListener(v -> {
             email = txtEmail.getText().toString();
             if (isValidEmail(email) && validContracena()) {
@@ -97,11 +99,11 @@ public class Login extends AppCompatActivity {
         });
         createRequest();
     }
-
+    //Metodo que sirve para comprobar si las credencias del email estan bien escritos
     public final static boolean isValidEmail(CharSequence charsequence) {
         return !TextUtils.isEmpty(charsequence) && Patterns.EMAIL_ADDRESS.matcher(charsequence).matches();
     }
-
+    //Metodo que sirve para comprobar si las credencias de la contraseña estan bien escritos
     public boolean validContracena() {
         String contrasena;
         contrasena = txtContracena.getText().toString();
@@ -111,7 +113,7 @@ public class Login extends AppCompatActivity {
             return false;
         }
     }
-
+   //Metodo que se llama cuando el activity se inicia
     @Override
     protected void onStart() {
         super.onStart();
@@ -121,7 +123,7 @@ public class Login extends AppCompatActivity {
             startActivity(new Intent(Login.this, AplicationActivity.class));
         }
     }
-
+    //Metodo que sirve para crear Request token para indetificacion con Google
     public void createRequest() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -130,23 +132,20 @@ public class Login extends AppCompatActivity {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
-
+    //Llama a este metodo al dar click de entrada con Google
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
-
+    //Gestion resultados producidos de Intent
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
-                // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-
                 mAuth.fetchSignInMethodsForEmail(account.getEmail())
                         .addOnCompleteListener(task1 -> {
                             boolean isNewUser = task1.getResult().getSignInMethods().isEmpty();
@@ -171,8 +170,8 @@ public class Login extends AppCompatActivity {
         }
     }
 
+    //Funcion de Autentificacion Firebase Google
     private void firebaseAuthWithGoogle(String idToken) {
-
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
@@ -193,6 +192,7 @@ public class Login extends AppCompatActivity {
                 });
 
     }
+    //Funcion para llamar al dialog de olvidar contraseña
     private void mostrarDialogOlvidarContrasena(){
         AlertDialog.Builder builder=new AlertDialog.Builder(Login.this);
         LayoutInflater inflater=getLayoutInflater();
@@ -232,7 +232,7 @@ public class Login extends AppCompatActivity {
         Button btnCancelar=view.findViewById(R.id.btn_cancelar);
         btnCancelar.setOnClickListener(v -> dialog.dismiss());
     }
-
+    //Get y Set de ID Google
     public static String getTokenID() {
         return tokenID;
     }

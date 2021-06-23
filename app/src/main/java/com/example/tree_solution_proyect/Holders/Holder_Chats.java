@@ -18,7 +18,7 @@ import com.example.tree_solution_proyect.Vistas.ui.comunicacion.ChatClickableInt
 import org.jetbrains.annotations.NotNull;
 
 public class Holder_Chats extends  RecyclerView.ViewHolder{
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     private ImageView Foto_libro_chat;
     private TextView name_libro_chat;
     private TextView ultimo_mensaje;

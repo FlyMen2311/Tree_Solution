@@ -8,7 +8,7 @@ import com.google.firebase.database.ServerValue;
 import java.io.Serializable;
 
 public class Libro implements Serializable {
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     private String FotoPrincipalUrl,categoria,descripcion,userKey,
             referenceStorage,ISBN,condition,autor,nombre, esVendido;
     private Double precio;

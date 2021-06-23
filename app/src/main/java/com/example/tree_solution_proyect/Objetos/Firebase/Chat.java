@@ -7,7 +7,7 @@ import com.google.firebase.database.ServerValue;
 import java.io.Serializable;
 
 public class Chat implements Serializable {
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     private String keyemisor;
     private String keyreceptor;
     private String keylibro;

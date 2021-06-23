@@ -13,7 +13,7 @@ import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.favorite.LibrosFavClickableInteface;
 
 public class Holder_Favoritos extends  RecyclerView.ViewHolder{
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     private ImageView Foto_libro;
     private ImageView Favorit;
     private TextView nombre;

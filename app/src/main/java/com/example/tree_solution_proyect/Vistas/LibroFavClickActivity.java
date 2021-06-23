@@ -34,7 +34,7 @@ import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
 public class LibroFavClickActivity extends AppCompatActivity {
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     private ImageView foto_libro;
     private ImageView favorit;
     private ImageView foto_libro_propietario;
@@ -63,6 +63,7 @@ public class LibroFavClickActivity extends AppCompatActivity {
     private Boolean isExist=false;
     private Boolean exist;
 
+    //Metodo que se llama al crear dicha activity aqui es donde se inicializan todos los variables
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,21 +101,7 @@ public class LibroFavClickActivity extends AppCompatActivity {
         mAuth=FirebaseAuth.getInstance();
         LoadLibros(Llibro);
 
-        favorit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(favorit.getBackground().getConstantState().equals(favorit.getContext().getDrawable(R.drawable.favorite).getConstantState())){
-                    favorit.setBackgroundResource(R.drawable.favorite_libro);
-                    LibroDAO.getInstance().crearLibroFavorito(Llibro);
-                }else if(favorit.getBackground().getConstantState().equals(favorit.getContext().getDrawable(R.drawable.favorite_libro).getConstantState())){
-                    LibroDAO.getInstance().eliminarLibroFavorito(Llibro);
-                    favorit.setBackgroundResource(R.drawable.favorite);
-                }
-            }
-        });
-
-
-
+        //Sacamos los datos del receptor
         DatabaseReference reference=database.getReference(Constantes.NODO_USUARIOS).child(Llibro.getLibro().getUserKey());
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -131,6 +118,7 @@ public class LibroFavClickActivity extends AppCompatActivity {
 
             }
         });
+        //Sacamos los datos del emisor
         DatabaseReference reference2=database.getReference(Constantes.NODO_USUARIOS).child(mAuth.getCurrentUser().getUid());
         reference2.addValueEventListener(new ValueEventListener() {
             @Override
@@ -147,7 +135,7 @@ public class LibroFavClickActivity extends AppCompatActivity {
 
             }
         });
-
+        //Gestion eventos producidos al pulsar button de chat
         btnchat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -213,7 +201,7 @@ public class LibroFavClickActivity extends AppCompatActivity {
                 });
             }
         });
-
+        //Gestion eventos producidos al pulsar button de volver
         btnVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -222,6 +210,7 @@ public class LibroFavClickActivity extends AppCompatActivity {
             }
         });
     }
+    //Funcion para cargar todos los datos del dicho libro y asignarlos a los atributos de la clase
     public void LoadLibros(LLibro libro){
         Picasso.with(getApplicationContext()).load(libro.getLibro().getFotoPrincipalUrl()).into(foto_libro);
         nombre.setText(libro.getLibro().getNombre());
@@ -265,7 +254,7 @@ public class LibroFavClickActivity extends AppCompatActivity {
             }
         });
     }
-
+    //Funcion para cargar datos chat se produce al clickear datos de chat
     public void cargarDatosChat(){
         DatabaseReference reference=database.getReference(Constantes.NODO_CHAT_DATOS).
                 child(mAuth.getCurrentUser().getUid()).
@@ -314,7 +303,7 @@ public class LibroFavClickActivity extends AppCompatActivity {
     }
 
 
-
+    //Funcion de comprobacion de datos de libro para iniciar el chat
     public boolean comprobarDatos(){
         Boolean apto=false;
         if((lemisor!=null)&&(lreceptor!=null)&&(Llibro!=null)) {
@@ -338,6 +327,7 @@ public class LibroFavClickActivity extends AppCompatActivity {
         }
         return  apto;
     }
+    //Funcion para comparacion de dos chats
     public boolean compararChats(Chat chat1,Chat chat2){
         boolean isigual=false;
 
