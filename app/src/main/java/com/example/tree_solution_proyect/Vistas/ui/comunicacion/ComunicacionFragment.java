@@ -98,7 +98,6 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
             adapter_chats=new Adapter_Chats(getActivity().getApplicationContext(),new ChatOpen(getActivity(),getContext()));
             LinearLayoutManager l=new LinearLayoutManager(getActivity().getApplicationContext());
             recyclerView.setLayoutManager(l);
-
             recyclerView.setAdapter(adapter_chats);
 
             //Callback que se produce al desplazar a la izquierda un holder de RecyclerView

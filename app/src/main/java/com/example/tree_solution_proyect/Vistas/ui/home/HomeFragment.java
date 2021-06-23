@@ -62,7 +62,7 @@ import java.util.Map;
 
 
 public class HomeFragment extends Fragment {
-    //Inicializamos los atributos
+    //Instanciamos los atributos
     private RecyclerView recyclerView;
     private FirebaseDatabase database;
     private DatabaseReference databaseReferenceLibro;
@@ -90,7 +90,7 @@ public class HomeFragment extends Fragment {
 
         vista =inflater.inflate(R.layout.fragment_home, container, false);
 
-        recyclerView=vista.findViewById(R.id.recycler_home);
+
         buscar_librosISBN=vista.findViewById(R.id.buscar_libro_isbn);
         mAuth=FirebaseAuth.getInstance();
 
@@ -105,6 +105,7 @@ public class HomeFragment extends Fragment {
         adapter_libro=new Adapter_Libro(getContext(),new LibroOpen(getActivity(),getContext()));
         adapter_libro.setHasStableIds(true);
 
+        recyclerView=vista.findViewById(R.id.recycler_home);
         recyclerView.setHasTransientState(true);
         l=new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(l);
