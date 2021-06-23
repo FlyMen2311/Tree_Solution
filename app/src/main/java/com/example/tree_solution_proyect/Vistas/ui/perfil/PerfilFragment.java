@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment;
 import com.example.tree_solution_proyect.Adaptadores.Adapter_Chats;
 import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
 import com.example.tree_solution_proyect.Objetos.Constantes;
+import com.example.tree_solution_proyect.Objetos.Firebase.Chat;
 import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
 import com.example.tree_solution_proyect.Objetos.Firebase.Usuario;
 import com.example.tree_solution_proyect.Objetos.Logica.LChat;
@@ -80,7 +81,7 @@ public class PerfilFragment extends Fragment {
     private FirebaseDatabase database;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReferenceUsuario,databaseReferenceChat,
-            databaseReferenceDatosChat;
+            databaseReferenceDatosChat,databaseReferenceFavoritos;
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private Dialog myDialog, myDialogResetPass;
@@ -170,6 +171,8 @@ public class PerfilFragment extends Fragment {
                 .getCurrentUser().getUid());
         databaseReferenceChat = database.getReference(Constantes.NODO_CHATS+"/"+mAuth.getCurrentUser().getUid());
         databaseReferenceDatosChat = database.getReference(Constantes.NODO_CHAT_DATOS+"/"+mAuth.getCurrentUser().getUid());
+        databaseReferenceFavoritos=database.getReference(Constantes.NODO_LIB_FAV).child(mAuth.getCurrentUser().getUid());
+
         databaseReferenceUsuario.addValueEventListener(new ValueEventListener() {
 
             @Override
@@ -498,6 +501,7 @@ public class PerfilFragment extends Fragment {
                                                                     databaseReferenceUsuario.removeValue();
                                                                     databaseReferenceChat.removeValue();
                                                                     databaseReferenceDatosChat.removeValue();
+                                                                    databaseReferenceFavoritos.removeValue();
 
                                                                 }
                                                                 else{
@@ -550,18 +554,52 @@ public class PerfilFragment extends Fragment {
                                                             @Override
                                                             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                                                                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                                                                    final Libro m = snapshot1.getValue(Libro.class);
-                                                                    final LLibro lLibro = new LLibro(m, snapshot1.getKey());
-
-                                                                    if (lLibro.getLibro().getUserKey().equals(key)) {
-                                                                        database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).removeValue();
+                                                                    alibro = HomeFragment.adapter_libro;
+                                                                    LLibro lLibro = null;
+                                                                    for (int i = 0; i < alibro.getListLibros().size(); i ++ ) {
+                                                                        lLibro = alibro.getListLibros().get(i);
+                                                                        if(lLibro.getLibro().getUserKey().equals(key)) {
+                                                                            database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).removeValue();
+                                                                        }
                                                                     }
+                                                                    databaseReferenceUsuario.removeValue();
+                                                                    databaseReferenceFavoritos.removeValue();
                                                                 }
                                                             }
 
                                                             @Override
                                                             public void onCancelled(@NonNull @NotNull DatabaseError error) {
                                                                 Toast.makeText(getActivity().getApplicationContext(), "Operacion cancelada", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        });
+                                                        database.getReference(Constantes.NODO_CHAT_DATOS).addValueEventListener(new ValueEventListener() {
+                                                            private DataSnapshot receptorsnapshot;
+                                                            private DataSnapshot librosnapshot;
+                                                            private DataSnapshot emisorsnashot;
+                                                            private String keyreceptor;
+                                                            private String keyemisor;
+                                                            @Override
+                                                            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                                                                for(DataSnapshot emisorsnashot:snapshot.getChildren()){
+                                                                    this.emisorsnashot=emisorsnashot;
+                                                                    keyemisor=emisorsnashot.getKey();
+                                                                    for(DataSnapshot receptorsnapshot:emisorsnashot.getChildren()){
+                                                                        keyreceptor=receptorsnapshot.getKey();
+
+                                                                        if((keyemisor.equals(key))||(keyreceptor.equals(key))){
+                                                                            database.getReference(Constantes.NODO_CHAT_DATOS).child(keyemisor).removeValue();
+                                                                            database.getReference(Constantes.NODO_CHAT_DATOS).child(keyreceptor).removeValue();
+                                                                            database.getReference(Constantes.NODO_CHATS).child(keyemisor).removeValue();
+                                                                            database.getReference(Constantes.NODO_CHATS).child(keyreceptor).removeValue();
+                                                                        }
+                                                                    }
+                                                                }
+
+                                                            }
+
+                                                            @Override
+                                                            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
                                                             }
                                                         });
                                                         database.getReference(Constantes.NODO_USUARIOS).child(key).removeValue();

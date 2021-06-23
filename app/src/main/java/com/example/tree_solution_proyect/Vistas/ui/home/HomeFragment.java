@@ -246,10 +246,11 @@ public class HomeFragment extends Fragment {
             adapter_libro.notifyDataSetChanged();
         }
     });
-                cont--;
-                adapter_libro.setNumItems(cont);
+
                 adapter_libro.getListLibros().remove(posicion);
                 adapter_libro.getListLibrosAll().remove(posicion);
+                cont--;
+                adapter_libro.setNumItems(cont);
                 adapter_libro.notifyItemRemoved(posicion);
 
             }
