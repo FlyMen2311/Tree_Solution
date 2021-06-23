@@ -308,7 +308,7 @@ public class HomeFragment extends Fragment {
             }
         }
     }
-
+    //Clase que gestiona evento producido al hacer click en el Libro
     public class LibroOpen  implements LibrosClickablesIntefrace {
         Activity activity;
         Context context;
