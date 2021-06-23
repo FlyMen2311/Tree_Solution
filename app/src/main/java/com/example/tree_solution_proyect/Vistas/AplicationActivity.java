@@ -187,7 +187,7 @@ public class AplicationActivity extends AppCompatActivity {
         try {
             FragmentTransaction transaction=fragmentManager.beginTransaction();
             transaction.replace(R.id.nav_host_fragment_activity_aplication2, fragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).addToBackStack(null)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     .commitAllowingStateLoss();
         }catch (Exception e){
             Toast.makeText(fragment.getContext(), e.getMessage(),Toast.LENGTH_LONG).show();
@@ -233,7 +233,6 @@ public class AplicationActivity extends AppCompatActivity {
                         databaseReferenceLibro.child(mGroupId).setValue(libro);
                         Toast.makeText(getApplicationContext(), "Libro se subío correcto", Toast.LENGTH_SHORT).show();
                         myDialog.dismiss();
-
                     } else {
                         Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                     }

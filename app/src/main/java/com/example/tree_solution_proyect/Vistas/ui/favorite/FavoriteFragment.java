@@ -4,13 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -21,8 +17,6 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,10 +29,6 @@ import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.LibroClickActivity;
 import com.example.tree_solution_proyect.Vistas.Login;
-import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
-import com.example.tree_solution_proyect.Vistas.ui.home.LibrosClickablesIntefrace;
-import com.example.tree_solution_proyect.databinding.FragmentFavoriteBinding;
-import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -47,25 +37,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.zip.Inflater;
 
 
 public class FavoriteFragment extends Fragment {
     private View vista;
     private RecyclerView recyclerView;
     private FirebaseDatabase database;
-    private DatabaseReference databaseReferenceLibro;
+    private DatabaseReference databaseReferenceLibrosFavoritos;
 
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -85,7 +70,7 @@ public class FavoriteFragment extends Fragment {
         mAuth=FirebaseAuth.getInstance();
 
         database=FirebaseDatabase.getInstance();
-        databaseReferenceLibro =database.getReference(Constantes.NODO_LIB_FAV).child(mAuth.getCurrentUser().getUid());
+        databaseReferenceLibrosFavoritos =database.getReference(Constantes.NODO_LIB_FAV).child(mAuth.getCurrentUser().getUid());
 
 
         storage= FirebaseStorage.getInstance();;
@@ -108,7 +93,7 @@ public class FavoriteFragment extends Fragment {
 
 
 
-        databaseReferenceLibro.addChildEventListener(new ChildEventListener() {
+        databaseReferenceLibrosFavoritos.addChildEventListener(new ChildEventListener() {
             Map<String, LUsuario> stringLUsuarioMap=new HashMap<>();
 
             @Override

@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tree_solution_proyect.Adaptadores.Adapter_Libro;
 import com.example.tree_solution_proyect.Objetos.Constantes;
 import com.example.tree_solution_proyect.Persistencia.LibroDAO;
+import com.example.tree_solution_proyect.Vistas.AplicationActivity;
 import com.example.tree_solution_proyect.Vistas.LibroClickActivity;
 import com.example.tree_solution_proyect.Objetos.Firebase.Libro;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
@@ -78,6 +80,7 @@ public class HomeFragment extends Fragment {
     private boolean isFavorite;
     public View vista;
     private  LinearLayoutManager l;
+    int cont;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -131,6 +134,9 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
+
+
         databaseReferenceLibro.addChildEventListener(new ChildEventListener() {
             Map<String, LUsuario> stringLUsuarioMap=new HashMap<>();
 
@@ -138,10 +144,14 @@ public class HomeFragment extends Fragment {
             public void onChildAdded(@NonNull @NotNull DataSnapshot snapshot,
                                      @Nullable @org.jetbrains.annotations.Nullable
                                              String previousChildName) {
-                final Libro m = snapshot.getValue(Libro.class);
-                final LLibro lLibro = new LLibro(m, snapshot.getKey());
+               int controlador=0;
+                if(controlador==0) {
+                    cont++;
+                    Log.i("add", "Anadiendo" + cont);
+                    final Libro m = snapshot.getValue(Libro.class);
+                    final LLibro lLibro = new LLibro(m, snapshot.getKey());
 
-                if(lLibro.getLibro().getEsVendido().equals("No")) {
+                    if (lLibro.getLibro().getEsVendido().equals("No")) {
                         final int posicion = adapter_libro.addLibro(lLibro);//listFilter
                         adapter_libro.addLibroAll(lLibro);//listAll
 
@@ -164,15 +174,16 @@ public class HomeFragment extends Fragment {
                             });
                         }
 
-                }
+                    }
 
-                       adapter_libro.notifyDataSetChanged();
-                  
+                    adapter_libro.notifyDataSetChanged();
+                    controlador++;
+                }
             }
 
             @Override
             public void onChildChanged(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
-                adapter_libro.notifyDataSetChanged();
+                AplicationActivity.addFragment(new HomeFragment());
             }
 
             @Override

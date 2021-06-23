@@ -133,7 +133,7 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
             }
         }
         holder.getHora().setText(lLibro.obtenerFechaDeCreacionLibro());
-        holder.setIsRecyclable(true);
+
 
 
             }catch (Exception exception){
