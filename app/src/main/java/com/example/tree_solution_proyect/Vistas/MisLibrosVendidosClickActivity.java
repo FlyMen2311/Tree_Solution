@@ -139,7 +139,7 @@ public class MisLibrosVendidosClickActivity extends AppCompatActivity {
         });
 
     }
-
+    /*cargamos los datos del libro*/
     public void LoadLibros(LLibro libro){
         Picasso.with(getApplicationContext()).load(libro.getLibro().getFotoPrincipalUrl()).into(foto_libro);
         nombre.setText(libro.getLibro().getNombre());
@@ -195,6 +195,9 @@ public class MisLibrosVendidosClickActivity extends AppCompatActivity {
         }
     }
 
+    /*Cuando queremos eliminar un libro saldrá un dialogo para comprobar
+    * de que lo queremos hacer seguramente y mediante una confirmación
+    * borramos el libro*/
     class btnEliminar implements View.OnClickListener {
 
         @Override

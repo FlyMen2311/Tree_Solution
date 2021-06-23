@@ -96,6 +96,9 @@ public class MisLibrosVendidosActivity extends AppCompatActivity {
             }
         });
 
+        /*cargamos los datos comprobando si es vendido o no, si es vendido libros
+        * estarán mostrados mediante este médoto y después actualizados si se vende
+        * algun libro nuevo*/
         databaseReferenceLibro.addChildEventListener(new ChildEventListener() {
             Map<String, LUsuario> stringLUsuarioMap=new HashMap<>();
             @Override
@@ -154,6 +157,8 @@ public class MisLibrosVendidosActivity extends AppCompatActivity {
 
     }
 
+    /*el metodo se llama cuando damos click al holder para después mediante
+    * transacción pasar los datos desde holder y abrir un nuevo intent*/
     public class LibroOpen  implements MisLibrosVendidosClickableInterface {
         Activity activity;
         Context context;

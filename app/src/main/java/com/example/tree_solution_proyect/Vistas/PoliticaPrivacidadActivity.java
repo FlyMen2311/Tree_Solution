@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tree_solution_proyect.R;
 
+/*solamente para mostrar el layout*/
 public class PoliticaPrivacidadActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

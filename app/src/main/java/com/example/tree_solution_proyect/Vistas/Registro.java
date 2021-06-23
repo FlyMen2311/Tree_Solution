@@ -55,6 +55,9 @@ public class Registro extends AppCompatActivity {
         registro= (Button) findViewById(R.id.btnRegistro);
         registro.setOnClickListener(new View.OnClickListener() {
             @Override
+            /*Cuando pulsamos el botón de registrar se realiza un comprobación de
+            * que el email no esta en bd ya, si no esta realizamos la registración con los
+            * datos introducidos si no saldra un Toast marcando el problema*/
             public void onClick(View v) {
                 String email=txtCorreo.getText().toString();
                 String nombre=txtNombre.getText().toString();
@@ -103,10 +106,12 @@ public class Registro extends AppCompatActivity {
 
 
     }
-
+    /*comprobamos el formato del email*/
     public final static boolean isValidEmail(CharSequence charsequence){
         return !TextUtils.isEmpty(charsequence) && Patterns.EMAIL_ADDRESS.matcher(charsequence).matches();
     }
+
+    /*comprobamos que contraseñas son correctas*/
     public boolean validContracena(){
         String contrasena,contrasenarepetida;
         contrasena=txtContraseña.getText().toString();

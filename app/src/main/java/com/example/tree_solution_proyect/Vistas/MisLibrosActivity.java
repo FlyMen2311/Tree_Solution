@@ -102,6 +102,7 @@ public class MisLibrosActivity extends AppCompatActivity {
         databaseReferenceLibro.addChildEventListener(new ChildEventListener() {
             Map<String, LUsuario> stringLUsuarioMap=new HashMap<>();
             @Override
+            /*para actualizar los datos en manera dinamica cuando se añade otro holder(objeto)*/
             public void onChildAdded(@NonNull @NotNull DataSnapshot snapshot,
                                      @Nullable @org.jetbrains.annotations.Nullable
                                              String previousChildName) {
@@ -181,6 +182,8 @@ public class MisLibrosActivity extends AppCompatActivity {
             this.context = context;
         }
 
+        /*recojemos los datos del holder y mediante transacción habrimos
+        * mis libros click activity mediante una transacción*/
         @Override
         public void MisLibrosClick(int pos, ImageView imgcontainer, ImageView fotoLibro,
                                TextView nombre, TextView autor, TextView precio, TextView ISBN,
