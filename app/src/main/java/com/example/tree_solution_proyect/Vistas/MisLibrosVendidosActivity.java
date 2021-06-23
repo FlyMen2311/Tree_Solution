@@ -46,6 +46,7 @@ import java.util.Map;
 
 
 public class MisLibrosVendidosActivity extends AppCompatActivity {
+    //Inicializamos los atributos
     private RecyclerView recyclerView;
     private FirebaseDatabase database;
     private FirebaseAuth mAuth;
@@ -53,7 +54,6 @@ public class MisLibrosVendidosActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     private Adapter_MisLibros_Vendidos adapter_misLibros_vendidoss;
     private ImageView atras;
-
     private String currentUserKey;
 
 

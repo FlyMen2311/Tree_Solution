@@ -28,22 +28,23 @@ import java.util.List;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class Adapter_Favoritos extends RecyclerView.Adapter<Holder_Favoritos>{
+    //Inicializamos los atributos
     public List<LLibro> listLibros=new ArrayList<>();
     private Context x;
     private  FavoriteFragment.LibroOpenFav libroOpen;
     public boolean isFavorite=false;
-
+    //Metodo Constructor
     public Adapter_Favoritos(Context x, FavoriteFragment.LibroOpenFav libroOpen) {
         this.x = x;
         this.libroOpen=libroOpen;
     }
-
+    //Metodo que sirve para actualizar un Libro Favorito
     public void actualizarLibro(int posicion,LLibro lLibro){
         listLibros.set(posicion,lLibro);
         notifyItemChanged(posicion);
     }
 
-
+    //Llama a este metodo cada vez cuando se esta creando el Holder para vincularlos
     @NonNull
     @NotNull
     @Override
@@ -57,8 +58,7 @@ public class Adapter_Favoritos extends RecyclerView.Adapter<Holder_Favoritos>{
 
 
 
-
-    @Override
+    //Llama a este metodo para vincular holder con los datos asociados    @Override
     public void onBindViewHolder(@NonNull @NotNull Holder_Favoritos holder, int position) {
 
         LLibro lLibro=listLibros.get(position);
@@ -138,26 +138,26 @@ public class Adapter_Favoritos extends RecyclerView.Adapter<Holder_Favoritos>{
 
     }
 
-
+    //Metodo que sirve para devolver Lista de Libros Favoritos
     public List<LLibro> getListLibros() {
         return listLibros;
     }
 
-
+    //Get booleano
     public boolean isFavorite() {
         return isFavorite;
     }
-
+    //Set booleano
     public void setFavorite(boolean favorite) {
         isFavorite = favorite;
     }
-
+    //Metodo que sirve para devolver numero de holders creados
     @Override
     public int getItemCount() {
         return listLibros.size();
     }
 
-    //En este metodo añdimos el Libro creado a nuestra lista y notificamos a nuestro activity
+    //En este metodo añadimos el Libro creado a nuestra lista y notificamos a nuestro activity
     public int addLibro(LLibro lLibro){
         listLibros.add(lLibro);
         int posicion=listLibros.size()-1;

@@ -16,8 +16,8 @@
     </string-array>
 
     <string-array name="category">
-        <item>Primaría</item>
-        <item>Segundaría</item>
+        <item>Primaria</item>
+        <item>Secundaria</item>
         <item>Bachillerato</item>
     </string-array>
 </resources>

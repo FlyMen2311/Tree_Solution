@@ -13,6 +13,7 @@ import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.home.LibrosClickablesIntefrace;
 
 public class Holder_Libro extends  RecyclerView.ViewHolder{
+    //Inicializamos los atributos
     private ImageView Foto_libro,Favorit;
     private TextView nombre;
     private TextView hora;
@@ -28,7 +29,7 @@ public class Holder_Libro extends  RecyclerView.ViewHolder{
     private ImageView containerLibro;
     private LibrosClickablesIntefrace librosClickablesIntefrace1;
 
-
+    //Metodo Constructor de holder,es donde se hacen todas las vinculasiones con layout
     public Holder_Libro(@NonNull View itemView ,LibrosClickablesIntefrace librosClickablesIntefrace) {
         super(itemView);
         context=itemView.getContext();
@@ -60,7 +61,7 @@ public class Holder_Libro extends  RecyclerView.ViewHolder{
             }
         });
     }
-
+    //Seters y Geters
     public ImageView getFavorit() {
         return Favorit;
     }

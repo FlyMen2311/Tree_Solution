@@ -57,6 +57,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MisLibrosClickActivity extends AppCompatActivity {
+    //Inicializamos los atributos
     private ImageView foto_libro;
     private ImageView foto_libro_propietario;
     private TextView  nombre_libro_propietario;

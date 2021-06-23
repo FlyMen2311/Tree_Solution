@@ -27,26 +27,25 @@ import java.util.List;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class Adapter_MisLibros extends RecyclerView.Adapter<Holder_MisLibros> {
+    //Inicializamos los atributos
     public List<LLibro> listMisLibros =new ArrayList<>();
     private Context x;
     private  MisLibrosActivity.LibroOpen libroOpen;
     public boolean isFavorite=false;
-
+    //Metodo Constructor
     public Adapter_MisLibros(Context x, MisLibrosActivity.LibroOpen libroOpen) {
         this.x = x;
 
         this.libroOpen=libroOpen;
     }
 
-
-
-
+    //Metodo que sirve para actualizar Mis Libros
     public void actualizarLibro(int posicion,LLibro lLibro){
         listMisLibros.set(posicion,lLibro);
         notifyItemChanged(posicion);
     }
 
-
+    //Llama a este metodo cada vez cuando se esta creando el Holder para vincularlos
     @NonNull
     @NotNull
     @Override
@@ -55,7 +54,7 @@ public class Adapter_MisLibros extends RecyclerView.Adapter<Holder_MisLibros> {
 
         return new Holder_MisLibros(v, libroOpen);
     }
-
+    //Llama a este metodo para vincular holder con los datos asociados
     @Override
     public void onBindViewHolder(@NonNull @NotNull Holder_MisLibros holder, int position) {
 

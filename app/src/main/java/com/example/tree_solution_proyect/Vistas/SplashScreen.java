@@ -7,7 +7,7 @@ import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tree_solution_proyect.R;
-
+//Clase para mostrar SplashScreen en primer lugar al abrir la aplicacion
 public class SplashScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -25,16 +25,16 @@ import java.util.List;
 import java.util.Locale;
 
 public class Adapter_mensaje extends RecyclerView.Adapter<HolderMensaje> {
-
+    //Inicializamos los atributos
    private List<LMensaje> listMensaje=new ArrayList<>();
    private Context x;
    private ChatsClick chatsClick=new ChatsClick();;
 
-
+    //Metodo constructor
    public Adapter_mensaje(Context x){
        this.x=x;
    }
-
+    //Metodo que sirve para actualizar los mensajes
    public void actualizarMensaje(int posicion,LMensaje lMensaje){
        listMensaje.set(posicion,lMensaje);
        notifyItemChanged(posicion);

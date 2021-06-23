@@ -73,6 +73,7 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class PerfilFragment extends Fragment {
+    //Inicializamos los atributos
     private TextView salir,userName,textViewResetPass;
     private ImageView FotoCambioPerfil;
     private FirebaseDatabase database;

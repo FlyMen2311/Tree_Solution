@@ -27,6 +27,7 @@ import java.util.List;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements Filterable {
+    //Inicializamos los atributos
     public List<LLibro> listLibros=new ArrayList<>();
     public List<LLibro> listLibrosFilter=new ArrayList<>();
     private Context x;
@@ -34,19 +35,19 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
     public ISBNFilter isbnFilter;
     private int numItems;
     public boolean isFavorite=false;
-
+    //Metodo constructor
     public Adapter_Libro(Context x,HomeFragment.LibroOpen libroOpen) {
         this.x = x;
         isbnFilter=new ISBNFilter(this);
         this.libroOpen=libroOpen;
         numItems=listLibrosFilter.size();
     }
-
+    //Metodo que sirve para actualizar un Libro
     public void actualizarLibro(int posicion,LLibro lLibro){
         listLibrosFilter.set(posicion,lLibro);
         notifyItemChanged(posicion);
     }
-
+    //Llama a este metodo cada vez cuando se esta creando el Holder para vincularlos
     @NonNull
     @NotNull
     @Override
@@ -55,6 +56,7 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
         View v= LayoutInflater.from(x).inflate(R.layout.layout_holder_libro,parent,false);
         return new Holder_Libro(v, libroOpen);
     }
+    //Llama a este metodo para vincular holder con los datos asociados
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull Holder_Libro holder, int position) {
@@ -143,31 +145,32 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
             }
 
     }
-
+    //Gets de Listas
     public List<LLibro> getListLibros() {
         return listLibrosFilter;
     }
     public List<LLibro> getListLibrosAll() {
         return listLibros;
     }
+    //Set Lista
     public void setListLibros(List<LLibro> listLibros) {
         this.listLibrosFilter = listLibros;
     }
-
+    //Get boolean
     public boolean isFavorite() {
         return isFavorite;
     }
-
+    //Set boolean
     public void setFavorite(boolean favorite) {
         isFavorite = favorite;
     }
-
+    //Metodo que sirve para devolver numero de holders creados
     @Override
     public int getItemCount() {
         return numItems;
     }
 
-    //En este metodo añdimos el Libro creado a nuestra lista y notificamos a nuestro activity
+    //En este metodo añadimos el Libro creado a nuestra lista y notificamos a nuestro activity
     public int addLibro(LLibro lLibro){
 
         int posicion=0;
@@ -179,16 +182,18 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
 
         return posicion;
     }
+    //En este metodo añadimos el Libro creado a nuestra lista
     public void addLibroAll(LLibro Libro){
         this.listLibros.add(Libro);
     }
 
-
+    //En este metodo devolvemos filter asignado al nuestro adapter
     @Override
     public Filter getFilter() {
         return isbnFilter;
     }
 
+    //Clase Filter donde controlamos nuestro filter y sus eventos
     public class ISBNFilter extends Filter {
         private Adapter_Libro listAdapter;
 
@@ -215,6 +220,7 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
             }
             results.values = listLibrosFilter;
             results.count = listLibrosFilter.size();
+            setNumItems(listLibrosFilter.size());
             return results;
         }
 
@@ -223,6 +229,7 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
             this.listAdapter.notifyDataSetChanged();
         }
     }
+
 
     @Override
     public void setHasStableIds(boolean hasStableIds) {
@@ -237,7 +244,7 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
     public int getItemViewType(int position) {
         return position;
     }
-
+    //Metodo que sirve para establecer numero de holders creados y asignados al nuestro adapter
    public void setNumItems(int numItems){
         this.numItems = numItems;
     }

@@ -7,21 +7,22 @@ import com.google.firebase.database.ServerValue;
 import java.io.Serializable;
 
 public class Chat implements Serializable {
+    //Inicializamos los atributos
     private String keyemisor;
     private String keyreceptor;
     private String keylibro;
-
     private String FotoPrincipalUrl;
     private String nombrelibro;
     private String nombrePropietario;
     private String nombreUser;
     private Object createTimestamp;
 
-
+    //Metodo constructor
     public Chat() {
         createTimestamp = ServerValue.TIMESTAMP;
     }
 
+    //Seters y Geters
     public Object getCreateTimestamp() {
         return createTimestamp;
     }

@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MisLibrosVendidosClickActivity extends AppCompatActivity {
+    //Inicializamos los atributos
     private ImageView foto_libro;
     private ImageView favorit;
     private ImageView foto_libro_propietario;

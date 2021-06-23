@@ -8,16 +8,19 @@ import com.google.firebase.database.ServerValue;
 import java.io.Serializable;
 
 public class Libro implements Serializable {
+    //Inicializamos los atributos
     private String FotoPrincipalUrl,categoria,descripcion,userKey,
             referenceStorage,ISBN,condition,autor,nombre, esVendido;
     private Double precio;
     private Object createTimestamp;
 
 
-
+    //Metodo constructor
     public Libro() {
         createTimestamp = ServerValue.TIMESTAMP;
     }
+
+    //Seters y Geters
     public String getUserKey() {
         return userKey;
     }

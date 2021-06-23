@@ -32,6 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Login extends AppCompatActivity {
+    //Inicializamos los atributos
     private static final int RC_SIGN_IN = 123 ;
     private static String tokenID;
     private EditText txtEmail, txtContracena;

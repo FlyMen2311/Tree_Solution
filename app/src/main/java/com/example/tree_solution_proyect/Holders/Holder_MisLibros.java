@@ -13,6 +13,7 @@ import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.perfil.MisLibrosClickablesIntefrace;
 
 public class Holder_MisLibros extends  RecyclerView.ViewHolder{
+    //Inicializamos los atributos
     private ImageView Foto_libro;
     private TextView nombre;
     private TextView hora;
@@ -27,7 +28,7 @@ public class Holder_MisLibros extends  RecyclerView.ViewHolder{
     private ImageView containerLibro;
     private MisLibrosClickablesIntefrace librosClickablesIntefrace1;
 
-
+    //Metodo Constructor de holder,es donde se hacen todas las vinculasiones con layout
     public Holder_MisLibros(@NonNull View itemView , MisLibrosClickablesIntefrace librosClickablesIntefrace) {
         super(itemView);
         context=itemView.getContext();
@@ -52,7 +53,7 @@ public class Holder_MisLibros extends  RecyclerView.ViewHolder{
                 categoria,ratingBar,
                 condition,hora));
     }
-
+    //Seters y Geters
     public TextView getHora() {
         return hora;
     }

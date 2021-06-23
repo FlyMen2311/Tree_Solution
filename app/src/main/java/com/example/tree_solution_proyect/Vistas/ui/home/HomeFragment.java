@@ -62,7 +62,7 @@ import java.util.Map;
 
 
 public class HomeFragment extends Fragment {
-
+    //Inicializamos los atributos
     private RecyclerView recyclerView;
     private FirebaseDatabase database;
     private DatabaseReference databaseReferenceLibro;

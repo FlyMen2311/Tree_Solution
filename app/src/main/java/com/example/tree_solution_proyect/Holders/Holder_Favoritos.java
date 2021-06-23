@@ -13,9 +13,7 @@ import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.ui.favorite.LibrosFavClickableInteface;
 
 public class Holder_Favoritos extends  RecyclerView.ViewHolder{
-
-
-
+    //Inicializamos los atributos
     private ImageView Foto_libro;
     private ImageView Favorit;
     private TextView nombre;
@@ -30,7 +28,7 @@ public class Holder_Favoritos extends  RecyclerView.ViewHolder{
     private ImageView containerLibro;
     private LibrosFavClickableInteface librosFavClickableInteface;
 
-
+    //Metodo Constructor de holder,es donde se hacen todas las vinculasiones con layout
     public Holder_Favoritos(@NonNull View itemView , LibrosFavClickableInteface librosFavClickableInteface) {
         super(itemView);
         context=itemView.getContext();
@@ -63,7 +61,7 @@ public class Holder_Favoritos extends  RecyclerView.ViewHolder{
             }
         });
     }
-
+    //Seters y Geters
     public ImageView getFoto_libro() {
         return Foto_libro;
     }

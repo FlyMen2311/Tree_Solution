@@ -10,10 +10,12 @@ public class Mensaje implements  Serializable{
     private String mensaje,userKey;
     private Object createTimestamp;
 
-    //Metodo constructor vacio
+    //Metodo constructor
     public Mensaje(){
         createTimestamp = ServerValue.TIMESTAMP;
         }
+
+    //Seters y Geters
     public String getMensaje() {
         return mensaje;
     }

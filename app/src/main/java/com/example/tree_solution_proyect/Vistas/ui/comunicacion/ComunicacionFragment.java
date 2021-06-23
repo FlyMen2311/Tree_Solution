@@ -34,6 +34,7 @@ import com.example.tree_solution_proyect.Objetos.Logica.LChat;
 import com.example.tree_solution_proyect.Objetos.Logica.LLibro;
 import com.example.tree_solution_proyect.R;
 
+import com.example.tree_solution_proyect.Vistas.AplicationActivity;
 import com.example.tree_solution_proyect.Vistas.ChatsClick;
 import com.example.tree_solution_proyect.Vistas.Login;
 import com.example.tree_solution_proyect.Vistas.ui.perfil.PerfilFragment;
@@ -46,15 +47,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 
 public class ComunicacionFragment extends Fragment implements RecyclerChatRemoveListener.IRecyclerChatRemoveListener {
-
+    //Inicializamos los atributos
     public static Adapter_Chats adapter_chats;
-
     private RecyclerView recyclerView;
     private FirebaseDatabase database;
     private DatabaseReference databaseReferenceChats;
@@ -71,6 +74,7 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
     private Button CancelEliminar;
     public View vista;
     public int posicion =0;
+    private int cont=0;
 
 
 
@@ -103,32 +107,36 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
             new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
 
               //Gestion de eventos producidos en FIREBASE
-              databaseReferenceChatsUsuario.addChildEventListener(new ChildEventListener() {
+                databaseReferenceChatsUsuario.addChildEventListener(new ChildEventListener() {
                   private DataSnapshot receptorsnapshot;
                   private DataSnapshot librosnapshot;
                   private DataSnapshot emisorsnashot;
 
                   @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                      adapter_chats.notifyDataSetChanged();
                       keyreceptor=dataSnapshot.getKey();
+                      int posicion = 0;
                       for (DataSnapshot librosnapshot : dataSnapshot.getChildren()) {
                           this.librosnapshot = librosnapshot;
                           keylibro = librosnapshot.getKey();
-
                           for (DataSnapshot chatsnapshot : librosnapshot.getChildren()) {
-
                               Chat m = chatsnapshot.getValue(Chat.class);
-                              final LChat lChat = new LChat(m, chatsnapshot.getKey());
-                              final int posicion = adapter_chats.addChat(lChat);
-
+                              LChat lChat = new LChat(m, chatsnapshot.getKey());
+                              posicion = adapter_chats.addChat(lChat);
+                              adapter_chats.notifyItemRangeInserted(cont,adapter_chats.getListChats().size());
+                              adapter_chats.notifyItemChanged(adapter_chats.getListChats().size());
                           }
+                          cont++;
                       }
 
+                      adapter_chats.setNumItems(cont);
+                      adapter_chats.notifyItemChanged(adapter_chats.getListChats().size());
+                      adapter_chats.notifyDataSetChanged();
                   }
                 @Override
                 public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    adapter_chats.notifyDataSetChanged();
+                   adapter_chats.notifyItemInserted(adapter_chats.getListChats().size());
+                    adapter_chats.notifyItemChanged(adapter_chats.getListChats().size());
                 }
 
                 @Override
@@ -143,6 +151,9 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
                                 String key2=lLChat.getKey();
                                 if (key1.equals(key2)) {
                                     adapter_chats.getListChats().remove(i);
+                                    adapter_chats.notifyItemRemoved(i);
+                                    cont--;
+                                    adapter_chats.setNumItems(cont);
                                 }
                             }
 
@@ -160,6 +171,36 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
                     adapter_chats.notifyDataSetChanged();
                 }
             });
+
+             database.getReference(Constantes.NODO_CHATS).addChildEventListener(new ChildEventListener() {
+                  @Override
+                  public void onChildAdded(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
+                      adapter_chats.notifyDataSetChanged();
+                      onResume();
+                  }
+
+                  @Override
+                  public void onChildChanged(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
+                      adapter_chats.notifyDataSetChanged();
+                      recyclerView.refreshDrawableState();
+                      onResume();
+                  }
+
+                  @Override
+                  public void onChildRemoved(@NonNull @NotNull DataSnapshot snapshot) {
+                      adapter_chats.notifyDataSetChanged();
+                  }
+
+                  @Override
+                  public void onChildMoved(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
+                      adapter_chats.notifyDataSetChanged();
+                  }
+
+                  @Override
+                  public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                      adapter_chats.notifyDataSetChanged();
+                  }
+              });
             //Funcion para pasar al ultimo mensaje producido
             adapter_chats.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
                 @Override
@@ -201,12 +242,14 @@ public class ComunicacionFragment extends Fragment implements RecyclerChatRemove
             AceptarEliminar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    cont--;
                     LChat lChat=adapter_chats.getListChats().get(position);
                     database.getReference(Constantes.NODO_CHAT_DATOS).child(lChat.getChat().getKeyemisor()).child(lChat.getChat().getKeyreceptor()).child(lChat.getChat().getKeylibro()).removeValue();
                     database.getReference(Constantes.NODO_CHAT_DATOS).child(lChat.getChat().getKeyreceptor()).child(lChat.getChat().getKeyemisor()).child(lChat.getChat().getKeylibro()).removeValue();
                     database.getReference(Constantes.NODO_CHATS).child(lChat.getChat().getKeyemisor()).child(lChat.getChat().getKeyreceptor()).child(lChat.getChat().getKeylibro()).removeValue();
                     database.getReference(Constantes.NODO_CHATS).child(lChat.getChat().getKeyreceptor()).child(lChat.getChat().getKeyemisor()).child(lChat.getChat().getKeylibro()).removeValue();
                     adapter_chats.removeChat(viewHolder.getBindingAdapterPosition());
+                    adapter_chats.setNumItems(cont);
                     dialog.dismiss();
                 }
             });

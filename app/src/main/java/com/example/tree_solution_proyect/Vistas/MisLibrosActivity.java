@@ -49,6 +49,7 @@ import java.util.Map;
 
 
 public class MisLibrosActivity extends AppCompatActivity {
+    //Inicializamos los atributos
     private RecyclerView recyclerView;
     private FirebaseDatabase database;
     private FirebaseAuth mAuth;

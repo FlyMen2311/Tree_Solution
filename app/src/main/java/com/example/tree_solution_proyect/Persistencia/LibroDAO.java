@@ -28,6 +28,7 @@ import java.util.Locale;
 import javax.security.auth.callback.Callback;
 
 public class LibroDAO {
+    //Inicializamos los atributos
     private static LibroDAO libroDAO;
     private FirebaseDatabase database;
     private FirebaseAuth mAuth;

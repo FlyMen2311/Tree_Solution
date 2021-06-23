@@ -24,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 public class ChatDao {
+    //Inicializamos los atributos
     private static ChatDao chatDao;
     private FirebaseDatabase database;
     private DatabaseReference referenceChats;

@@ -10,15 +10,26 @@ import java.util.Date;
 import java.util.Locale;
 
 public class LMensaje implements Serializable {
+    //Inicializamos los atributos
     private Mensaje mensaje;
     private String key;
     private LUsuario lUsuario;
 
+    //Metodo Constructor
     public LMensaje(Mensaje mensaje, String key) {
         this.mensaje = mensaje;
         this.key = key;
     }
 
+
+    //Metodo que sirve para obtener y devolver fecha de creacion de Mensaje
+    public String obtenerFechaDeCreacionMensaje(){
+        Date date=new Date(getCreateTimeLong());
+        PrettyTime prettyTime=new PrettyTime(new Date(),Locale.getDefault());
+        return prettyTime.format(date);
+
+    }
+    //Seters y Geters
     public Mensaje getMensaje() {
         return mensaje;
     }
@@ -37,14 +48,6 @@ public class LMensaje implements Serializable {
     public long getCreateTimeLong(){
         return (long) mensaje.getCreateTimestamp();
     }
-
-    public String obtenerFechaDeCreacionMensaje(){
-        Date date=new Date(getCreateTimeLong());
-        PrettyTime prettyTime=new PrettyTime(new Date(),Locale.getDefault());
-        return prettyTime.format(date);
-
-    }
-
     public LUsuario getlUsuario() {
         return lUsuario;
     }

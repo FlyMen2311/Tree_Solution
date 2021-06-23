@@ -25,11 +25,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Registro extends AppCompatActivity {
+    //Inicializamos los atributos
     private EditText txtNombre,txtCorreo,txtContraseña,txtContraseñaRepetida;
     private Button registro,btn_atras;
     private FirebaseAuth mAuth;
-
     private FirebaseDatabase database;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +103,7 @@ public class Registro extends AppCompatActivity {
 
 
     }
+
     public final static boolean isValidEmail(CharSequence charsequence){
         return !TextUtils.isEmpty(charsequence) && Patterns.EMAIL_ADDRESS.matcher(charsequence).matches();
     }

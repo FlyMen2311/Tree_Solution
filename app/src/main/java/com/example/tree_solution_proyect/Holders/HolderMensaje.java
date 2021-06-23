@@ -11,15 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tree_solution_proyect.R;
 
 public class HolderMensaje extends RecyclerView.ViewHolder  {
-    
-    //Atributos
+
+    //Inicializamos los atributos
     private TextView nombre,hora;
     public TextView mensaje;
     private ImageView fotoPerfilMensaje;
     private Context context;
 
 
-    //Metodo Constructor
+    //Metodo Constructor de holder,es donde se hacen todas las vinculasiones con layout
     public HolderMensaje(@NonNull View itemView) {
         super(itemView);
         context=itemView.getContext();

@@ -47,6 +47,7 @@ import java.util.Map;
 
 
 public class FavoriteFragment extends Fragment {
+    //Inicializamos los atributos
     private View vista;
     private RecyclerView recyclerView;
     private FirebaseDatabase database;

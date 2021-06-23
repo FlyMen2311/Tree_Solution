@@ -45,7 +45,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class AplicationActivity extends AppCompatActivity {
-
+    //Inicializamos los atributos
     private FirebaseDatabase database;
     private DatabaseReference databaseReferenceLibro;
     private Dialog myDialog;

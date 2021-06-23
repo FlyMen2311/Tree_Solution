@@ -12,17 +12,19 @@ import java.util.Date;
 import java.util.Locale;
 
 public class LLibro implements Serializable  {
+    //Inicializamos los atributos
     private Libro libro;
     private LLibro lLibro;
     private String key;
     private LUsuario LUsuario;
     private String fecha;
 
+    //Metodo Constructor
     public LLibro(Libro libro, String key) {
         this.libro = libro;
         this.key = key;
     }
-
+    //Metodo que sirve para obtener y devolver fecha de creacion de Libro
     public String obtenerFechaDeCreacionLibro() throws ClassCastException{
         Date date=new Date(getCreateTimeLong());
 
@@ -30,6 +32,7 @@ public class LLibro implements Serializable  {
         return prettyTime.format(date);
     }
 
+    //Seters y Geters
     public long getCreateTimeLong(){
         Long aLong=Long.parseLong(String.valueOf(libro.getCreateTimestamp()));
         return aLong;

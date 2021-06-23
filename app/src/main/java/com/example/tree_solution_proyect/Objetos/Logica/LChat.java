@@ -9,21 +9,24 @@ import java.util.Date;
 import java.util.Locale;
 
 public class LChat implements Serializable {
+    //Inicializamos los atributos
   private String key;
   private Chat chat;
 
-
+    //Metodo Constructor
     public LChat( Chat chat,String key) {
         this.key = key;
         this.chat = chat;
     }
 
-
+    //Metodo que sirve para obtener y devolver fecha de creacion Chat
     public String obtenerFechaDeCreacionChat() throws ClassCastException{
         Date date=new Date(getCreateTimeLong());
         PrettyTime prettyTime=new PrettyTime(new Date(), Locale.getDefault());
         return prettyTime.format(date);
     }
+
+    //Seters y Geters
     public long getCreateTimeLong(){
         Long aLong=Long.parseLong(String.valueOf(chat.getCreateTimestamp()));
         return aLong;

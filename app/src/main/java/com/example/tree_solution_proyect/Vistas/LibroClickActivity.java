@@ -38,6 +38,7 @@ import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
 public class LibroClickActivity extends AppCompatActivity {
+    //Inicializamos los atributos
     private ImageView foto_libro;
     private ImageView favorit;
     private ImageView foto_libro_propietario;

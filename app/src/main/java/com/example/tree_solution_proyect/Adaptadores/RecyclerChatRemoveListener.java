@@ -23,7 +23,6 @@ public class RecyclerChatRemoveListener extends ItemTouchHelper.SimpleCallback {
 
     @Override
     public boolean onMove(@NonNull @NotNull RecyclerView recyclerView, @NonNull @NotNull RecyclerView.ViewHolder viewHolder, @NonNull @NotNull RecyclerView.ViewHolder target) {
-
         return true;
     }
 

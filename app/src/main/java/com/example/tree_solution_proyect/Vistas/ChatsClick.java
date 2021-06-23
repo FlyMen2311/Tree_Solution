@@ -59,34 +59,25 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChatsClick extends AppCompatActivity {
+    //Inicializamos los atributos
     private ImageButton enviar;
     private EditText texto_mensaje;
     private RecyclerView recyclerView;
-
-
     private ImageView foto_libro;
     private TextView nombre;
     private ImageButton envial_loc;
     private TextView userName;
-
     private FirebaseDatabase database;
     private DatabaseReference databaseReferenceChat;
     private DatabaseReference databaseReferenceLibros;
     private DatabaseReference databaseReferenceUsuario;
-
     private FirebaseStorage storage;
     private StorageReference storageReference;
-
     private Adapter_mensaje adapter_mensaje;
-
     private Calendar calendario = Calendar.getInstance();
-
     private LocationManager locationManager;
-
     private String fotoPerfilString;
-
     private FirebaseAuth mAuth;
-
     private ImageView foto_libro_propietario;
     private TextView  nombre_libro_propietario;
     private TextView autor;
@@ -96,8 +87,8 @@ public class ChatsClick extends AppCompatActivity {
     private TextView precio;
     private TextView hora;
     private RatingBar ratingBar;
-
     private  LLibro Llibro;
+
     public ChatsClick() { }
 
     @Override

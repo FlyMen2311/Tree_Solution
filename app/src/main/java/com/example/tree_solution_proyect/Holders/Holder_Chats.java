@@ -18,6 +18,7 @@ import com.example.tree_solution_proyect.Vistas.ui.comunicacion.ChatClickableInt
 import org.jetbrains.annotations.NotNull;
 
 public class Holder_Chats extends  RecyclerView.ViewHolder{
+    //Inicializamos los atributos
     private ImageView Foto_libro_chat;
     private TextView name_libro_chat;
     private TextView ultimo_mensaje;
@@ -28,7 +29,7 @@ public class Holder_Chats extends  RecyclerView.ViewHolder{
     private ChatClickableInterface chatClickableInterface;
     public RelativeLayout relativeLayout;
     public CardView cardView;
-
+    //Metodo Constructor de holder,es donde se hacen todas las vinculasiones con layout
     public Holder_Chats(@NonNull @NotNull View itemView,ChatClickableInterface chatClickableInterface) {
         super(itemView);
         Foto_libro_chat =itemView.findViewById(R.id.fotoLibroChat);
@@ -55,7 +56,7 @@ public class Holder_Chats extends  RecyclerView.ViewHolder{
             }
         });
     }
-
+    //Seters y Geters
     public ImageView getFoto_libro_chat() {
         return Foto_libro_chat;
     }

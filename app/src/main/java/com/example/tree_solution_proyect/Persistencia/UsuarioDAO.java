@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class UsuarioDAO {
+    //Inicializamos los atributos
     private static UsuarioDAO usuarioDAO;
     private FirebaseDatabase database;
     private FirebaseStorage storage;

@@ -16,6 +16,7 @@ import com.example.tree_solution_proyect.Vistas.ui.perfil.MisLibrosVendidosClick
 import org.jetbrains.annotations.NotNull;
 
 public class Holder_MisLibros_Vendidos extends RecyclerView.ViewHolder {
+    //Inicializamos los atributos
     private ImageView Foto_libro;
     private TextView nombre;
     private TextView hora;
@@ -30,6 +31,7 @@ public class Holder_MisLibros_Vendidos extends RecyclerView.ViewHolder {
     private ImageView containerLibro;
     private MisLibrosVendidosClickableInterface misLibrosVendidosClickableInterface;
 
+    //Metodo Constructor de holder,es donde se hacen todas las vinculasiones con layout
     public Holder_MisLibros_Vendidos(@NonNull @NotNull View itemView, MisLibrosVendidosClickableInterface misLibrosVendidosClickableInterface) {
         super(itemView);
         context=itemView.getContext();
@@ -54,7 +56,7 @@ public class Holder_MisLibros_Vendidos extends RecyclerView.ViewHolder {
                 categoria,ratingBar,
                 condition,hora));
     }
-
+    //Seters y Geters
     public ImageView getFoto_libro() {
         return Foto_libro;
     }
