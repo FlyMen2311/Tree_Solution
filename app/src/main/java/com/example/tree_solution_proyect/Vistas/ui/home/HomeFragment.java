@@ -228,6 +228,7 @@ public class HomeFragment extends Fragment {
                             if (!keyExiste) {
                                 database.getReference(Constantes.NODO_CHATS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
                                 database.getReference(Constantes.NODO_CHAT_DATOS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
+
                                 database.getReference(Constantes.NODO_LIB_FAV).child(keyEmisor).child(keyLibro).removeValue();
                                 keyExiste = false;
                             }
@@ -236,6 +237,7 @@ public class HomeFragment extends Fragment {
 
                             database.getReference(Constantes.NODO_CHATS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
                             database.getReference(Constantes.NODO_CHAT_DATOS).child(keyEmisor).child(keyreceptor).child(keyLibro).removeValue();
+
                             database.getReference(Constantes.NODO_LIB_FAV).child(keyEmisor).child(keyLibro).removeValue();
                         }
                     }
