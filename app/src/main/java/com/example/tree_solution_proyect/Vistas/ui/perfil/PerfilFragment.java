@@ -35,6 +35,7 @@ import com.example.tree_solution_proyect.Vistas.Login;
 import com.example.tree_solution_proyect.Vistas.MainActivity;
 import com.example.tree_solution_proyect.Vistas.MisLibrosActivity;
 import com.example.tree_solution_proyect.Vistas.MisLibrosVendidosActivity;
+import com.example.tree_solution_proyect.Vistas.PoliticaPrivacidadActivity;
 import com.example.tree_solution_proyect.Vistas.ui.comunicacion.ComunicacionFragment;
 import com.example.tree_solution_proyect.Vistas.ui.home.HomeFragment;
 import com.google.android.gms.auth.GoogleAuthUtil;
@@ -87,7 +88,7 @@ public class PerfilFragment extends Fragment {
     private Uri fotoUriPerfil;
     private Button btndarBajaAceptar,btndarBajaCancelar,btnAceptarResetContrasena,btnCancelarContrasena;
     private TextView editTextTextPassword,editTextTextPassword2,editTextContraseñaActual,textViewAccept,textViewMisLibros
-            ,textViewLibrosVendidos,textViewExit,textViewBaja;
+            ,textViewLibrosVendidos,textViewExit,textViewBaja,textViewPrivacy;
     private EditText emailcambiocontrasena;
     private String key;
     private AuthCredential credential;
@@ -103,6 +104,7 @@ public class PerfilFragment extends Fragment {
         textViewResetPass = vista.findViewById(R.id.textViewResetPass);
         textViewMisLibros = vista.findViewById(R.id.textViewMisLibros);
         textViewLibrosVendidos = vista.findViewById(R.id.textViewLibrosVendidos);
+        textViewPrivacy = vista.findViewById(R.id.textViewPrivacy);
         textViewBaja = vista.findViewById(R.id.textViewBaja);
         constraintLayout=vista.findViewById(R.id.textViewMisProductos);
         constraintLayout.setOnClickListener(new View.OnClickListener() {
@@ -115,6 +117,7 @@ public class PerfilFragment extends Fragment {
         textViewMisLibros.setOnClickListener(new textViewMisLibros());
         textViewLibrosVendidos.setOnClickListener(new textViewLibrosVendidos());
         textViewBaja.setOnClickListener(new textViewBaja());
+        textViewPrivacy.setOnClickListener(new textViewPrivacy());
 
         myDialog = new Dialog(getActivity());
         myDialogResetPass = new Dialog(getActivity());
@@ -614,6 +617,15 @@ public class PerfilFragment extends Fragment {
             this.finalize();
         } catch (Throwable throwable) {
             throwable.printStackTrace();
+        }
+    }
+
+    class textViewPrivacy implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            Intent i = new Intent(getActivity(), PoliticaPrivacidadActivity.class);
+            startActivity(i);
         }
     }
     public void showToastMessage(String text, int duration){ final Toast toast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT); toast.show(); Handler handler = new Handler(); handler.postDelayed(new Runnable() { @Override public void run() { toast.cancel(); } }, duration); }
