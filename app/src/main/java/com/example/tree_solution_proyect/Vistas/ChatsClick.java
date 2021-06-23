@@ -433,10 +433,13 @@ public class ChatsClick extends AppCompatActivity {
         }
         locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
         Location loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        String localizacion="";
+        try {
+            localizacion =
+                    String.format(Locale.ENGLISH, "Estoy en esta localizacion http://maps.google.com/maps?q=%f,%f ", loc.getLatitude(), loc.getLongitude());
+        }catch (Exception e){
 
-        String localizacion =
-                String.format(Locale.ENGLISH, "Estoy en esta localizacion http://maps.google.com/maps?q=%f,%f ", loc.getLatitude(),loc.getLongitude());
-
+        }
 
         return localizacion;
     }
