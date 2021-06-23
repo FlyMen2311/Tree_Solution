@@ -40,6 +40,7 @@ import com.example.tree_solution_proyect.Objetos.Logica.LUsuario;
 import com.example.tree_solution_proyect.Persistencia.UsuarioDAO;
 import com.example.tree_solution_proyect.R;
 import com.example.tree_solution_proyect.Vistas.Login;
+import com.example.tree_solution_proyect.Vistas.ui.perfil.PerfilFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -73,6 +74,7 @@ public class HomeFragment extends Fragment {
     public static Adapter_Libro adapter_libro;
     private FirebaseAuth mAuth;
     private String keyEmisor;
+    private String currentUser;
     private String keyreceptor;
     private String keyLibro;
     private int posicion = 0;
@@ -92,11 +94,13 @@ public class HomeFragment extends Fragment {
         buscar_librosISBN=vista.findViewById(R.id.buscar_libro_isbn);
         mAuth=FirebaseAuth.getInstance();
 
+        currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         database=FirebaseDatabase.getInstance();
         databaseReferenceLibro = database.getReference(Constantes.NODO_LIBROS);
-        databaseReferenceChatDatos=database.getReference(Constantes.NODO_CHAT_DATOS);
+        databaseReferenceChatDatos= database.getReference(Constantes.NODO_CHAT_DATOS);
 
-        storage= FirebaseStorage.getInstance();;
+        storage= FirebaseStorage.getInstance();
 
         adapter_libro=new Adapter_Libro(getContext(),new LibroOpen(getActivity(),getContext()));
         adapter_libro.setHasStableIds(true);
@@ -338,16 +342,16 @@ public class HomeFragment extends Fragment {
                     intent.putExtra("objectLibro", llibro);
 
                     ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, Pair.create((View) imgcontainer, " container_holder_libro")
-                            ,Pair.create((View) fotoLibro, "fotolibro_TR")
-                            ,Pair.create((View) nombre, "nombre_TR")
-                            ,Pair.create((View) autor, "autor_TR")
-                            ,Pair.create((View) precio, "precio_TR")
-                            ,Pair.create((View) ISBN, "ISBN_TR")
-                            ,Pair.create((View) categoria, "categoria_TN")
-                            ,Pair.create((View) ratingBar, "ratingbar_TR")
-                            ,Pair.create((View) estado, "condition_TR")
-                            ,Pair.create((View) fechacreacion, "fechacreacion_TR")
-                            ,Pair.create((View) favorite, "favorite_TR"));
+                            ,Pair.create((View) fotoLibro, "fotolibro_libro_click_T_TR")
+                            ,Pair.create((View) nombre, "nombre_libro_click_T_TR")
+                            ,Pair.create((View) autor, "autor_libro_click_T_TR")
+                            ,Pair.create((View) precio, "precio_libro_click_T_TR")
+                            ,Pair.create((View) ISBN, "ISBN_libro_click_T_TR")
+                            ,Pair.create((View) categoria, "categoria_libro_click_T_TN")
+                            ,Pair.create((View) ratingBar, "ratingbar_libro_click_T_TR")
+                            ,Pair.create((View) estado, "condition_libro_click_T_TR")
+                            ,Pair.create((View) fechacreacion, "fechacreacion_libro_click_T_TR")
+                            ,Pair.create((View) favorite, "favorite_libro_click_T_TR"));
 
                     startActivity(intent, activityOptionsCompat.toBundle());
 

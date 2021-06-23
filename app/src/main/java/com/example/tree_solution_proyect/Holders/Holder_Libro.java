@@ -33,16 +33,16 @@ public class Holder_Libro extends  RecyclerView.ViewHolder{
         super(itemView);
         context=itemView.getContext();
         Foto_libro=itemView.findViewById(R.id.foto_libro_libro);
-        nombre=itemView.findViewById(R.id.nombre_libro);
-        autor=itemView.findViewById(R.id.autor_libro);
-        categoria=itemView.findViewById(R.id.categoria_libro);
-        ISBN=itemView.findViewById(R.id.Isbn_libro);
+        nombre=itemView.findViewById(R.id.holder_nombre_libro);
+        autor=itemView.findViewById(R.id.holder_autor_libro);
+        categoria=itemView.findViewById(R.id.holder_categoria_libro);
+        ISBN=itemView.findViewById(R.id.holder_Isbn_libro);
 
-        condition=itemView.findViewById(R.id.condition_libro);
-        precio=itemView.findViewById(R.id.precio_libro);
-        Favorit=itemView.findViewById(R.id.favoritos_libro);
-        ratingBar=itemView.findViewById(R.id.ratingBar_libro_libro);
-        hora=itemView.findViewById(R.id.fechacreacion_libro);
+        condition=itemView.findViewById(R.id.holder_condition_libro);
+        precio=itemView.findViewById(R.id.holder_precio_libro);
+        Favorit=itemView.findViewById(R.id.holder_favoritos_libro);
+        ratingBar=itemView.findViewById(R.id.holder_ratingBar_libro_libro);
+        hora=itemView.findViewById(R.id.holder_fechacreacion_libro);
         containerLibro= itemView.findViewById(R.id.container_holder_libro_libro);
         this.librosClickablesIntefrace1=librosClickablesIntefrace;
 

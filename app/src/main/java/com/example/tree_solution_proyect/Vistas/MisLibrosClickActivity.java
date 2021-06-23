@@ -110,11 +110,11 @@ public class MisLibrosClickActivity extends AppCompatActivity {
         foto_libro=findViewById(R.id.foto_libro_mislibrosclick);
         nombre=findViewById(R.id.nombre_mislibrosclick);
         autor=findViewById(R.id.autor_mislibrosclick);
-        categoria=findViewById(R.id.holder_categoria_mislibrosclick);
-        ISBN=findViewById(R.id.holder_Isbn_mislibrosclick);
-        condition=findViewById(R.id.holder_condition_mislibrosclick);
-        precio=findViewById(R.id.holder_precio_mislibrosclick);
-        hora=findViewById(R.id.holder_fechacreacion_mislibrosclick);
+        categoria=findViewById(R.id.categoria_mislibrosclick);
+        ISBN=findViewById(R.id.Isbn_mislibrosclick);
+        condition=findViewById(R.id.condition_mislibrosclick);
+        precio=findViewById(R.id.precio_mislibrosclick);
+        hora=findViewById(R.id.fechacreacion_mislibrosclick);
         ratingBar=findViewById(R.id.ratingBar_libro_mislibrosclick);
         foto_libro_propietario =findViewById(R.id.foto_user_libro_mislibrosclick);
         nombre_libro_propietario=findViewById(R.id.nombre_user_mislibrosclick);

@@ -68,15 +68,15 @@ public class LibroFavClickActivity extends AppCompatActivity {
         setContentView(R.layout.activity_libro_fav_click);
 
         foto_libro=findViewById(R.id.foto_libro_favotirosclick);
-        favorit=findViewById(R.id.favoritos_favotirosclick);
-        nombre=findViewById(R.id.nombre_favotirosclick);
-        autor=findViewById(R.id.autor_favotirosclick);
-        categoria=findViewById(R.id.categoria_favotirosclick);
-        ISBN=findViewById(R.id.Isbn_favotirosclick);
-        condition=findViewById(R.id.condition_favotirosclick);
-        precio=findViewById(R.id.precio_favotirosclick);
-        hora=findViewById(R.id.fechacreacion_favotirosclick);
-        ratingBar=findViewById(R.id.ratingBar_libro_favotirosclick);
+        favorit=findViewById(R.id.favoritos_favoritosclick);
+        nombre=findViewById(R.id.nombre_favoritosclick);
+        autor=findViewById(R.id.autor_favoritosclick);
+        categoria=findViewById(R.id.categoria_favoritosclick);
+        ISBN=findViewById(R.id.Isbn_favoritosclick);
+        condition=findViewById(R.id.condition_favoritosclick);
+        precio=findViewById(R.id.precio_favoritosclick);
+        hora=findViewById(R.id.fechacreacion_favoritosclick);
+        ratingBar=findViewById(R.id.ratingBar_libro_favoritosclick);
         foto_libro_propietario =findViewById(R.id.foto_user_libro_favotirosclick);
         nombre_libro_propietario=findViewById(R.id.nombre_user_favotirosclick);
         btnchat=findViewById(R.id.btn_chat_favotirosclick);

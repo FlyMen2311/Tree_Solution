@@ -76,12 +76,12 @@ public class PerfilFragment extends Fragment {
     private ImageView FotoCambioPerfil;
     private FirebaseDatabase database;
     private FirebaseAuth mAuth;
-    private DatabaseReference databaseReferenceUsuario;
+    private DatabaseReference databaseReferenceUsuario,databaseReferenceChat,
+            databaseReferenceDatosChat;
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private Dialog myDialog, myDialogResetPass;
     private Adapter_Libro alibro;
-    private Adapter_Chats achats;
     private ImagePicker imagePicker;
     private Uri fotoUriPerfil;
     private Button btndarBajaAceptar,btndarBajaCancelar,btnAceptarResetContrasena,btnCancelarContrasena;
@@ -155,6 +155,8 @@ public class PerfilFragment extends Fragment {
 
         databaseReferenceUsuario = database.getReference("Usuarios/"+mAuth
                 .getCurrentUser().getUid());
+        databaseReferenceChat = database.getReference(Constantes.NODO_CHATS+"/"+mAuth.getCurrentUser().getUid());
+        databaseReferenceDatosChat = database.getReference(Constantes.NODO_CHAT_DATOS+"/"+mAuth.getCurrentUser().getUid());
         databaseReferenceUsuario.addValueEventListener(new ValueEventListener() {
 
             @Override
@@ -467,41 +469,31 @@ public class PerfilFragment extends Fragment {
                                                 public void onSuccess(Void unused) {
                                                     key = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                                     alibro = HomeFragment.adapter_libro;
-                                                    achats = ComunicacionFragment.adapter_chats;
-                                                    LLibro lLibro = null;
-                                                    LChat lChat = null;
-                                                    if (alibro.getListLibros().size() != 0) {
-                                                        for (int i = 0; i < alibro.getListLibros().size(); i++) {
-                                                            lLibro = alibro.getListLibros().get(i);
-                                                            if (lLibro.getLibro().getUserKey().equals(key)) {
-                                                                database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).removeValue();
-                                                            }
-                                                        }
-                                                    }
-
-                                                    if (achats.getListChats().size() != 0) {
-                                                        for (int i = 0; i < achats.getListChats().size(); i++) {
-                                                            lChat = achats.getListChats().get(i);
-                                                            if (lChat.getChat().getKeyemisor().equals(key)) {
-                                                                database.getReference(Constantes.NODO_CHAT_DATOS).child(lChat.getChat().getKeyemisor()).removeValue();
-                                                            }
-                                                            if (lChat.getChat().getKeyreceptor().equals(key)) {
-                                                                database.getReference(Constantes.NODO_CHAT_DATOS).child(lChat.getChat().getKeyemisor()).child(lChat.getChat().getKeyreceptor()).removeValue();
-                                                            }
-                                                        }
-                                                    }
-
                                                     FirebaseAuth.getInstance().signOut();
                                                     user.delete()
                                                             .addOnCompleteListener(task -> {
                                                                 if (task.isSuccessful()) {
                                                                     startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
+<<<<<<< HEAD
 
                                                                     database.getReference(Constantes.NODO_USUARIOS).child(key).removeValue();
                                                                     Toast.makeText(getActivity().getApplicationContext(), "Usuario se ha borrado correctamente", Toast.LENGTH_SHORT).show();
                                                                     Toast.makeText(getActivity().getApplicationContext(), "Muchas gracias", Toast.LENGTH_LONG).show();
 
 
+=======
+                                                                    alibro = HomeFragment.adapter_libro;
+                                                                    LLibro lLibro = null;
+                                                                    for (int i = 0; i < alibro.getListLibros().size(); i ++ ) {
+                                                                        lLibro = alibro.getListLibros().get(i);
+                                                                        if(lLibro.getLibro().getUserKey().equals(key)) {
+                                                                            database.getReference(Constantes.NODO_LIBROS).child(lLibro.getKey()).removeValue();
+                                                                        }
+                                                                    }
+                                                                    databaseReferenceUsuario.removeValue();
+                                                                    databaseReferenceChat.removeValue();
+                                                                    databaseReferenceDatosChat.removeValue();
+>>>>>>> denys
                                                                 }
                                                                 else{
                                                                     Toast.makeText(getActivity().getApplicationContext(), "Usuario no se ha borrado correctamente", Toast.LENGTH_SHORT).show();
@@ -569,7 +561,10 @@ public class PerfilFragment extends Fragment {
                                                         });
                                                         database.getReference(Constantes.NODO_USUARIOS).child(key).removeValue();
                                                         Toast.makeText(getActivity().getApplicationContext(), "Usuario se ha borrado correctamente", Toast.LENGTH_SHORT).show();
+<<<<<<< HEAD
 
+=======
+>>>>>>> denys
 
                                                         Toast.makeText(getActivity().getApplicationContext(), "Muchas gracias", Toast.LENGTH_LONG).show();
                                                     } catch (Exception e) {

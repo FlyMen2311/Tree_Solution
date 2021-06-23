@@ -76,14 +76,14 @@ public class MisLibrosVendidosClickActivity extends AppCompatActivity {
         dialog.setCanceledOnTouchOutside(false);
 
         foto_libro=findViewById(R.id.foto_libro_mislibros_vendidos_click);
-        nombre=findViewById(R.id.nombre_mislibros_vendidos_click);
-        autor=findViewById(R.id.autor_mislibros_vendidos_click);
-        categoria=findViewById(R.id.holder_categoria_mislibros_vendidos_click);
-        ISBN=findViewById(R.id.holder_Isbn_mislibros_vendidos_click);
-        condition=findViewById(R.id.holder_condition_mislibros_vendidos_click);
-        precio=findViewById(R.id.holder_precio_mislibros_vendidos_click);
-        hora=findViewById(R.id.holder_fechacreacion_mislibros_vendidos_click);
-        ratingBar=findViewById(R.id.ratingBar_libro_mislibros_vendidos_click);
+        nombre=findViewById(R.id.nombre_mislibros_vendidosclick);
+        autor=findViewById(R.id.autor_mislibros_vendidosclick);
+        categoria=findViewById(R.id.categoria_mislibros_vendidosclick);
+        ISBN=findViewById(R.id.Isbn_mislibros_vendidosclick);
+        condition=findViewById(R.id.condition_mislibros_vendidosclick);
+        precio=findViewById(R.id.precio_mislibros_vendidosclick);
+        hora=findViewById(R.id.fechacreacion_mislibros_vendidosclick);
+        ratingBar=findViewById(R.id.ratingBar_libro_mislibros_vendidosclick);
         foto_libro_propietario =findViewById(R.id.foto_user_libro_mislibros_vendidos_click);
         nombre_libro_propietario=findViewById(R.id.nombre_user_mislibros_vendidos_click);
         btnVolver=findViewById(R.id.btn_volver_mislibros_vendidos_click);

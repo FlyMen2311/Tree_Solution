@@ -35,16 +35,16 @@ public class Holder_Favoritos extends  RecyclerView.ViewHolder{
         super(itemView);
         context=itemView.getContext();
         Foto_libro=itemView.findViewById(R.id.foto_libro_favotiros);
-        nombre=itemView.findViewById(R.id.nombre_favotiros);
-        autor=itemView.findViewById(R.id.autor_favotiros);
-        categoria=itemView.findViewById(R.id.categoria_favoritos);
-        ISBN=itemView.findViewById(R.id.Isbn_favotiros);
+        nombre=itemView.findViewById(R.id.holder_nombre_favoritos);
+        autor=itemView.findViewById(R.id.holder_autor_favoritos);
+        categoria=itemView.findViewById(R.id.holder_categoria_favoritos);
+        ISBN=itemView.findViewById(R.id.holder_Isbn_favoritos);
 
-        condition=itemView.findViewById(R.id.condition_favotitos);
-        precio=itemView.findViewById(R.id.precio_favotiros);
-        Favorit=itemView.findViewById(R.id.favoritos_favotiros);
-        ratingBar=itemView.findViewById(R.id.ratingBar_libro_favotiros);
-        hora=itemView.findViewById(R.id.fechacreacion_favotiros);
+        condition=itemView.findViewById(R.id.holder_condition_favoritos);
+        precio=itemView.findViewById(R.id.holder_precio_favoritos);
+        Favorit=itemView.findViewById(R.id.holder_favoritos_favoritos);
+        ratingBar=itemView.findViewById(R.id.holder_ratingBar_libro_favoritos);
+        hora=itemView.findViewById(R.id.holder_fechacreacion_favotiros);
         containerLibro= itemView.findViewById(R.id.container_holder_libro_favoritos);
         this.librosFavClickableInteface=librosFavClickableInteface;
 

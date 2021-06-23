@@ -232,11 +232,6 @@ public class Login extends AppCompatActivity {
         btnCancelar.setOnClickListener(v -> dialog.dismiss());
     }
 
-    @Override
-    public void onBackPressed() {
-
-    }
-
     public static String getTokenID() {
         return tokenID;
     }
