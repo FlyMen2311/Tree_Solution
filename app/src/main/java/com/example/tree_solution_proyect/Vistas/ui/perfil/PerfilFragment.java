@@ -136,6 +136,7 @@ public class PerfilFragment extends Fragment {
 
         imagePicker=new ImagePicker(this);
 
+        /*cargamos la imagen desde firebase*/
         imagePicker.setImagePickerCallback(new ImagePickerCallback() {
             @Override
             public void onImagesChosen(List<ChosenImage> list) {
@@ -167,6 +168,7 @@ public class PerfilFragment extends Fragment {
             }
         });
 
+        /*instanciamos las referencias para después utilizarlos en método de la baja*/
         databaseReferenceUsuario = database.getReference("Usuarios/"+mAuth
                 .getCurrentUser().getUid());
         databaseReferenceChat = database.getReference(Constantes.NODO_CHATS+"/"+mAuth.getCurrentUser().getUid());
@@ -380,6 +382,7 @@ public class PerfilFragment extends Fragment {
         }
     }
 
+    //validamos la contraseña
     public boolean validContracena(){
         String contrasena,contrasenarepetida;
         contrasena=editTextTextPassword.getText().toString();
@@ -435,9 +438,11 @@ public class PerfilFragment extends Fragment {
             startActivity(i);
         }
     }
-    
-    class textViewBaja implements View.OnClickListener {
 
+    /*Otra vez comprobamos de que el usuario ha entrado con google o no, y
+    * depeniendo de la cuenta hacemos comrpobaciónes y eliminamos todos los
+    * datos referenciados con la cuenta*/
+    class textViewBaja implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             myDialog.setContentView(R.layout.layout_dialog_dar_baja);
@@ -610,6 +615,7 @@ public class PerfilFragment extends Fragment {
             myDialog.show();
         }
     }
+    //para comprobar que email es válido
     public final static boolean isValidEmail(CharSequence charsequence) {
         return !TextUtils.isEmpty(charsequence) && Patterns.EMAIL_ADDRESS.matcher(charsequence).matches();
     }
@@ -623,6 +629,7 @@ public class PerfilFragment extends Fragment {
         }
     }
 
+    //politica de privacidad
     class textViewPrivacy implements View.OnClickListener {
 
         @Override
