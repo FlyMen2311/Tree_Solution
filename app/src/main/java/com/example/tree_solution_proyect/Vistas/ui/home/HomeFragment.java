@@ -138,9 +138,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
-
-
         databaseReferenceLibro.addChildEventListener(new ChildEventListener() {
             Map<String, LUsuario> stringLUsuarioMap=new HashMap<>();
 
@@ -150,7 +147,7 @@ public class HomeFragment extends Fragment {
                                              String previousChildName) {
                int controlador=0;
                 if(controlador==0) {
-                    cont++;
+
                     Log.i("add", "Anadiendo" + cont);
                     final Libro m = snapshot.getValue(Libro.class);
                     final LLibro lLibro = new LLibro(m, snapshot.getKey());
@@ -177,17 +174,16 @@ public class HomeFragment extends Fragment {
                                 }
                             });
                         }
-
+                        cont++;
                     }
-
-                    adapter_libro.notifyDataSetChanged();
+                    adapter_libro.setNumItems(cont);
                     controlador++;
                 }
             }
 
             @Override
             public void onChildChanged(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
-                AplicationActivity.addFragment(new HomeFragment());
+                adapter_libro.notifyDataSetChanged();
             }
 
             @Override
@@ -250,6 +246,8 @@ public class HomeFragment extends Fragment {
             adapter_libro.notifyDataSetChanged();
         }
     });
+                cont--;
+                adapter_libro.setNumItems(cont);
                 adapter_libro.getListLibros().remove(posicion);
                 adapter_libro.getListLibrosAll().remove(posicion);
                 adapter_libro.notifyItemRemoved(posicion);

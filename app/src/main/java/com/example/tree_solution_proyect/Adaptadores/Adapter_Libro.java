@@ -32,12 +32,14 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
     private Context x;
     private  HomeFragment.LibroOpen libroOpen;
     public ISBNFilter isbnFilter;
+    private int numItems;
     public boolean isFavorite=false;
 
     public Adapter_Libro(Context x,HomeFragment.LibroOpen libroOpen) {
         this.x = x;
         isbnFilter=new ISBNFilter(this);
         this.libroOpen=libroOpen;
+        numItems=listLibrosFilter.size();
     }
 
     public void actualizarLibro(int posicion,LLibro lLibro){
@@ -162,16 +164,17 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
 
     @Override
     public int getItemCount() {
-        return listLibrosFilter.size();
+        return numItems;
     }
 
     //En este metodo añdimos el Libro creado a nuestra lista y notificamos a nuestro activity
     public int addLibro(LLibro lLibro){
+
         int posicion=0;
         if(posicion==0) {
             listLibrosFilter.add(lLibro);
             posicion = listLibrosFilter.size() - 1;
-            notifyItemInserted(listLibrosFilter.size());
+            notifyItemInserted(listLibrosFilter.size()-1);
         }
 
         return posicion;
@@ -233,5 +236,9 @@ public class Adapter_Libro extends RecyclerView.Adapter<Holder_Libro>implements 
     @Override
     public int getItemViewType(int position) {
         return position;
+    }
+
+   public void setNumItems(int numItems){
+        this.numItems = numItems;
     }
 }

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.tree_solution_proyect.Adaptadores.Adapter_Chats;
@@ -91,6 +92,7 @@ public class PerfilFragment extends Fragment {
     private String key;
     private AuthCredential credential;
     boolean isEnterWithGoogle=false;
+    private ConstraintLayout constraintLayout;
     FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -102,6 +104,13 @@ public class PerfilFragment extends Fragment {
         textViewMisLibros = vista.findViewById(R.id.textViewMisLibros);
         textViewLibrosVendidos = vista.findViewById(R.id.textViewLibrosVendidos);
         textViewBaja = vista.findViewById(R.id.textViewBaja);
+        constraintLayout=vista.findViewById(R.id.textViewMisProductos);
+        constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         textViewMisLibros.setOnClickListener(new textViewMisLibros());
         textViewLibrosVendidos.setOnClickListener(new textViewLibrosVendidos());
@@ -474,14 +483,6 @@ public class PerfilFragment extends Fragment {
                                                             .addOnCompleteListener(task -> {
                                                                 if (task.isSuccessful()) {
                                                                     startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
-<<<<<<< HEAD
-
-                                                                    database.getReference(Constantes.NODO_USUARIOS).child(key).removeValue();
-                                                                    Toast.makeText(getActivity().getApplicationContext(), "Usuario se ha borrado correctamente", Toast.LENGTH_SHORT).show();
-                                                                    Toast.makeText(getActivity().getApplicationContext(), "Muchas gracias", Toast.LENGTH_LONG).show();
-
-
-=======
                                                                     alibro = HomeFragment.adapter_libro;
                                                                     LLibro lLibro = null;
                                                                     for (int i = 0; i < alibro.getListLibros().size(); i ++ ) {
@@ -493,7 +494,7 @@ public class PerfilFragment extends Fragment {
                                                                     databaseReferenceUsuario.removeValue();
                                                                     databaseReferenceChat.removeValue();
                                                                     databaseReferenceDatosChat.removeValue();
->>>>>>> denys
+
                                                                 }
                                                                 else{
                                                                     Toast.makeText(getActivity().getApplicationContext(), "Usuario no se ha borrado correctamente", Toast.LENGTH_SHORT).show();
@@ -561,11 +562,6 @@ public class PerfilFragment extends Fragment {
                                                         });
                                                         database.getReference(Constantes.NODO_USUARIOS).child(key).removeValue();
                                                         Toast.makeText(getActivity().getApplicationContext(), "Usuario se ha borrado correctamente", Toast.LENGTH_SHORT).show();
-<<<<<<< HEAD
-
-=======
->>>>>>> denys
-
                                                         Toast.makeText(getActivity().getApplicationContext(), "Muchas gracias", Toast.LENGTH_LONG).show();
                                                     } catch (Exception e) {
                                                         Toast.makeText(getActivity().getApplicationContext(), e.getMessage() + "", Toast.LENGTH_SHORT).show();
