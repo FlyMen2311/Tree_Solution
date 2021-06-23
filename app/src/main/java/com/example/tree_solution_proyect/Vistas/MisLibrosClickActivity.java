@@ -107,7 +107,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
 
 
         misLibrosActivity=new MisLibrosActivity();
-
+        /*recojemos dato desde el activity dialog*/
         foto_libro=findViewById(R.id.foto_libro_mislibrosclick);
         nombre=findViewById(R.id.nombre_mislibrosclick);
         autor=findViewById(R.id.autor_mislibrosclick);
@@ -176,6 +176,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
 
     }
 
+    /*cargamos los datos de los libros*/
     public void LoadLibros(LLibro libro){
         Picasso.with(getApplicationContext()).load(libro.getLibro().getFotoPrincipalUrl()).into(foto_libro);
         nombre.setText(libro.getLibro().getNombre());
@@ -226,6 +227,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
         });
     }
 
+    /*accion del botón volver*/
     class btnVolver implements View.OnClickListener {
 
         @Override
@@ -234,6 +236,7 @@ public class MisLibrosClickActivity extends AppCompatActivity {
             finish();
         }
     }
+    /*eliminamos el libro mediante una referencia de firebase*/
     class btnEliminar implements View.OnClickListener {
 
         @Override
@@ -261,6 +264,8 @@ public class MisLibrosClickActivity extends AppCompatActivity {
             dialog.show();
         }
     }
+
+    /*acción del botón modificar*/
     class btnModificar implements View.OnClickListener {
 
         @Override
@@ -270,6 +275,8 @@ public class MisLibrosClickActivity extends AppCompatActivity {
         }
     }
 
+    /*lanzamos un dialogo con los datos a rellenar, mediante una confirmación
+    * recogemos datos del dialogo anterior y mandamos petición a firebase*/
     private void asignarDatosDialogModificar() {
 
         dialog.setContentView(R.layout.activity_modificar);
