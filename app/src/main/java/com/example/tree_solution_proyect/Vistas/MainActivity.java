@@ -36,10 +36,9 @@ public class MainActivity extends AppCompatActivity {
 
     //Metodo que se llama cuando el activity se reinicia
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
 
-        if (isNetworkAvailable(getApplicationContext())) {
             FirebaseUser currentuser = FirebaseAuth.getInstance().getCurrentUser();
 
             if (currentuser != null) {
@@ -52,30 +51,8 @@ public class MainActivity extends AppCompatActivity {
                     throwable.printStackTrace();
                 }
             }
-        } else {
-            Toast.makeText(getApplicationContext(), "No hay conexion a internet", Toast.LENGTH_LONG).show();
-            finishAffinity();
-        }
-    }
-    //Metodo que sirve para comprobar si movil eta conectado al internet o no
-    public  boolean isNetworkAvailable(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivityManager != null) {
-            NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork());
-            if (capabilities != null) {
-                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
-
-                    return true;
-                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-
-                    return true;
-                }  else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)){
-                    return true;
-                }
-            }
-        }
-
-        return false;
 
     }
+
+
 }
