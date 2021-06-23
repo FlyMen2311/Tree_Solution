@@ -241,7 +241,12 @@ public class PerfilFragment extends Fragment {
             }
         }
     }
-
+    /*sirve para resetear contraseña, pero resetearla el método esta comprobando
+    * si el usuario a entrado con cuenta de google o no. Si usuario entro con la cuenta
+    * de google solamente habra que introducir email correcto para obtener mensaje con
+    * posibilidad de resetear. Y si usuario ha entrado con datos suyos solamente
+    * habra que introducir la contraseña vieja y la nueva si cumplen con requisitos
+    * contraseña será cambiada*/
     class textViewResetPass implements View.OnClickListener {
 
         @Override
@@ -262,7 +267,6 @@ public class PerfilFragment extends Fragment {
                 textViewAccept = myDialogResetPass.findViewById(R.id.textViewAccept);
 
                 myDialogResetPass.show();
-
                 textViewExit.setOnClickListener(new resetPassExit());
                 textViewAccept.setOnClickListener(v1 -> {
                     FirebaseUser user1 = FirebaseAuth.getInstance().getCurrentUser();
@@ -402,7 +406,7 @@ public class PerfilFragment extends Fragment {
         }
     }
 
-
+    //salta a librosVendidos
     class textViewLibrosVendidos implements View.OnClickListener {
 
         @Override
@@ -422,7 +426,7 @@ public class PerfilFragment extends Fragment {
             imagePicker.submit(data);
         }
     }
-
+    //lanza intent con mis libros
     class textViewMisLibros implements View.OnClickListener {
 
         @Override
@@ -431,7 +435,7 @@ public class PerfilFragment extends Fragment {
             startActivity(i);
         }
     }
-
+    
     class textViewBaja implements View.OnClickListener {
 
         @Override

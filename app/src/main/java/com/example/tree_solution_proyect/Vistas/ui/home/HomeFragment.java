@@ -111,7 +111,7 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(adapter_libro);
 
 
-
+        /*Sirve para filtrar el texto en manera dinamica*/
         buscar_librosISBN.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -140,15 +140,15 @@ public class HomeFragment extends Fragment {
 
         databaseReferenceLibro.addChildEventListener(new ChildEventListener() {
             Map<String, LUsuario> stringLUsuarioMap=new HashMap<>();
-
+            /*Este metodo se llama cuando se añade un nuevo componente en firebase.
+            * La lógica es comprobar si el libro esta vendido y si no añadir
+            * nuevo holder con un objeto obtenido desde firebase*/
             @Override
             public void onChildAdded(@NonNull @NotNull DataSnapshot snapshot,
                                      @Nullable @org.jetbrains.annotations.Nullable
                                              String previousChildName) {
                int controlador=0;
                 if(controlador==0) {
-
-                    Log.i("add", "Anadiendo" + cont);
                     final Libro m = snapshot.getValue(Libro.class);
                     final LLibro lLibro = new LLibro(m, snapshot.getKey());
 
@@ -180,12 +180,13 @@ public class HomeFragment extends Fragment {
                     controlador++;
                 }
             }
-
+            /*realiza actualización de los holders*/
             @Override
             public void onChildChanged(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
                 adapter_libro.notifyDataSetChanged();
             }
 
+            /*Sirve para comprobar que los holders se borran correctamente*/
             @Override
             public void onChildRemoved(@NonNull @NotNull DataSnapshot snapshot) {
                 final Libro m=snapshot.getValue(Libro.class);
@@ -202,6 +203,9 @@ public class HomeFragment extends Fragment {
                 adapter_libro.setNumItems(cont);
                 adapter_libro.notifyItemRemoved(posicion);
 
+                /*El método de abajo se llama cuando se borra un libro depeniedo del usuario que
+                * esta logeado filtamos las dependencias en firebase y borramos todos los chats,
+                * datos etc.*/
     database.getReference(Constantes.NODO_LIB_FAV).child(mAuth.getCurrentUser().getUid()).child(adapter_libro.getListLibros().get(posicion).getKey()).removeValue();
     databaseReferenceChatDatos.addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -329,7 +333,8 @@ public class HomeFragment extends Fragment {
         public void setContext(Context context) {
             this.context = context;
         }
-
+        /*Método para llamar LibroClickActivity pasando los datos del holder a activity
+        * con transación animada*/
         @Override
         public void LibroClick (int pos, ImageView imgcontainer, ImageView fotoLibro, TextView nombre,
                                 TextView autor, TextView precio, TextView ISBN, TextView categoria,
@@ -377,6 +382,7 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    /*Llama al método cuando se finaliza el proceso de un fragmento*/
     @Override
     public void onDestroyView() {
         super.onDestroyView();
