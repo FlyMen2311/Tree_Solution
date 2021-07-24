@@ -95,7 +95,6 @@ public class MisLibrosVendidosClickActivity extends AppCompatActivity {
         btnVolver.setOnClickListener(new btnVolver());
         btnEliminar.setOnClickListener(new btnEliminar());
 
-
         lLibro = (LLibro) getIntent().getExtras().getSerializable("objectLibro");
 
         database=FirebaseDatabase.getInstance();
@@ -121,6 +120,7 @@ public class MisLibrosVendidosClickActivity extends AppCompatActivity {
 
             }
         });
+
         DatabaseReference reference2=database.getReference(Constantes.NODO_USUARIOS).child(mAuth.getCurrentUser().getUid());
         reference2.addValueEventListener(new ValueEventListener() {
             @Override
